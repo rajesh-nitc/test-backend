@@ -14,7 +14,7 @@ get_spend_func = FunctionDeclaration(
             "category": {
                 "type": "string",
                 "description": """
-                You are an AI assistant trained to extract spend category information from user queries. for e.g. groceries, bills, shopping, Eating in or out, travel, entertainment" 
+                You are an AI assistant trained to extract spend category information from user queries. for e.g. groceries, bills, shopping, travel, entertainment" 
                 If the user asks, What were my expenses in January?, it means the user is looking for total spend across all spend categories
                 If the user asks, What were my expenses this year?, it means the user is looking for total spend across all spend categories
                 If the user asks, How much did I spend on groceries this year?, extract groceries from the query
