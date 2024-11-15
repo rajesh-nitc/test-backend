@@ -3,7 +3,6 @@ from vertexai.generative_models import FunctionDeclaration
 from utils.util import get_today_date
 
 date, day_of_week = get_today_date()
-print(date)
 
 get_spend_func = FunctionDeclaration(
     name="get_spend_func",
