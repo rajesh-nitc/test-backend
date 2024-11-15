@@ -1,8 +1,7 @@
-from vertexai.generative_models import (
-    FunctionDeclaration,  
-)
+from vertexai.generative_models import FunctionDeclaration
 
-from util import get_today_date
+from utils.util import get_today_date
+
 date, day_of_week = get_today_date()
 
 get_spend_func = FunctionDeclaration(

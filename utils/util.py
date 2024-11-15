@@ -1,10 +1,11 @@
-from typing import Any
 import datetime
-from vertexai.generative_models import (
-    GenerationResponse,  
-)
 import logging
+from typing import Any
+
+from vertexai.generative_models import GenerationResponse
+
 logger = logging.getLogger(__name__)
+
 
 def extract_function_calls(response: GenerationResponse) -> list[dict]:
     function_calls: list[dict] = []
@@ -17,9 +18,11 @@ def extract_function_calls(response: GenerationResponse) -> list[dict]:
     logger.info(f"function_calls: {function_calls}")
     return function_calls
 
+
 def extract_text(response: GenerationResponse):
     logger.info(f"Text: {response.candidates[0].content.parts[0].text}")
     return response.candidates[0].content.parts[0].text
+
 
 def get_today_date():
     today = datetime.date.today()

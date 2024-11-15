@@ -19,11 +19,18 @@ Work in progress
 │   └── vertex_ai.py
 ├── tools
 │   └── spend.py
-└── util.py
+└── utils
+    └── util.py
 ```
 
 ## Run
-```python3 main.py```
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pre-commit install
+python3 main.py
+```
 
 ## Test
 ```

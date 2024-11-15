@@ -1,0 +1,14 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.9.1  # Use the latest stable version
+    hooks:
+      - id: black
+        args: [--line-length=88]  # Adjust line length to match your preferences
+        language_version: python3.12  # Match your project's Python version
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0  # Use the latest stable version
+    hooks:
+      - id: isort
+        args: ["--profile=black"]  # Ensure compatibility with Black
+        language_version: python3.12  # Match your project's Python version

@@ -1,7 +1,7 @@
-from logging.config import dictConfig
 import os
+from logging.config import dictConfig
 
-LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO').upper()
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
 LOGGING_CONFIG = {
     "version": 1,
@@ -34,6 +34,7 @@ LOGGING_CONFIG = {
         },
     },
 }
+
 
 def setup_logging():
     dictConfig(LOGGING_CONFIG)

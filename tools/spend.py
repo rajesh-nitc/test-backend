@@ -1,6 +1,4 @@
-from vertexai.generative_models import (
-    Tool, 
-)
+from vertexai.generative_models import Tool
 
 from function_declarations.spend import get_spend_func
 
