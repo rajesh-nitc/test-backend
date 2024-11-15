@@ -5,6 +5,7 @@ from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from models.prompt import PromptRequest, PromptResponse
 from services.vertex_ai import generate_model_response
+from tools.spend import spend_tool
 
 router = APIRouter()
 
@@ -16,6 +17,7 @@ def get_model() -> GenerativeModel:
     return GenerativeModel(
         model_name,
         generation_config=GenerationConfig(temperature=0),
+        tools=[spend_tool],
     )
 
 
