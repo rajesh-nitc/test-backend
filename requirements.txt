@@ -1,6 +1,4 @@
-black==24.10.0 
 fastapi==0.110.0
-isort==5.13.2
 google-cloud-aiplatform==1.47.0
 pre-commit==4.0.1
 python-dotenv==1.0.1
