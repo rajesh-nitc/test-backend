@@ -17,6 +17,7 @@ Work in progress
 ├── routers
 │   └── prompt.py
 ├── services
+│   ├── mock_external_api.py
 │   └── vertex_ai.py
 ├── start.sh
 ├── tools
