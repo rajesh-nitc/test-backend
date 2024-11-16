@@ -19,7 +19,6 @@ Work in progress
 ├── services
 │   └── vertex_ai.py
 ├── start.sh
-├── tests
 ├── tools
 │   └── spend.py
 └── utils
