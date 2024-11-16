@@ -27,11 +27,16 @@ LOGGING_CONFIG = {
             "level": LOG_LEVEL,
             "propagate": False,
         },
-        "uvicorn": {
-            "handlers": ["console"],
-            "level": LOG_LEVEL,
-            "propagate": False,
-        },
+        # "uvicorn": {
+        #     "handlers": ["console"],
+        #     "level": LOG_LEVEL,
+        #     "propagate": False,
+        # },
+        # "gunicorn": {
+        #     "handlers": ["console"],
+        #     "level": LOG_LEVEL,
+        #     "propagate": False,
+        # },
     },
 }
 

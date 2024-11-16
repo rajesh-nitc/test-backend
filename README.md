@@ -6,6 +6,7 @@ Work in progress
 .
 ├── README.md
 ├── config
+│   ├── gunicorn.conf.py
 │   └── logging.py
 ├── function_declarations
 │   └── spend.py
@@ -17,10 +18,12 @@ Work in progress
 │   └── prompt.py
 ├── services
 │   └── vertex_ai.py
+├── start.sh
+├── tests
 ├── tools
 │   └── spend.py
 └── utils
-    └── util.py
+    └── genai.py
 ```
 
 ## Run
@@ -30,7 +33,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 pre-commit install
 # Update PROJECT_ID in .env
-python3 main.py
+./start.sh
 ```
 
 ## Test
