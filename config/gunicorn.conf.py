@@ -1,8 +1,5 @@
 import os
 
-# from main import setup_logging
-# setup_logging()
-
 # Get the number of CPU cores (use it for worker count)
 workers = os.cpu_count()
 
