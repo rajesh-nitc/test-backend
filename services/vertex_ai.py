@@ -9,6 +9,15 @@ logger = logging.getLogger(__name__)
 
 
 def generate_model_response(prompt: str, model: GenerativeModel) -> str:
+    """_summary_
+
+    Args:
+        prompt (str): _description_
+        model (GenerativeModel): _description_
+
+    Returns:
+        str: _description_
+    """
     chat = model.start_chat()
     response = chat.send_message(prompt)
 
