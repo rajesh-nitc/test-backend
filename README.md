@@ -3,9 +3,10 @@
 Work in progress
 
 ```
-tree -a -I "__pycache__|venv|.git"
+tree -a -I "__pycache__|venv|.git|.ruff_cache"
 .
 ├── .env
+├── .gitattributes
 ├── .gitignore
 ├── .pre-commit-config.yaml
 ├── README.md
