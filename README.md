@@ -3,7 +3,11 @@
 Work in progress
 
 ```
+tree -a -I "__pycache__|venv|.git"
 .
+├── .env
+├── .gitignore
+├── .pre-commit-config.yaml
 ├── README.md
 ├── config
 │   ├── gunicorn.conf.py
