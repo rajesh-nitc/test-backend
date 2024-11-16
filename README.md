@@ -1,14 +1,16 @@
 # hello-genai
 
-Work in progress
+Mostly function calling
 
 ```
 tree -a -I "__pycache__|venv|.git|.ruff_cache"
 .
+├── .dockerignore
 ├── .env
 ├── .gitattributes
 ├── .gitignore
 ├── .pre-commit-config.yaml
+├── Dockerfile
 ├── README.md
 ├── config
 │   ├── gunicorn.conf.py
@@ -42,6 +44,19 @@ pre-commit install
 ./start.sh
 ```
 
+With Docker:
+```
+docker build -t hello-genai .
+docker run -d -p 8000:8000 \
+  -v ~/.config/gcloud/application_default_credentials.json:/tmp/keys/credentials.json \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/credentials.json \
+  -e ENV=dev \
+  -e PROJECT_ID=$PROJECT_ID \
+  -e REGION=europe-west4 \
+  -e MODEL_NAME=gemini-1.5-pro \
+  -e LOG_LEVEL=INFO \
+  hello-genai
+```
 ## Test
 ```
 curl -X 'POST' 'http://localhost:8000/api/v1/prompt' -H 'Content-Type: application/json' -d '{ "prompt": "how much did i spend on travel last month" }'
