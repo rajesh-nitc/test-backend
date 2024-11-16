@@ -4,3 +4,4 @@ gunicorn==23.0.0
 pre-commit==4.0.1
 python-dotenv==1.0.1
 uvicorn==0.32.0
+

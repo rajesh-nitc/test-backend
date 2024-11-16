@@ -27,6 +27,9 @@ def generate_model_response(prompt: str, model: GenerativeModel) -> str:
                     },
                 ),
             )
+        # After processing function calls, we may want to call extract_text to capture the final response
+        return extract_text(response)
 
-    # If no function calls, return the extracted text from the response
-    return extract_text(response)
+    else:
+        # If there are no function calls, return the extracted text from the response
+        return extract_text(response)
