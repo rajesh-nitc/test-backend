@@ -27,7 +27,7 @@ def generate_model_response(prompt: str, model: GenerativeModel) -> str:
                     },
                 ),
             )
-        # After processing function calls, we may want to call extract_text to capture the final response
+        # After passing api_response to Model, return the model response
         return extract_text(response)
 
     else:

@@ -25,13 +25,6 @@ def get_model() -> GenerativeModel:
 async def get_prompt_response(
     request: PromptRequest, model: GenerativeModel = Depends(get_model)
 ):
-    # Call service function to generate response and handle function calls
     result = generate_model_response(request.prompt, model)
-
-    # Response handling: Return the appropriate response
-    if isinstance(result, list):  # This means we have function calls
-        # Process function calls if needed
-        return PromptResponse(response=result)
-    else:
-        # If it's just text, return it as the response
-        return PromptResponse(response=result)
+    # def generate_model_response -> str:
+    return PromptResponse(response=result)
