@@ -1,9 +1,9 @@
 import logging
 
-from vertexai.generative_models import GenerativeModel,Part
+from vertexai.generative_models import GenerativeModel, Part
 
-from utils.genai import extract_function_calls, extract_text
 from services.mock_external_api import fetch_mock_data
+from utils.genai import extract_function_calls, extract_text
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ def generate_model_response(prompt: str, model: GenerativeModel) -> str:
     if function_calls:
         for k, v in function_calls[0].items():
             logger.info(f"Type of v: {type(v)}")
-            api_response =  fetch_mock_data(v)
+            api_response = fetch_mock_data(v)
             response = chat.send_message(
                 Part.from_function_response(
                     name=k,
@@ -27,6 +27,6 @@ def generate_model_response(prompt: str, model: GenerativeModel) -> str:
                     },
                 ),
             )
-    
+
     # If no function calls, return the extracted text from the response
     return extract_text(response)
