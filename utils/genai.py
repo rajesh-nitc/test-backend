@@ -1,30 +1,30 @@
 import datetime
 import logging
-from typing import Any, Tuple
+from typing import Tuple
 
 from vertexai.generative_models import GenerationResponse
 
 logger = logging.getLogger(__name__)
 
 
-def extract_function_calls(response: GenerationResponse) -> list[dict]:
-    """_summary_
+def extract_function_call(response: GenerationResponse) -> dict:
+    """
+    Extracts a single function call and its arguments from the response.
 
     Args:
-        response (GenerationResponse): _description_
+        response (GenerationResponse): The model's response.
 
     Returns:
-        list[dict]: _description_
+        dict: A dictionary representing the function call and its arguments.
     """
-    function_calls: list[dict] = []
-    if response.candidates[0].function_calls:
-        for function_call in response.candidates[0].function_calls:
-            function_call_dict: dict[str, dict[str, Any]] = {function_call.name: {}}
-            for key, value in function_call.args.items():
-                function_call_dict[function_call.name][key] = value
-            function_calls.append(function_call_dict)
-    logger.info(f"function_calls: {function_calls}")
-    return function_calls
+    if response.candidates and response.candidates[0].function_calls:
+        function_call = response.candidates[0].function_calls[0]
+        function_call_dict = {function_call.name: dict(function_call.args)}
+        logger.info(f"function_call_dict: {function_call_dict}")
+        return function_call_dict
+
+    logger.warning("No function call found in the response.")
+    return {}
 
 
 def extract_text(response: GenerationResponse) -> str:

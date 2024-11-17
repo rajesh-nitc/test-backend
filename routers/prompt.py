@@ -24,7 +24,7 @@ def get_model() -> GenerativeModel:
         raise ValueError("MODEL_NAME environment variable is not set.")
     return GenerativeModel(
         model_name,
-        generation_config=GenerationConfig(temperature=0),
+        generation_config=GenerationConfig(temperature=0, candidate_count=1),
         tools=[spend_tool],
     )
 
