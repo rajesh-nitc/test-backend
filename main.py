@@ -19,7 +19,7 @@ logger.info(f"Use CPU cores for worker count: {os.cpu_count()}")
 
 # Initialize the app
 app = FastAPI(
-    title="Hello GenAI",
+    title="function-calling-api",
     description=f"An API leveraging Vertex AI with {os.getenv("MODEL_NAME")} model.",
     version="1.0.0",
 )

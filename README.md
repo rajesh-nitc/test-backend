@@ -1,6 +1,4 @@
-# hello-genai
-
-Mostly function calling
+# function-calling-api
 
 ```
 tree -a -I "__pycache__|venv|.git|.ruff_cache"
@@ -31,7 +29,7 @@ tree -a -I "__pycache__|venv|.git|.ruff_cache"
 ├── tools
 │   └── spend.py
 └── utils
-    └── genai.py
+    └── util.py
 ```
 
 ## Run
@@ -46,7 +44,7 @@ pre-commit install
 
 With Docker:
 ```
-docker build -t hello-genai .
+docker build -t function-calling-api .
 docker run -d -p 8000:8000 \
   -v ~/.config/gcloud/application_default_credentials.json:/tmp/keys/credentials.json \
   -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/credentials.json \
@@ -55,7 +53,8 @@ docker run -d -p 8000:8000 \
   -e REGION=europe-west4 \
   -e MODEL_NAME=gemini-1.5-pro \
   -e LOG_LEVEL=INFO \
-  hello-genai
+  -e ALLOWED_ORIGINS=* \
+  function-calling-api
 ```
 ## Test
 ```
