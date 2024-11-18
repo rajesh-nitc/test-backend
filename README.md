@@ -1,5 +1,11 @@
 # function-calling-api
 
+## Prerequisites
+```
+gcloud auth application-default login
+```
+
+## Project structure
 ```
 tree -a -I "__pycache__|venv|.git|.ruff_cache"
 .
@@ -33,6 +39,8 @@ tree -a -I "__pycache__|venv|.git|.ruff_cache"
 ```
 
 ## Run
+
+Locally without Docker:
 ```
 python3 -m venv venv
 source venv/bin/activate
@@ -42,7 +50,7 @@ pre-commit install
 ./start.sh
 ```
 
-With Docker:
+Locally with Docker:
 ```
 docker build -t function-calling-api .
 docker run -d -p 8000:8000 \
@@ -58,5 +66,8 @@ docker run -d -p 8000:8000 \
 ```
 ## Test
 ```
-curl -X 'POST' 'http://localhost:8000/api/v1/prompt' -H 'Content-Type: application/json' -d '{ "prompt": "how much did i spend on travel last month" }'
+curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
+  -H 'Content-Type: application/json' \
+  -d '{ "prompt": "how much did i spend on travel last month" }'
+
 ```
