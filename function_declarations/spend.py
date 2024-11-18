@@ -6,12 +6,13 @@ date, day_of_week = get_today_date()
 
 get_spend_func = FunctionDeclaration(
     name="get_spend_func",
-    description="Get spend of the user",
+    description="Call this if user is asking for the spend",
     parameters={
         "type": "object",
         "properties": {
             "category": {
                 "type": "string",
+                "enum": ["groceries", "bills", "shopping", "travel", "entertainment"],
                 "description": """
                 You are an AI assistant trained to extract spend category information from user queries. for e.g. groceries, bills, shopping, travel, entertainment
                 If the user asks, What were my expenses in January?, it means the user is looking for total spend across all spend categories
