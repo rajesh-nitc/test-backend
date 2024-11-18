@@ -1,4 +1,5 @@
 # function-calling-api
+This API allows you to send natural language prompts to the Vertex AI model, which returns function calls with specific arguments. The API then calls an external API with these arguments, feeds the external API response back to the model, and returns the model's response to the user.
 
 ## Prerequisites
 ```
