@@ -1,6 +1,6 @@
 from vertexai.generative_models import FunctionDeclaration
 
-from utils.util import get_today_date
+from utils.date import get_today_date
 
 date, day_of_week = get_today_date()
 

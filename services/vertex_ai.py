@@ -3,7 +3,7 @@ import logging
 from vertexai.generative_models import GenerativeModel, Part
 
 from services.mock_external_api import fetch_mock_data
-from utils.util import extract_function_call, extract_text
+from utils.vertex_ai import extract_function_call, extract_text
 
 logger = logging.getLogger(__name__)
 

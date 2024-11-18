@@ -1,9 +1,8 @@
-import datetime
 import logging
-from typing import Tuple
 
-from vertexai.generative_models import GenerationResponse
-
+from vertexai.generative_models import GenerationResponse,GenerativeModel,GenerationConfig
+from tools.spend import spend_tool
+import os
 logger = logging.getLogger(__name__)
 
 
@@ -23,7 +22,7 @@ def extract_function_call(response: GenerationResponse) -> dict:
         logger.info(f"function_call_dict: {function_call_dict}")
         return function_call_dict
 
-    logger.warning("No function call found in the response.")
+    logger.info("No function call found in the model response.")
     return {}
 
 
@@ -40,12 +39,22 @@ def extract_text(response: GenerationResponse) -> str:
     return response.candidates[0].content.parts[0].text
 
 
-def get_today_date() -> Tuple[datetime.date, str]:
+
+
+def get_model() -> GenerativeModel:
     """_summary_
 
+    Raises:
+        ValueError: _description_
+
     Returns:
-        Tuple[datetime.date, str]: _description_
+        GenerativeModel: _description_
     """
-    today = datetime.date.today()
-    # Return the full date (YYYY-MM-DD) and the day of the week
-    return today, today.strftime("%A")
+    model_name = os.getenv("MODEL_NAME")
+    if not model_name:
+        raise ValueError("MODEL_NAME environment variable is not set.")
+    return GenerativeModel(
+        model_name,
+        generation_config=GenerationConfig(temperature=0, candidate_count=1),
+        tools=[spend_tool],
+    )
