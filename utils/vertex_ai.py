@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def extract_function_call(response: GenerationResponse) -> dict:
     """
-    Extracts a single function call and its arguments from the response and appends it to the history for the user.
+    Extracts a single function call
 
     Args:
         response (GenerationResponse): The model's response.
