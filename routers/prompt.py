@@ -12,7 +12,8 @@ history = []
 
 @router.post("/prompt", response_model=PromptResponse)
 async def get_prompt_response(
-    request: PromptRequest, model: GenerativeModel = Depends(get_model)
+    request: PromptRequest,
+    model: GenerativeModel = Depends(get_model),
 ):
-    result = generate_model_response(request.prompt, model, history)
+    result = generate_model_response(request.prompt, model, request.user_id)
     return PromptResponse(response=result)

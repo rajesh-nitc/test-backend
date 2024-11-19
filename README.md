@@ -70,6 +70,6 @@ docker run -d -p 8000:8000 \
 ```
 curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
   -H 'Content-Type: application/json' \
-  -d '{ "prompt": "how much did i spend on travel last month" }'
+  -d '{ "prompt": "how much did i spend on travel last month", "user_id": "25" }'
 
 ```
