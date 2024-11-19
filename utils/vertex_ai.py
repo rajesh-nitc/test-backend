@@ -1,17 +1,24 @@
 import logging
-
-from vertexai.generative_models import GenerationResponse,GenerativeModel,GenerationConfig
-from tools.spend import spend_tool
 import os
+
+from vertexai.generative_models import (
+    GenerationConfig,
+    GenerationResponse,
+    GenerativeModel,
+)
+
+from tools.spend import spend_tool
+
 logger = logging.getLogger(__name__)
 
 
-def extract_function_call(response: GenerationResponse) -> dict:
+def extract_function_call(response: GenerationResponse, history: list) -> dict:
     """
-    Extracts a single function call and its arguments from the response.
+    Extracts a single function call and its arguments from the response and appends it to the history.
 
     Args:
         response (GenerationResponse): The model's response.
+        history (list): The conversation history.
 
     Returns:
         dict: A dictionary representing the function call and its arguments.
@@ -20,35 +27,45 @@ def extract_function_call(response: GenerationResponse) -> dict:
         function_call = response.candidates[0].function_calls[0]
         function_call_dict = {function_call.name: dict(function_call.args)}
         logger.info(f"function_call_dict: {function_call_dict}")
+
         return function_call_dict
 
     logger.info("No function call found in the model response.")
     return {}
 
 
-def extract_text(response: GenerationResponse) -> str:
-    """_summary_
+def extract_text(response: GenerationResponse, history: list) -> str:
+    """
+    Extracts text content from the response and appends it to the history.
 
     Args:
-        response (GenerationResponse): _description_
+        response (GenerationResponse): The model's response.
+        history (list): The conversation history.
 
     Returns:
-        str: _description_
+        str: The extracted text.
     """
-    logger.info(f"Text: {response.candidates[0].content.parts[0].text}")
-    return response.candidates[0].content.parts[0].text
+    # Extract text from the model's response
+    text = response.candidates[0].content.parts[0].text
+    logger.info(f"Text: {text}")
 
+    # Append the text response to the conversation history with role 'model'
+    history.append(f"model: {text}")  # Store as a string for consistency
 
+    logging.info(f"===== Updated History (with text): {history} =====")
+
+    return text
 
 
 def get_model() -> GenerativeModel:
-    """_summary_
+    """
+    Returns a configured GenerativeModel object.
 
     Raises:
-        ValueError: _description_
+        ValueError: If the MODEL_NAME environment variable is not set.
 
     Returns:
-        GenerativeModel: _description_
+        GenerativeModel: A configured generative model instance.
     """
     model_name = os.getenv("MODEL_NAME")
     if not model_name:

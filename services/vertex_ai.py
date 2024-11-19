@@ -8,22 +8,40 @@ from utils.vertex_ai import extract_function_call, extract_text
 logger = logging.getLogger(__name__)
 
 
-def generate_model_response(prompt: str, model: GenerativeModel) -> str:
+def generate_model_response(prompt: str, model: GenerativeModel, history: list) -> str:
     """
-    Generates a response from the model based on the given prompt.
+    Generates a response from the model based on the given prompt and maintains conversation history.
 
     Args:
         prompt (str): The input prompt.
         model (GenerativeModel): The generative model to use.
+        history (list): The conversation history.
 
     Returns:
         str: The final model response.
     """
-    chat = model.start_chat()
-    response = chat.send_message(prompt)
 
-    # Extract the single function call from the model's response
-    function_call = extract_function_call(response)
+    logger.info(f"***** Received new prompt: {prompt} *****")
+
+    chat = model.start_chat()
+
+    # Construct the full conversation context
+    conversation = ""
+    for entry in history:
+        conversation += f"{entry}\n"  # Each entry is a user or model response
+
+    # Add the current user prompt to the conversation
+    conversation += f"user: {prompt}\nmodel:"
+
+    logger.info(f"===== Converstaion: {conversation} =====")
+
+    history.append(f"user: {prompt}")
+
+    # Send the conversation history and new prompt to the model
+    response = chat.send_message(conversation)
+
+    # Extract the function call or text from the model's response
+    function_call = extract_function_call(response, history)
 
     if function_call:
         function_name, function_args = next(iter(function_call.items()))
@@ -40,7 +58,7 @@ def generate_model_response(prompt: str, model: GenerativeModel) -> str:
             )
         )
         # After sending the API response, return the text response from the model
-        return extract_text(response)
+        return extract_text(response, history)
 
     # If there is no function call, return the text from the initial response
-    return extract_text(response)
+    return extract_text(response, history)

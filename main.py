@@ -6,16 +6,14 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from config.logging import setup_logging
 from routers import prompt
 
 # Load environment variables early
 load_dotenv()
 
 # Initialize logging
-setup_logging()
+
 logger = logging.getLogger(__name__)
-logger.info(f"Use CPU cores for worker count: {os.cpu_count()}")
 
 # Initialize the app
 app = FastAPI(

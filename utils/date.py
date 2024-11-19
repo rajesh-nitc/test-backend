@@ -1,6 +1,7 @@
 import datetime
 from typing import Tuple
 
+
 def get_today_date() -> Tuple[datetime.date, str]:
     """_summary_
 
