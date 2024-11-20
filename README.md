@@ -1,6 +1,6 @@
 # function-calling-api
 
-```
+
 ## Project structure
 ```
 tree -a -I "__pycache__|venv|.git"
