@@ -61,7 +61,7 @@ docker run -d -p 8000:8000 \
   -e MODEL_NAME=gemini-1.5-pro \
   -e LOG_LEVEL=INFO \
   -e ALLOWED_ORIGINS=* \
-  -e BUCKET_NAME=function-calling-api \
+  -e BUCKET_NAME=bkt-function-calling-api \
   -e CHAT_HISTORY_FOLDER=chat_histories \
   function-calling-api
 ```
