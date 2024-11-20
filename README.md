@@ -7,8 +7,8 @@ This API supports function calling with chat history stored in GCS, ensuring tha
 1. A GCP project with Vertex AI API enabled.
 2. A GCS bucket.
 3. Roles:
-   - `roles/aiplatform.user` (Vertex AI User) at the project level.
-   - `roles/storage.objectAdmin` (Storage Object Admin) on the GCS bucket.
+   - `roles/aiplatform.user` at the project level.
+   - `roles/storage.objectAdmin` on the GCS bucket.
 4. Run `gcloud auth application-default login` to authenticate locally.
 5. Ensure the `.env` file is properly configured with environment variables.
 
