@@ -78,15 +78,9 @@ docker build -t function-calling-api .
 docker run -d -p 8000:8000 \
   -v ~/.config/gcloud/application_default_credentials.json:/tmp/keys/credentials.json \
   -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/credentials.json \
-  -e ENV=dev \
-  -e PROJECT_ID=$PROJECT_ID \
-  -e REGION=europe-west4 \
-  -e MODEL_NAME=gemini-1.5-pro \
-  -e LOG_LEVEL=INFO \
-  -e ALLOWED_ORIGINS=* \
-  -e BUCKET_NAME=bkt-function-calling-api \
-  -e CHAT_HISTORY_FOLDER=chat_histories \
+  --env-file .env \
   function-calling-api
+
 ```
 
 ## Test
