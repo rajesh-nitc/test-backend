@@ -1,15 +1,15 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import logging
 import os
 
 import vertexai
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from routers import prompt
-
-# Load environment variables early
-load_dotenv()
 
 # Initialize logging
 

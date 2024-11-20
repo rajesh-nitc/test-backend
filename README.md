@@ -1,14 +1,9 @@
 # function-calling-api
-This API allows you to send natural language prompts to the Vertex AI model, which returns function call with specific arguments. The API then calls an external API with these arguments, feeds the external API response back to the model, and returns the model's response to the user.
 
-## Prerequisites
 ```
-gcloud auth application-default login
-```
-
 ## Project structure
 ```
-tree -a -I "__pycache__|venv|.git|.ruff_cache"
+tree -a -I "__pycache__|venv|.git"
 .
 ├── .dockerignore
 ├── .env
@@ -37,6 +32,7 @@ tree -a -I "__pycache__|venv|.git|.ruff_cache"
 │   └── spend.py
 └── utils
     ├── date.py
+    ├── gcs_history.py
     └── vertex_ai.py
 ```
 
@@ -64,6 +60,8 @@ docker run -d -p 8000:8000 \
   -e MODEL_NAME=gemini-1.5-pro \
   -e LOG_LEVEL=INFO \
   -e ALLOWED_ORIGINS=* \
+  -e BUCKET_NAME=function-calling-api \
+  -e CHAT_HISTORY_FOLDER=chat_histories \
   function-calling-api
 ```
 ## Test

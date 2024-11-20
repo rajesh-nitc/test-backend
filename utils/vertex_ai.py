@@ -8,23 +8,20 @@ from vertexai.generative_models import (
 )
 
 from tools.spend import spend_tool
-from utils.dict import user_chat_histories
 
 logger = logging.getLogger(__name__)
 
 
 def extract_function_call(response: GenerationResponse) -> dict:
     """
-    Extracts a single function call
+    Extracts a single function call from the model's response.
 
     Args:
         response (GenerationResponse): The model's response.
-        user_id (str): The unique identifier for the user.
 
     Returns:
         dict: A dictionary representing the function call and its arguments.
     """
-
     if response.candidates and response.candidates[0].function_calls:
         function_call = response.candidates[0].function_calls[0]
         function_call_dict = {function_call.name: dict(function_call.args)}
@@ -47,18 +44,9 @@ def extract_text(response: GenerationResponse, user_id: str) -> str:
     Returns:
         str: The extracted text.
     """
-    if user_id not in user_chat_histories:
-        user_chat_histories[user_id] = []
-
-    history = user_chat_histories[user_id]
-
     # Extract text from the model's response
     text = response.candidates[0].content.parts[0].text
-    logger.info(f"Text: {text}")
-
-    # Append the text response to the user's conversation history
-    history.append(f"model: {text}")  # Store as a string for consistency
-    logger.info(f"+++++ user_chat_histories: {user_chat_histories} +++++")
+    logger.info(f"Extracted text: {text}")
 
     return text
 
@@ -76,6 +64,9 @@ def get_model() -> GenerativeModel:
     model_name = os.getenv("MODEL_NAME")
     if not model_name:
         raise ValueError("MODEL_NAME environment variable is not set.")
+
+    logger.info(f"Initializing GenerativeModel with model_name: {model_name}")
+
     return GenerativeModel(
         model_name,
         generation_config=GenerationConfig(temperature=0, candidate_count=1),
