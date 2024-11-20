@@ -7,8 +7,6 @@ from utils.vertex_ai import get_model
 
 router = APIRouter()
 
-history = []
-
 
 @router.post("/prompt", response_model=PromptResponse)
 async def get_prompt_response(

@@ -12,7 +12,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import prompt
 
 # Initialize logging
-
 logger = logging.getLogger(__name__)
 
 # Initialize the app
