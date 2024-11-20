@@ -53,7 +53,7 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
         # Fetch mock data based on the function arguments
         api_response = fetch_mock_data(function_args)
 
-        # Send the function response back to the model
+        # Send api response back to the model
         response = chat.send_message(
             Part.from_function_response(
                 name=function_name,
