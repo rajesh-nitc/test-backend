@@ -33,16 +33,14 @@ def extract_function_call(response: GenerationResponse) -> dict:
     return {}
 
 
-def extract_text(response: GenerationResponse, user_id: str) -> str:
-    """
-    Extracts text content from the response and appends it to the history for the user.
+def extract_text(response: GenerationResponse) -> str:
+    """_summary_
 
     Args:
-        response (GenerationResponse): The model's response.
-        user_id (str): The unique identifier for the user.
+        response (GenerationResponse): _description_
 
     Returns:
-        str: The extracted text.
+        str: _description_
     """
     # Extract text from the model's response
     text = response.candidates[0].content.parts[0].text

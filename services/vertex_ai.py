@@ -40,9 +40,6 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
 
     logger.info(f"===== Conversation: {conversation} =====")
 
-    # Append the user prompt to the local history
-    history.append(f"user: {prompt}")
-
     # Send the conversation history and new prompt to the model
     response = chat.send_message(conversation)
 
@@ -65,14 +62,11 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
         )
 
         # Extract the final text response from the model
-        model_response = extract_text(response, user_id)
+        model_response = extract_text(response)
 
     else:
         # If there is no function call, extract the text from the initial response
-        model_response = extract_text(response, user_id)
-
-    # Append the model's response to the local history
-    history.append(f"model: {model_response}")
+        model_response = extract_text(response)
 
     # Store the updated history in GCP bucket
     append_chat_to_gcs(user_id, f"user: {prompt}")
