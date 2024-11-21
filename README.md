@@ -8,7 +8,7 @@ This API supports function calling with chat history stored in GCS, ensuring tha
 2. A GCS bucket.
 3. Roles:
    - `roles/aiplatform.user` at the project level.
-   - `roles/storage.objectAdmin` on the GCS bucket.
+   - `roles/storage.objectUser` on the GCS bucket.
 4. Run `gcloud auth application-default login` to authenticate locally.
 5. Ensure the `.env` file is properly configured with environment variables.
 
