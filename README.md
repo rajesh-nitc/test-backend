@@ -1,6 +1,6 @@
 # function-calling-api
 
-This API supports function calling with chat history stored in GCS, ensuring that each user's conversation is preserved and accessible to the model for the current day. This enables the model to maintain context and deliver more accurate, context-aware and multi-turn responses.
+This API enables function calling with chat history stored in GCS, with the current day's history fed to the model to ensure accurate, context-aware, and multi-turn conversations.
 
 ## Prerequisites
 
