@@ -45,6 +45,6 @@ app.include_router(prompt.router, prefix="/api/v1", tags=["Prompt"])
 
 
 # Health Check Route
-@app.get("/", tags=["Health"])
+@app.get("/health", tags=["Health"])
 async def health_check():
     return {"status": "ok"}

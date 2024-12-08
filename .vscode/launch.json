@@ -14,9 +14,7 @@
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
-            "env": {
-                "ENV": "dev"
-            }
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
