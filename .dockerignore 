@@ -1,20 +1,26 @@
 # Python cache
-__pycache__/
+
+**pycache**/
 
 # Virtual environment
+
 venv/
 
 # Environment variables and local IDE settings
+
 .env
 .vscode/
 
 # Git-related files
+
 .gitattributes
 .gitignore
 .git/
 
 # Pre-commit and configuration files
+
 .pre-commit-config.yaml
 
 # Documentation
+
 README.md

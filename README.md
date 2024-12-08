@@ -12,8 +12,8 @@ This API enables function calling with chat history stored in GCS, with the curr
 4. Run `gcloud auth application-default login` to authenticate locally.
 5. Ensure the `.env` file is properly configured with environment variables.
 
-
 ## Project structure
+
 ```
 tree -a -I "__pycache__|venv|.git"
 .
@@ -51,6 +51,7 @@ tree -a -I "__pycache__|venv|.git"
 ## Run
 
 Locally without Docker:
+
 ```
 # Create a virtual environment
 python3 -m venv venv
@@ -70,6 +71,7 @@ pre-commit install
 ```
 
 Locally with Docker:
+
 ```
 # Build the Docker image
 docker build -t function-calling-api .
@@ -84,6 +86,7 @@ docker run -d -p 8000:8000 \
 ```
 
 ## Test
+
 ```
 curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
   -H 'Content-Type: application/json' \
