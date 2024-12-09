@@ -28,6 +28,9 @@ tree -a -I "__pycache__|venv|.git"
 ├── .gitattributes
 ├── .gitignore
 ├── .pre-commit-config.yaml
+├── .vscode
+│   ├── launch.json
+│   └── settings.json
 ├── Dockerfile
 ├── README.md
 ├── config
