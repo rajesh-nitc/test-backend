@@ -7,9 +7,15 @@ This API enables function calling with chat history stored in GCS, with the curr
 1. A GCP project with Vertex AI API enabled.
 2. A GCS bucket.
 3. Roles:
-   - `roles/aiplatform.user` at the project level.
-   - `roles/storage.objectUser` on the GCS bucket.
-4. Run `gcloud auth application-default login` to authenticate locally.
+
+- `roles/aiplatform.user` at the project level.
+- `roles/storage.objectUser` on the GCS bucket.
+
+4. Run to authenticate locally:
+
+- `gcloud auth application-default login`
+- `gcloud auth application-default set-quota-project prj-bu1-d-sample-base-9208`
+
 5. Ensure the `.env` file is properly configured with environment variables.
 
 ## Project structure
@@ -74,10 +80,10 @@ Locally with Docker:
 
 ```
 # Build the Docker image
-docker build -t function-calling-api .
+sudo docker build -t function-calling-api .
 
 # Run the Docker container
-docker run -d -p 8000:8000 \
+sudo docker run -d -p 8000:8000 \
   -v ~/.config/gcloud/application_default_credentials.json:/tmp/keys/credentials.json \
   -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/credentials.json \
   --env-file .env \

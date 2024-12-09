@@ -33,7 +33,7 @@ app.add_middleware(
 )
 
 # Initialize Vertex AI SDK
-vertexai.init(project=os.getenv("PROJECT_ID"), location=os.getenv("REGION"))
+vertexai.init(project=os.getenv("GOOGLE_CLOUD_PROJECT"), location=os.getenv("REGION"))
 
 # Log startup configuration
 logger.info("FastAPI app starting...")
