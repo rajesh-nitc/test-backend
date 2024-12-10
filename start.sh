@@ -2,6 +2,8 @@
 
 set -e
 
+ENV=${ENV:-dev}
+
 if [ "$ENV" == "dev" ]; then
     echo "Running Gunicorn in development mode."
     # Run Gunicorn with the --reload option for development
