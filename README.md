@@ -18,45 +18,6 @@ This API enables function calling with chat history stored in GCS, with the curr
 
 5. Ensure the `.env` file is properly configured with environment variables.
 
-## Project structure
-
-```
-tree -a -I "__pycache__|venv|.git"
-.
-├── .dockerignore
-├── .env
-├── .gitattributes
-├── .gitignore
-├── .pre-commit-config.yaml
-├── .vscode
-│   ├── launch.json
-│   └── settings.json
-├── Dockerfile
-├── README.md
-├── config
-│   ├── gunicorn.conf.py
-│   └── logging.py
-├── function_declarations
-│   └── spend.py
-├── main.py
-├── models
-│   ├── mock_external_api.py
-│   └── prompt.py
-├── requirements.txt
-├── routers
-│   └── prompt.py
-├── services
-│   ├── mock_external_api.py
-│   └── vertex_ai.py
-├── start.sh
-├── tools
-│   └── spend.py
-└── utils
-    ├── date.py
-    ├── gcs_history.py
-    └── vertex_ai.py
-```
-
 ## Run
 
 Locally without Docker:
