@@ -19,9 +19,6 @@ accesslog = "-"  # Log access requests to stdout (or a file)
 errorlog = "-"  # Log errors to stdout (or a file)
 loglevel = "info"  # Log level for Gunicorn logs
 
-# Dynamically set the number of workers based on the available CPU cores
-workers = workers  # Number of workers equals CPU cores
-
 # Log the decision
 if environment == "dev":
     logger.info("Development environment detected. Using a single worker.")
