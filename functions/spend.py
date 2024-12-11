@@ -2,53 +2,49 @@ from vertexai.generative_models import FunctionDeclaration
 
 from utils.date import get_today_date
 
+# Get today's date and day of the week
 date, day_of_week = get_today_date()
 
+# Define reusable templates for descriptions
+date_info_template = f"""
+Today's date is {date} ({day_of_week}).
+Handle relative terms like "last year" or "this month" by calculating the appropriate start and end dates.
+
+Examples:
+- "How much did I spend on groceries this year?":
+  Start Date: YYYY-01-01, End Date: today's date
+- "What were my expenses in January?":
+  Start Date: YYYY-01-01, End Date: YYYY-01-31
+"""
+
+category_description = """
+Identify the spend category from user queries.
+
+Examples:
+- "What were my expenses this year?": null
+- "How much did I spend on groceries this year?": groceries
+"""
+
+# Define the function declaration
 get_spend_func = FunctionDeclaration(
     name="get_spend_func",
-    description="Call this if user is asking for the spend",
+    description="Call this if the user is asking for spending information.",
     parameters={
         "type": "object",
         "properties": {
             "category": {
                 "type": "string",
                 "enum": ["groceries", "bills", "shopping", "travel", "entertainment"],
-                "description": """
-                You are an AI assistant trained to extract spend category information from user queries.
-                If the user asks, What were my expenses this year?, it means the user is looking for total spend across all spend categories
-                If the user asks, How much did I spend on groceries this year?, extract groceries from the query
-
-                Return the extracted information in the format:
-                null
-                groceries
-                """,
+                "description": category_description,
                 "nullable": True,
             },
             "start_date": {
                 "type": "string",
-                "description": f"""
-                You are an AI assistant trained to extract date-related information from user queries. The user will provide queries, and your task is to identify and extract any date in the query, including relative terms like "last year" or "this month"
-                This is today's date {date} ({day_of_week}) in the format YYYY-MM-DD
-                If the user asks, How much did I spend on groceries this year?, extract the start of year from the today's date
-                If the user asks, What were my expenses in January?, extract the start of month January and year from today's date
-
-                Return the extracted information in the format:
-                YYYY-01-01
-                YYYY-01-01
-                """,
+                "description": date_info_template,
             },
             "end_date": {
                 "type": "string",
-                "description": f"""
-                You are an AI assistant trained to extract date-related information from user queries. The user will provide queries, and your task is to identify and extract any date in the query, including relative terms like "last year" or "this month"
-                This is today's date {date} ({day_of_week}) in the format YYYY-MM-DD
-                If the user asks, How much did I spend on groceries this year?, extract the end date which is today's date
-                If the user asks, What were my expenses in January?, extract the end date of January and year from today's date
-
-                Return the extracted information in the format:
-                YYYY-MM-DD
-                YYYY-01-31
-                """,
+                "description": date_info_template,
             },
         },
         "required": ["start_date", "end_date"],
