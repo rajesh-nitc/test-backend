@@ -2,7 +2,7 @@ import logging
 
 from vertexai.generative_models import GenerativeModel, Part
 
-from services.mock_external_api import fetch_mock_data
+from services.function_registry import FUNCTION_REGISTRY
 from utils.gcs_history import append_chat_to_gcs, load_same_day_history
 from utils.vertex_ai import extract_function_call, extract_text
 
@@ -50,8 +50,11 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
         function_name, function_args = next(iter(function_call.items()))
         logger.info(f"function_name: {function_name}, function_args: {function_args}")
 
-        # Fetch mock data based on the function arguments
-        api_response = fetch_mock_data(function_args)
+        # Fetch response using the appropriate function handler
+        if function_name in FUNCTION_REGISTRY:
+            api_response = FUNCTION_REGISTRY[function_name](function_args)
+        else:
+            raise ValueError(f"Unknown function called: {function_name}")
 
         # Send api response back to the model
         response = chat.send_message(

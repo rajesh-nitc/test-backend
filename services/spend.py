@@ -1,11 +1,11 @@
 import logging
 
-from models.mock_external_api import MockExternalApiRequest
+from models.spend import MockExternalApiRequest
 
 logger = logging.getLogger(__name__)
 
 
-def fetch_mock_data(function_args: dict) -> dict:
+def get_spend(function_args: dict) -> dict:
     """_summary_
 
     Args:
