@@ -25,8 +25,6 @@ def extract_function_call(response: GenerationResponse) -> dict:
     if response.candidates and response.candidates[0].function_calls:
         function_call = response.candidates[0].function_calls[0]
         function_call_dict = {function_call.name: dict(function_call.args)}
-        logger.info(f"function_call_dict: {function_call_dict}")
-
         return function_call_dict
 
     logger.info("No function call found in the model response.")

@@ -5,7 +5,7 @@ from main import app
 client = TestClient(app)
 
 
-def test_prompt_integration():
+def test_prompt():
     """Test a request to the prompt endpoint with a real API call to Gemini."""
     payload = {
         "prompt": "how much did i spend on travel last month",
