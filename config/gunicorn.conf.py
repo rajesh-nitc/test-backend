@@ -5,10 +5,10 @@ from config.logging import setup_logging
 
 setup_logging()
 logger = logging.getLogger(__name__)
-environment = os.getenv("ENV", "dev")  # Default to "dev" if ENV is not set
+environment = os.getenv("ENV", "local")  # Default to "local" if ENV is not set
 
 # Get the number of CPU cores (use it for worker count)
-workers = 1 if environment == "dev" else os.cpu_count()
+workers = 1 if environment == "local" else os.cpu_count()
 
 # Gunicorn configuration settings
 bind = "0.0.0.0:8000"  # Bind to all IPs on port 8000
@@ -20,9 +20,9 @@ errorlog = "-"  # Log errors to stdout (or a file)
 loglevel = "info"  # Log level for Gunicorn logs
 
 # Log the decision
-if environment == "dev":
-    logger.info("Development environment detected. Using a single worker.")
+if environment == "local":
+    logger.info("Local development environment detected. Using a single worker.")
 else:
     logger.info(
-        f"Production environment detected. Using CPU cores for worker count: {workers}"
+        f"Cloud {environment} environment detected. Using CPU cores for worker count: {workers}"
     )

@@ -2,14 +2,14 @@
 
 set -e
 
-ENV=${ENV:-dev}
+ENV=${ENV:-local}
 
-if [ "$ENV" == "dev" ]; then
-    echo "Running Gunicorn in development mode."
-    # Run Gunicorn with the --reload option for development
+if [ "$ENV" == "local" ]; then
+    echo "Running Gunicorn in local mode."
+    # Run Gunicorn with the --reload option for local development
     exec gunicorn main:app --config config/gunicorn.conf.py --reload
 else
-    echo "Running Gunicorn in production mode."
+    echo "Running Gunicorn in cloud $ENV mode."
     # Run Gunicorn without --reload in production
     exec gunicorn main:app --config config/gunicorn.conf.py
 fi

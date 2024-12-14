@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 
 load_dotenv()
-
 import logging
 import os
 
@@ -37,7 +36,7 @@ vertexai.init(project=os.getenv("GOOGLE_CLOUD_PROJECT"), location=os.getenv("REG
 
 # Log startup configuration
 logger.info("FastAPI app starting...")
-logger.info(f"Running in {os.getenv('ENV', 'development')} mode.")
+logger.info(f"Running in {os.getenv('ENV', 'local')} mode.")
 logger.info("App is bound to host: 0.0.0.0, port: 8000")
 
 # Include Routers
