@@ -1,65 +1,56 @@
 # function-calling-api
 
-This API enables function calling with chat history stored in GCS, with the current day's history fed to the model to ensure accurate, context-aware, and multi-turn conversations.
+This API enables function calling with chat history stored in GCS. The current day's history is fed to the model to ensure accurate, context-aware, and multi-turn conversations.
+
+## Features
+1. APIs
+2. RAG *(TODO)*
 
 ## Prerequisites
 
-1. A GCP project with Vertex AI API enabled.
-2. A GCS bucket.
-3. Roles:
+1. A Google Cloud Project with the Vertex AI API enabled.
+2. A GCS bucket to store conversation history.
+3. Appropriate IAM roles:
 
-- `roles/aiplatform.user` at the project level.
-- `roles/storage.objectUser` on the GCS bucket.
+- Vertex AI User on the project.
+- Storage Object User on the GCS bucket.
 
-4. Run to authenticate locally:
+4. Configure the `.env` file with required environment variables.
+5. Authenticate with GCP:
 
-- `gcloud auth application-default login`
-- `gcloud auth application-default set-quota-project prj-bu1-d-sample-base-9208`
-
-5. Ensure the `.env` file is properly configured with environment variables.
+```
+make auth
+```
 
 ## Run
 
-Locally without Docker:
+### Run Locally (Without Docker)
+
+1. Create a virtual environment:
 
 ```
-# Create a virtual environment
 python3 -m venv venv
-
-# Activate the virtual environment
 source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements-test.txt
-
-# Set up pre-commit hooks
-pre-commit install
-
-# Start the application
-./start.sh
-
 ```
 
-Locally with Docker:
+2. Run
 
 ```
-# Build the Docker image
-sudo docker build -t function-calling-api .
-
-# Run the Docker container
-sudo docker run -d -p 8000:8000 \
-  -v ~/.config/gcloud/application_default_credentials.json:/tmp/keys/credentials.json \
-  -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/credentials.json \
-  --env-file .env \
-  function-calling-api
-
+make run
 ```
 
-## Test
+### Run Locally (With Docker)
 
 ```
-curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
-  -H 'Content-Type: application/json' \
-  -d '{ "prompt": "how much did i spend on travel last month", "user_id": "rajesh-nitc" }'
-
+make docker
 ```
+
+## Tests
+
+`make tests`
+
+## Send prompt
+
+To send a test prompt to the api:
+
+`make prompt`
