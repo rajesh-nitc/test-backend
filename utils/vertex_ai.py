@@ -52,19 +52,19 @@ def get_model() -> GenerativeModel:
     Returns a configured GenerativeModel object.
 
     Raises:
-        ValueError: If the MODEL_NAME environment variable is not set.
+        ValueError: If the MODEL_LLM environment variable is not set.
 
     Returns:
         GenerativeModel: A configured generative model instance.
     """
-    model_name = os.getenv("MODEL_NAME")
-    if not model_name:
-        raise ValueError("MODEL_NAME environment variable is not set.")
+    MODEL_LLM = os.getenv("MODEL_LLM")
+    if not MODEL_LLM:
+        raise ValueError("MODEL_LLM environment variable is not set.")
 
-    logger.info(f"Initializing GenerativeModel with model_name: {model_name}")
+    logger.info(f"Initializing GenerativeModel with MODEL_LLM: {MODEL_LLM}")
 
     return GenerativeModel(
-        model_name,
+        MODEL_LLM,
         generation_config=GenerationConfig(temperature=0, candidate_count=1),
         tools=[spend_tool],
     )

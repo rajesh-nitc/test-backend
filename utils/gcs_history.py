@@ -5,7 +5,7 @@ from google.cloud import storage
 
 from utils.date import get_today_date
 
-BUCKET_NAME = os.getenv("BUCKET_NAME")
+BUCKET_CHAT = os.getenv("BUCKET_CHAT")
 CHAT_HISTORY_FOLDER = os.getenv("CHAT_HISTORY_FOLDER")
 
 
@@ -32,7 +32,7 @@ def load_same_day_history(user_id: str) -> list:
         list: List of chat history lines, or an empty list if no history exists.
     """
     client = get_gcs_client()
-    bucket = client.bucket(BUCKET_NAME)
+    bucket = client.bucket(BUCKET_CHAT)
     file_path = get_chat_history_file_path(user_id)
 
     blob = bucket.blob(file_path)
@@ -51,7 +51,7 @@ def append_chat_to_gcs(user_id: str, message: str):
         message (str): Message to append to the history.
     """
     client = get_gcs_client()
-    bucket = client.bucket(BUCKET_NAME)
+    bucket = client.bucket(BUCKET_CHAT)
     file_path = get_chat_history_file_path(user_id)
 
     blob = bucket.blob(file_path)

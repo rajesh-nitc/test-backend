@@ -10,9 +10,12 @@
     "source.organizeImports": "always"
   },
   "python.testing.pytestEnabled": true,
-  "python.testing.pytestArgs": [
-    "tests",
-    "-s"
-  ],
+  "python.testing.pytestArgs": ["tests", "-s"],
   "python.testing.autoTestDiscoverOnSaveEnabled": true,
+  "search.exclude": {
+    "**/venv": true,
+    "**/__pycache__": true,
+    "**/.git": true,
+    "**/.vscode": true
+  }
 }

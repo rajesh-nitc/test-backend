@@ -21,7 +21,7 @@ docker:
 	--name function-calling-api \
 	function-calling-api
 
-docker-clean:
+docker_clean:
 	sudo docker stop function-calling-api
 	sudo docker rm function-calling-api
 
@@ -34,3 +34,11 @@ prompt:
 	curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
   	-H 'Content-Type: application/json' \
   	-d '{ "prompt": "how much did i spend on travel last month", "user_id": "rajesh-nitc" }'
+
+# Generate embeddings
+generate_embeddings:
+	python3 helpers/generate_embeddings.py
+
+# Query index
+query_index:
+	python3 helpers/query_index.py

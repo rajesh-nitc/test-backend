@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 # Initialize the app
 app = FastAPI(
     title="function-calling-api",
-    description=f"function calling with {os.getenv("MODEL_NAME")} model.",
+    description=f"function calling with {os.getenv("MODEL_LLM")} model.",
     version="1.0.0",
 )
 

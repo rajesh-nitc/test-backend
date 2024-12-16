@@ -1,12 +1,15 @@
 # function-calling-api
 
-This API enables function calling with chat history stored in GCS. The current day's history is fed to the model to ensure accurate, context-aware, and multi-turn conversations.
+This API supports function calling with chat history stored in GCS. The current day's history is fed to the model to ensure accurate, context-aware, and multi-turn conversations.
 
 ## Features
-1. APIs
-2. RAG *(TODO)*
 
-## Prerequisites
+1. APIs
+2. RAG _(In Progress)_
+
+## Use Case 1: APIs
+
+### Prerequisites
 
 1. A Google Cloud Project with the Vertex AI API enabled.
 2. A GCS bucket to store conversation history.
@@ -22,35 +25,36 @@ This API enables function calling with chat history stored in GCS. The current d
 make auth
 ```
 
-## Run
-
-### Run Locally (Without Docker)
-
-1. Create a virtual environment:
-
+### Run
 ```
+# Run Locally (Without Docker)
 python3 -m venv venv
 source venv/bin/activate
-```
-
-2. Run
-
-```
 make run
-```
 
-### Run Locally (With Docker)
-
-```
+# Run Locally (With Docker)
 make docker
+
+# Tests
+make tests
+
+# Send prompt
+make prompt
 ```
 
-## Tests
+## Use Case 2: RAG
 
-`make tests`
+### Prerequisites
 
-## Send prompt
+1. Generate embeddings
 
-To send a test prompt to the api:
+```
+make generate_embeddings
+```
 
-`make prompt`
+2. Create Vertex Search Index Endpoint on the console
+3. Configure the `.env` file with required environment variables.
+4. Query Index Endpoint
+```
+make query_index
+```
