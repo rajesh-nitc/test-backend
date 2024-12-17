@@ -48,6 +48,6 @@ make tests
 
 ```
 make prompt_api # how much did i spend on groceries this year
-make prompt_search # suggest couple of games like Uno
+make prompt_search # suggest some toys over 2500
 
 ```
