@@ -38,12 +38,8 @@ prompt_api:
 prompt_search:
 	curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
   	-H 'Content-Type: application/json' \
-  	-d '{ "prompt": "suggest couple of games like Uno", "user_id": "rajesh-nitc" }'
+  	-d '{ "prompt": "suggest some toys over 2500", "user_id": "rajesh-nitc" }'
 
 # Generate embeddings
 generate_embeddings:
 	python3 helpers/generate_embeddings.py
-
-# Query index
-query_index:
-	python3 helpers/query_index.py

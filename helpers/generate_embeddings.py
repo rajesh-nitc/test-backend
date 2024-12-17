@@ -41,13 +41,18 @@ def split_product_descriptions(df: pd.DataFrame):
     for _, row in df.iterrows():
         product_name = row["product_name"]
         desc = row["description"]
+        list_price = row["list_price"]
         splits = text_splitter.create_documents([desc])
         for s in splits:
-            r = {
-                "product_name": product_name,
+            # Add numeric restricts and other metadata
+            chunk = {
+                "id": product_name,
                 "content": s.page_content,
+                "numeric_restricts": [
+                    {"namespace": "price", "value_float": list_price}
+                ],
             }
-            chunked.append(r)
+            chunked.append(chunk)
     return chunked
 
 
@@ -67,8 +72,6 @@ def generate_vector_embeddings(df: pd.DataFrame, batch_size=5):
 
     product_embeddings = pd.DataFrame(chunked)
 
-    # Rename the column
-    product_embeddings = product_embeddings.rename(columns={"product_name": "id"})
     print(product_embeddings.head(25))
 
     # Save as JSONL to GCS

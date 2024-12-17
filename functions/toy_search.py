@@ -4,9 +4,24 @@ top_k_description = """
 Identify number of toys, games or products from user queries.
 
 Examples:
-- "can you suggest couple of toys for a 7 year old?": 2
-- "what are the top five products for kids?: 5
-- "suggest some good toys": default to 5
+- "can you suggest some toys for a 7 year old?": default to 5
+- "top five indoor toys for kids?: 5
+"""
+
+operator_description = """
+Identify the operator
+
+Examples:
+- "indoor toys under $25": LESS
+- "bicyles over $25: GREATER
+"""
+
+price_description = """
+Identify the price from user queries.
+
+Examples:
+- "indoor toys under $25": 25
+- "bicyles over ten dollars: 10
 """
 
 # Define the function declaration
@@ -23,6 +38,17 @@ get_toys_func = FunctionDeclaration(
             "top_k": {
                 "type": "integer",
                 "description": top_k_description,
+            },
+            "operator": {
+                "type": "string",
+                "enum": ["LESS", "LESS_EQUAL", "EQUAL", "GREATER_EQUAL", "GREATER"],
+                "description": operator_description,
+                "nullable": True,
+            },
+            "price": {
+                "type": "integer",
+                "description": price_description,
+                "nullable": True,
             },
         },
         "required": ["query", "top_k"],

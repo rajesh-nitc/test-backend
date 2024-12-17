@@ -42,9 +42,6 @@ make docker
 # Tests
 make tests
 
-# Query index
-make query_index
-
 ```
 
 ## Test
