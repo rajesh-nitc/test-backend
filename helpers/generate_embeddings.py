@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 
 load_dotenv()
-import logging
 import os
 
 import pandas as pd
@@ -10,16 +9,16 @@ from google.cloud import storage
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
 
-logger = logging.getLogger(__name__)
-
 file_path = os.path.join(os.path.dirname(__file__), "retail_toy_dataset.csv")
-logger.info(file_path)
+print(file_path)
 REGION = os.getenv("REGION")
 GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
 MODEL_EMB = os.getenv("MODEL_EMB")
 BUCKET_EMB = os.getenv("BUCKET_EMB")
-blob_name = "product_embeddings.json"
-DIMENSIONALITY = os.getenv("DIMENSIONALITY")
+DIMENSIONALITY = int(os.getenv("DIMENSIONALITY"))  # type: ignore
+TASK = os.getenv("TASK")
+BLOB_NAME = os.getenv("BLOB_NAME")
+DF_HEAD = int(os.getenv("DF_HEAD"))  # type: ignore
 
 
 def load_dataset(location) -> pd.DataFrame:
@@ -27,7 +26,7 @@ def load_dataset(location) -> pd.DataFrame:
     df = pd.read_csv(location)
     df = df.loc[:, ["product_id", "product_name", "description", "list_price"]]
     df = df.dropna()
-    return df.head()
+    return df.head(DF_HEAD)
 
 
 def split_product_descriptions(df: pd.DataFrame):
@@ -40,11 +39,14 @@ def split_product_descriptions(df: pd.DataFrame):
     )
     chunked = []
     for _, row in df.iterrows():
-        product_id = row["product_id"]
+        product_name = row["product_name"]
         desc = row["description"]
         splits = text_splitter.create_documents([desc])
         for s in splits:
-            r = {"product_id": product_id, "content": s.page_content}
+            r = {
+                "product_name": product_name,
+                "content": s.page_content,
+            }
             chunked.append(r)
     return chunked
 
@@ -52,28 +54,25 @@ def split_product_descriptions(df: pd.DataFrame):
 def generate_vector_embeddings(df: pd.DataFrame, batch_size=5):
     """Generate vector embeddings for each chunk of text and save to GCS."""
     vertexai.init(project=GOOGLE_CLOUD_PROJECT, location=REGION)
-    task = "RETRIEVAL_DOCUMENT"
     model = TextEmbeddingModel.from_pretrained(MODEL_EMB)  # type: ignore
     chunked = split_product_descriptions(df)
-    logger.info(f"chunked: {chunked}")
+    print(f"chunked: {chunked}")
 
     for i in range(0, len(chunked), batch_size):
         texts = [x["content"] for x in chunked[i : i + batch_size]]
-        logger.info(f"texts: {texts}")
-        inputs = [TextEmbeddingInput(text, task) for text in texts]
-        kwargs = dict(output_dimensionality=DIMENSIONALITY) if DIMENSIONALITY else {}
-        embeddings = model.get_embeddings(inputs, **kwargs)  # type: ignore
+        inputs = [TextEmbeddingInput(text, TASK) for text in texts]
+        embeddings = model.get_embeddings(inputs, auto_truncate=False, output_dimensionality=DIMENSIONALITY)  # type: ignore
         for x, e in zip(chunked[i : i + batch_size], embeddings):
             x["embedding"] = e.values
 
     product_embeddings = pd.DataFrame(chunked)
 
     # Rename the column
-    product_embeddings = product_embeddings.rename(columns={"product_id": "id"})
-    logger.info(product_embeddings.head(10))
+    product_embeddings = product_embeddings.rename(columns={"product_name": "id"})
+    print(product_embeddings.head(25))
 
     # Save as JSONL to GCS
-    save_to_gcs_as_json(product_embeddings, BUCKET_EMB, blob_name)  # type: ignore
+    save_to_gcs_as_json(product_embeddings, BUCKET_EMB, BLOB_NAME)  # type: ignore
 
     return product_embeddings
 
@@ -99,7 +98,7 @@ def save_to_gcs_as_json(dataframe: pd.DataFrame, BUCKET_EMB: str, blob_name: str
 
     # Upload JSON string to GCS
     blob.upload_from_string(json_string, content_type="application/json")
-    logger.info(f"File saved to GCS: gs://{BUCKET_EMB}/{blob_name}")
+    print(f"File saved to GCS: gs://{BUCKET_EMB}/{blob_name}")
 
 
 def main():

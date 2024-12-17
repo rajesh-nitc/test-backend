@@ -4,28 +4,32 @@ This API supports function calling with chat history stored in GCS. The current 
 
 ## Features
 
-1. APIs
-2. RAG _(In Progress)_
+1. Generation with APIs
+2. Generation with Vector Search
 
-## Use Case 1: APIs
-
-### Prerequisites
+## Prerequisites
 
 1. A Google Cloud Project with the Vertex AI API enabled.
-2. A GCS bucket to store conversation history.
-3. Appropriate IAM roles:
-
-- Vertex AI User on the project.
-- Storage Object User on the GCS bucket.
-
-4. Configure the `.env` file with required environment variables.
-5. Authenticate with GCP:
+2. Appropriate IAM roles.
+3. GCS buckets to store conversation history and embeddings.
+4. Configure the `.env` file
+5. Authenticate locally with GCP:
 
 ```
 make auth
 ```
 
-### Run
+6. Generate embeddings:
+
+```
+make generate_embeddings
+```
+
+7. Create and deploy Vertex Search Index Endpoint on the console
+8. Update `.env` with Index Endpoint related variables
+
+## Run
+
 ```
 # Run Locally (Without Docker)
 python3 -m venv venv
@@ -38,23 +42,15 @@ make docker
 # Tests
 make tests
 
-# Send prompt
-make prompt
-```
-
-## Use Case 2: RAG
-
-### Prerequisites
-
-1. Generate embeddings
-
-```
-make generate_embeddings
-```
-
-2. Create Vertex Search Index Endpoint on the console
-3. Configure the `.env` file with required environment variables.
-4. Query Index Endpoint
-```
+# Query index
 make query_index
+
+```
+
+## Test
+
+```
+make prompt_api # how much did i spend on groceries this year
+make prompt_search # suggest couple of games like Uno
+
 ```

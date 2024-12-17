@@ -7,7 +7,7 @@ from vertexai.generative_models import (
     GenerativeModel,
 )
 
-from tools.spend import spend_tool
+from tools.tool import tool
 
 logger = logging.getLogger(__name__)
 
@@ -66,5 +66,5 @@ def get_model() -> GenerativeModel:
     return GenerativeModel(
         MODEL_LLM,
         generation_config=GenerationConfig(temperature=0, candidate_count=1),
-        tools=[spend_tool],
+        tools=[tool],
     )

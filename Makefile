@@ -30,10 +30,15 @@ tests:
 	pytest -s
 
 # Send a prompt request using cURL
-prompt:
+prompt_api:
 	curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
   	-H 'Content-Type: application/json' \
-  	-d '{ "prompt": "how much did i spend on travel last month", "user_id": "rajesh-nitc" }'
+  	-d '{ "prompt": "how much did i spend on groceries this year", "user_id": "rajesh-nitc" }'
+
+prompt_search:
+	curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
+  	-H 'Content-Type: application/json' \
+  	-d '{ "prompt": "suggest couple of games like Uno", "user_id": "rajesh-nitc" }'
 
 # Generate embeddings
 generate_embeddings:

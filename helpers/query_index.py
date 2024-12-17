@@ -1,32 +1,30 @@
+import ast
+
 from dotenv import load_dotenv
 
 load_dotenv()
-import logging
 import os
 
 import vertexai
 from google.cloud import aiplatform_v1
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
 
-logger = logging.getLogger(__name__)
-
-texts = ["what are some outdoor toys for 10 year old kid"]
-
+query = "games like Uno"
+query_list = [query]
+print(f"query: {query}, Type: {type(query_list)}")
 REGION = os.getenv("REGION")
 GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
 MODEL_EMB = os.getenv("MODEL_EMB")
-
-# Set variables for the current deployed index.
 API_ENDPOINT = os.getenv("API_ENDPOINT")
 INDEX_ENDPOINT = os.getenv("INDEX_ENDPOINT")
 DEPLOYED_INDEX_ID = os.getenv("DEPLOYED_INDEX_ID")
-DIMENSIONALITY = os.getenv("DIMENSIONALITY")
+DIMENSIONALITY = int(os.getenv("DIMENSIONALITY"))  # type: ignore
+TASK = os.getenv("TASK")
 
 vertexai.init(project=GOOGLE_CLOUD_PROJECT, location=REGION)
-task = "RETRIEVAL_DOCUMENT"
 model = TextEmbeddingModel.from_pretrained(MODEL_EMB)  # type: ignore
 
-inputs = [TextEmbeddingInput(text, task) for text in texts]
+inputs = [TextEmbeddingInput(text, TASK) for text in query_list]  # type: ignore
 kwargs = dict(output_dimensionality=DIMENSIONALITY) if DIMENSIONALITY else {}
 embeddings = model.get_embeddings(inputs, **kwargs)  # type: ignore
 feature_vector = [embedding.values for embedding in embeddings]
@@ -57,7 +55,7 @@ request = aiplatform_v1.FindNeighborsRequest(
 response = vector_search_client.find_neighbors(request)
 
 # Handle the response
-logger.info(response)
+print(response)
 
 
 # nearest_neighbors {

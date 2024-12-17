@@ -1,6 +1,6 @@
 import logging
 
-from models.spend import MockExternalApiRequest
+from models.spend_api import MockExternalApiRequest
 
 logger = logging.getLogger(__name__)
 

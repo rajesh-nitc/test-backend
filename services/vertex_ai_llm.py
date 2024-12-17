@@ -4,7 +4,7 @@ from vertexai.generative_models import GenerativeModel, Part
 
 from services.function_registry import FUNCTION_REGISTRY
 from utils.gcs_history import append_chat_to_gcs, load_same_day_history
-from utils.vertex_ai import extract_function_call, extract_text
+from utils.vertex_ai_llm import extract_function_call, extract_text
 
 logger = logging.getLogger(__name__)
 
