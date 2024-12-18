@@ -1,10 +1,12 @@
+import os
+
 from vertexai.generative_models import FunctionDeclaration
 
-top_k_description = """
+top_k_description = f"""
 Identify number of toys, games or products from user queries.
 
 Examples:
-- "can you suggest some toys for a 7 year old?": default to 5
+- "can you suggest some toys for a 7 year old?": default to {os.getenv("DEFAULT_TOP_K")}
 - "top five indoor toys for kids?: 5
 """
 

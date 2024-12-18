@@ -22,8 +22,7 @@ def get_vector_index_data(function_args: dict):
     if not query:
         raise ValueError("Missing required parameter: 'query'")
 
-    # Extract top_k with a default value of 5
-    top_k = function_args.get("top_k", 5)
+    top_k = function_args.get("top_k")
     op = function_args.get("operator")
     price = function_args.get("price")
 
@@ -54,7 +53,7 @@ def get_vector_index_data(function_args: dict):
         response = index_endpoint.find_neighbors(
             deployed_index_id=DEPLOYED_INDEX_ID,  # type: ignore
             queries=[feature_vector[0]],
-            num_neighbors=top_k,
+            num_neighbors=top_k,  # type: ignore
             numeric_filter=numeric_filter,  # type: ignore
         )
     except Exception as e:
