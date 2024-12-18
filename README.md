@@ -22,7 +22,7 @@ make auth
 6. Generate embeddings:
 
 ```
-make generate_embeddings
+make embeddings
 ```
 
 7. Create and deploy Vertex Search Index Endpoint on the console
@@ -38,9 +38,6 @@ make run
 
 # Run Locally (With Docker)
 make docker
-
-# Tests
-make tests
 
 ```
 

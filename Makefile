@@ -36,5 +36,9 @@ prompt:
   	-d '{ "prompt": "$(PROMPT)", "user_id": "rajesh-nitc" }'
 
 # Generate embeddings
-generate_embeddings:
+embeddings:
 	python3 helpers/generate_embeddings.py
+
+# Create notebook from py:
+notebook:
+	jupytext --to notebook helpers/generate_embeddings.py
