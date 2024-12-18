@@ -33,12 +33,12 @@ tests:
 prompt_api:
 	curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
   	-H 'Content-Type: application/json' \
-  	-d '{ "prompt": "how much did i spend on groceries this year", "user_id": "rajesh-nitc" }'
+  	-d '{ "prompt": "how much did i spend on entertainment this year?", "user_id": "rajesh-nitc" }'
 
 prompt_search:
 	curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
   	-H 'Content-Type: application/json' \
-  	-d '{ "prompt": "suggest some toys over 2500", "user_id": "rajesh-nitc" }'
+  	-d '{ "prompt": "suggest toys over $$2500?", "user_id": "rajesh-nitc" }'
 
 # Generate embeddings
 generate_embeddings:
