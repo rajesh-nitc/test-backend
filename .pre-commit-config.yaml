@@ -8,6 +8,14 @@ repos:
       - id: debug-statements
       - id: end-of-file-fixer
       - id: trailing-whitespace
+      - id: requirements-txt-fixer
+      - id: check-added-large-files
+      - id: check-json
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: sort-simple-yaml
+      - id: detect-private-key
 
   # Black for code formatting
   - repo: https://github.com/psf/black
