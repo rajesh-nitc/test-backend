@@ -47,7 +47,7 @@ make tests
 ## Test
 
 ```
-make prompt_api # how much did i spend on groceries this year
-make prompt_search # suggest some toys over 2500
+make prompt PROMPT='how much did i spend on entertainment this year?'
+make prompt PROMPT='suggest toys over $$2500?'
 
 ```
