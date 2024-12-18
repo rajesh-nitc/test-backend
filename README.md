@@ -45,6 +45,6 @@ make docker
 
 ```
 make prompt PROMPT='how much did i spend on entertainment this year?'
-make prompt PROMPT='suggest indoor toys over $$2500?'
+make prompt PROMPT='suggest toys over $$2500?'
 
 ```
