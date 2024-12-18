@@ -44,4 +44,23 @@ repos:
     rev: v1.13.0
     hooks:
       - id: mypy
-        args: ["--ignore-missing-imports","--explicit-package-bases"]
+        args: ["--ignore-missing-imports", "--explicit-package-bases"]
+
+  # PyUpgrade (use asottile’s official repo, it works fine as is)
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.1
+    hooks:
+      - id: pyupgrade
+        args: ["--py311-plus"]
+
+  # ShellCheck (use pre-commit mirror)
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+
+  # YamlLint for stricter YAML validation
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint

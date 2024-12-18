@@ -1,8 +1,7 @@
 import datetime
-from typing import Tuple
 
 
-def get_today_date() -> Tuple[datetime.date, str]:
+def get_today_date() -> tuple[datetime.date, str]:
     """_summary_
 
     Returns:
