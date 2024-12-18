@@ -1,11 +1,11 @@
-venv/
-**pycache**/
 .env
-.vscode/
+.git/
 .gitattributes
 .gitignore
-.git/
 .pre-commit-config.yaml
+.vscode/
+**pycache**/
+helpers/
 README.md
 tests/
-helpers/
+venv/

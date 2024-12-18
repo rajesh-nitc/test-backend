@@ -8,7 +8,6 @@ from google.cloud.aiplatform.matching_engine.matching_engine_index_endpoint impo
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
 
 MODEL_EMB = os.getenv("MODEL_EMB")
-API_ENDPOINT = os.getenv("API_ENDPOINT")
 INDEX_ENDPOINT = os.getenv("INDEX_ENDPOINT")
 DEPLOYED_INDEX_ID = os.getenv("DEPLOYED_INDEX_ID")
 DIMENSIONALITY = int(os.getenv("DIMENSIONALITY"))  # type: ignore
