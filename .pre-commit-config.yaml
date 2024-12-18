@@ -8,14 +8,23 @@ repos:
       - id: debug-statements
       - id: end-of-file-fixer
       - id: trailing-whitespace
-      - id: requirements-txt-fixer
       - id: check-added-large-files
       - id: check-json
       - id: check-ast
       - id: check-case-conflict
       - id: check-docstring-first
-      - id: sort-simple-yaml
       - id: detect-private-key
+      - id: check-builtin-literals
+      - id: check-shebang-scripts-are-executable
+      - id: file-contents-sorter
+        files: ^(requirements\.txt|requirements-test\.txt|\.env|\.gitignore|\.dockerignore)$
+
+  # Removes unused imports and unused variables
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.2.1
+    hooks:
+      - id: autoflake
+        args: ["--remove-unused-variables", "--remove-all-unused-imports"]
 
   # Black for code formatting
   - repo: https://github.com/psf/black
@@ -45,22 +54,24 @@ repos:
     hooks:
       - id: mypy
         args: ["--ignore-missing-imports", "--explicit-package-bases"]
+        exclude: tests/
 
-  # PyUpgrade (use asottile’s official repo, it works fine as is)
+  # PyUpgrade
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.19.1
     hooks:
       - id: pyupgrade
         args: ["--py311-plus"]
 
-  # ShellCheck (use pre-commit mirror)
+  # ShellCheck
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
 
-  # YamlLint for stricter YAML validation
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
+  # Common security issues
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.0
     hooks:
-      - id: yamllint
+      - id: bandit
+        exclude: tests/
