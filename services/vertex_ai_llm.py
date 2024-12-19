@@ -45,6 +45,8 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
 
     # Extract the last two turns (user-model pairs)
     last_two_turns = extract_last_two_turns(history)  # type: ignore
+
+    # Log Last two turns
     logger.info(f"Last two turns: {last_two_turns}")
 
     # Combine elements in last_two_turns list into single string, with each element separated by newline char
@@ -52,6 +54,8 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
 
     # Add the current user prompt to the conversation
     conversation += f"\n{prompt}"
+
+    # Log Conversation
     logger.info(f"Conversation: {conversation}")
 
     # Start a new chat session with the model
