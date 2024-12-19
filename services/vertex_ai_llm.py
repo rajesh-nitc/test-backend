@@ -4,7 +4,11 @@ from vertexai.generative_models import GenerativeModel, Part
 
 from config.settings import settings
 from services.function_registry import FUNCTION_REGISTRY
-from utils.gcs_history import append_chat_to_gcs, load_same_day_history
+from utils.gcs_history import (
+    append_chat_to_gcs,
+    extract_last_two_turns,
+    load_same_day_history,
+)
 from utils.vertex_ai_llm import (
     count_tokens_with_tiktoken,
     extract_function_call,
@@ -39,18 +43,22 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
     # Retrieve or initialize the user's chat history for the same day
     history = load_same_day_history(user_id)
 
-    # Start a new chat session with the model
-    chat = model.start_chat()
+    # Extract the last two turns (user-model pairs) from history
+    last_two_turns = extract_last_two_turns(history)  # type: ignore
+    logger.info(f"Last two turns: {last_two_turns}")
 
     # Construct the full conversation context from the history
-    conversation = "\n".join(history)
-    if conversation:
-        conversation += "\n"  # Add a newline if there's existing history
+    conversation = "\n".join(last_two_turns)
+    # if conversation:
+    #     conversation += "\n"  # Add a newline if there's existing history
 
     # Add the current user prompt to the conversation
-    conversation += f"user: {prompt}\nmodel:"
+    conversation += f"\n{prompt}"
 
     logger.info(f"Conversation: {conversation}")
+
+    # Start a new chat session with the model
+    chat = model.start_chat()
 
     # Send the conversation history and new prompt to the model
     response = chat.send_message(conversation)

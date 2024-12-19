@@ -16,6 +16,8 @@ Examples:
   Start Date: YYYY-01-01, End Date: today's date
 - "What were my expenses in January?":
   Start Date: YYYY-01-01, End Date: YYYY-01-31
+- "spend last year":
+  Start Date: YYYY-01-01, End Date: YYYY-12-31
     """,
     "category": """
 Identify the spend category from user queries.

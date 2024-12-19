@@ -63,3 +63,33 @@ def append_chat_to_gcs(user_id: str, message: str):
 
     # Upload the updated chat history
     blob.upload_from_string(new_data, content_type="text/plain")
+
+
+def extract_last_two_turns(history: list) -> list:
+    """
+    Extracts the last two user-model exchange pairs from the chat history, ignoring blank lines.
+
+    Args:
+        history (list): The chat history as a list of lines (each line being a user or model turn).
+
+    Returns:
+        list: The last two user-model exchanges in chronological order, excluding blank lines.
+    """
+    if not history:
+        return []
+
+    # Initialize a list to store the last two exchanges
+    turns = []
+
+    # We want to loop backwards and collect pairs (user, model), skipping blank lines
+    for i in range(len(history) - 1, -1, -1):
+        line = history[i].strip()  # Remove leading/trailing whitespace
+        if line:  # Ignore blank lines
+            turns.append(line)
+
+        # If we've added 4 valid lines (2 user-model pairs), stop collecting
+        if len(turns) == 4:
+            break
+
+    # Reverse the turns list to maintain the correct chronological order (oldest first)
+    return turns[::-1]

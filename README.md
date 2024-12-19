@@ -1,6 +1,6 @@
 # genai-function-calling-api
 
-This API supports function calling with chat history stored in GCS. The current day's history is fed to the model to ensure context-aware and multi-turn responses.
+This API supports function calling with chat history stored in GCS. The last two turns of conversation are retrieved and fed to the model to ensure context-aware, multi-turn responses.
 
 ## Features
 
