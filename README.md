@@ -4,8 +4,8 @@ This API supports function calling with chat history stored in GCS. The current 
 
 ## Features
 
-1. Generation with APIs
-2. Generation with Vector Search
+1. Grounded generation with APIs
+2. Grounded generation with Vector Search
 
 ## Prerequisites
 
