@@ -5,8 +5,9 @@ from utils.date import get_today_date
 # Get today's date and day of the week
 date, day_of_week = get_today_date()
 
-# Define reusable templates for descriptions
-date_info_template = f"""
+DESCRIPTIONS = {
+    "date": f"""
+Identify the date from user queries.
 Today's date is {date} ({day_of_week}).
 Handle relative terms like "last year" or "this month" by calculating the appropriate start and end dates.
 
@@ -15,15 +16,14 @@ Examples:
   Start Date: YYYY-01-01, End Date: today's date
 - "What were my expenses in January?":
   Start Date: YYYY-01-01, End Date: YYYY-01-31
-"""
-
-category_description = """
+    """,
+    "category": """
 Identify the spend category from user queries.
-
 Examples:
 - "What were my expenses this year?": null
 - "How much did I spend on groceries this year?": groceries
-"""
+    """,
+}
 
 # Define the function declaration
 get_spend_func = FunctionDeclaration(
@@ -35,16 +35,16 @@ get_spend_func = FunctionDeclaration(
             "category": {
                 "type": "string",
                 "enum": ["groceries", "bills", "shopping", "travel", "entertainment"],
-                "description": category_description,
+                "description": DESCRIPTIONS["category"],
                 "nullable": True,
             },
             "start_date": {
                 "type": "string",
-                "description": date_info_template,
+                "description": DESCRIPTIONS["date"],
             },
             "end_date": {
                 "type": "string",
-                "description": date_info_template,
+                "description": DESCRIPTIONS["date"],
             },
         },
         "required": ["start_date", "end_date"],

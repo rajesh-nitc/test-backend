@@ -5,7 +5,7 @@ from models.prompt import PromptRequest, PromptResponse
 from services.vertex_ai_llm import generate_model_response
 from utils.vertex_ai_llm import get_model
 
-router = APIRouter()
+router: APIRouter = APIRouter()
 
 
 @router.post("/prompt", response_model=PromptResponse)

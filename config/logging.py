@@ -1,7 +1,4 @@
-import os
 from logging.config import dictConfig
-
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
 LOGGING_CONFIG = {
     "version": 1,
@@ -18,18 +15,20 @@ LOGGING_CONFIG = {
         "console": {
             "class": "logging.StreamHandler",
             "formatter": "detailed",
-            "level": LOG_LEVEL,
+            "level": "INFO",  # Default level, will be updated later
         },
     },
     "loggers": {
         "": {
             "handlers": ["console"],
-            "level": LOG_LEVEL,
+            "level": "INFO",  # Default level, will be updated later
             "propagate": False,
         },
     },
 }
 
 
-def setup_logging():
+def setup_logging(log_level="INFO"):
+    LOGGING_CONFIG["handlers"]["console"]["level"] = log_level
+    LOGGING_CONFIG["loggers"][""]["level"] = log_level
     dictConfig(LOGGING_CONFIG)

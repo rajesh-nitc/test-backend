@@ -1,11 +1,10 @@
-import os
-
 from google.cloud import storage
 
+from config.settings import settings
 from utils.date import get_today_date
 
-BUCKET_CHAT = os.getenv("BUCKET_CHAT")
-CHAT_HISTORY_FOLDER = os.getenv("CHAT_HISTORY_FOLDER")
+BUCKET_CHAT = settings.bucket_chat
+CHAT_HISTORY_FOLDER = settings.chat_history_folder
 
 
 def get_gcs_client():

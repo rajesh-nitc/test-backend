@@ -1,30 +1,36 @@
-import os
-
 from vertexai.generative_models import FunctionDeclaration
 
-top_k_description = f"""
-Identify number of toys, games or products from user queries.
+from config.settings import settings
+
+DESCRIPTIONS = {
+    "top_k": f"""
+Identify number of toys or games from user queries.
 
 Examples:
-- "can you suggest some toys for a 7 year old?": default to {os.getenv("DEFAULT_TOP_K")}
-- "top five indoor toys for kids?: 5
-"""
-
-operator_description = """
-Identify the operator
+- "suggest toys": default to {settings.default_top_k} if not provided by user
+- "recommend five indoor toys: 5
+""",
+    "operator": """
+Identify the operator.
 
 Examples:
 - "indoor toys under $25": LESS
-- "bicyles over $25: GREATER
-"""
-
-price_description = """
+- "bicycles over $25: GREATER
+""",
+    "price": """
 Identify the price from user queries.
 
 Examples:
 - "indoor toys under $25": 25
-- "bicyles over ten dollars: 10
-"""
+- "bicycles over ten dollars: 10
+""",
+    "query": """
+Search query for the toy or game recommendations.
+Examples:
+- "suggest toys for a 7-year-old girl"
+- "recommend five indoor toys"
+""",
+}
 
 # Define the function declaration
 get_toys_func = FunctionDeclaration(
@@ -35,24 +41,25 @@ get_toys_func = FunctionDeclaration(
         "properties": {
             "query": {
                 "type": "string",
-                "description": "Search query",
+                "description": DESCRIPTIONS["query"],
             },
             "top_k": {
                 "type": "integer",
-                "description": top_k_description,
+                "description": DESCRIPTIONS["top_k"],
+                "nullable": True,
             },
             "operator": {
                 "type": "string",
                 "enum": ["LESS", "LESS_EQUAL", "EQUAL", "GREATER_EQUAL", "GREATER"],
-                "description": operator_description,
+                "description": DESCRIPTIONS["operator"],
                 "nullable": True,
             },
             "price": {
                 "type": "integer",
-                "description": price_description,
+                "description": DESCRIPTIONS["price"],
                 "nullable": True,
             },
         },
-        "required": ["query", "top_k"],
+        "required": ["query"],
     },
 )

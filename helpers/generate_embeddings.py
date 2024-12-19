@@ -9,16 +9,18 @@ from google.cloud import storage
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
 
+from config.settings import settings
+
 file_path = os.path.join(os.path.dirname(__file__), "retail_toy_dataset.csv")
 print(file_path)
-REGION = os.getenv("REGION")
-GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
-MODEL_EMB = os.getenv("MODEL_EMB")
-BUCKET_EMB = os.getenv("BUCKET_EMB")
-DIMENSIONALITY = int(os.getenv("DIMENSIONALITY"))  # type: ignore
-TASK = os.getenv("TASK")
-BLOB_NAME = os.getenv("BLOB_NAME")
-DF_HEAD = int(os.getenv("DF_HEAD"))  # type: ignore
+REGION = settings.region
+GOOGLE_CLOUD_PROJECT = settings.google_cloud_project
+MODEL_EMB = settings.model_emb
+BUCKET_EMB = settings.bucket_emb
+DIMENSIONALITY = settings.dimensionality
+TASK = settings.task
+BLOB_NAME = settings.blob_name
+DF_HEAD = settings.df_head
 
 
 def load_dataset(location) -> pd.DataFrame:

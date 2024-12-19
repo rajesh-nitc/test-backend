@@ -1,5 +1,4 @@
 import logging
-import os
 
 from google.cloud import aiplatform
 from google.cloud.aiplatform.matching_engine.matching_engine_index_endpoint import (
@@ -7,11 +6,13 @@ from google.cloud.aiplatform.matching_engine.matching_engine_index_endpoint impo
 )
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
 
-MODEL_EMB = os.getenv("MODEL_EMB")
-INDEX_ENDPOINT = os.getenv("INDEX_ENDPOINT")
-DEPLOYED_INDEX_ID = os.getenv("DEPLOYED_INDEX_ID")
-DIMENSIONALITY = int(os.getenv("DIMENSIONALITY"))  # type: ignore
-TASK = os.getenv("TASK")
+from config.settings import settings
+
+MODEL_EMB = settings.model_emb
+INDEX_ENDPOINT = settings.index_endpoint
+DEPLOYED_INDEX_ID = settings.deployed_index_id
+DIMENSIONALITY = settings.dimensionality
+TASK = settings.task
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +22,7 @@ def get_vector_index_data(function_args: dict):
     if not query:
         raise ValueError("Missing required parameter: 'query'")
 
-    top_k = function_args.get("top_k")
+    top_k = function_args.get("top_k", settings.default_top_k)
     op = function_args.get("operator")
     price = function_args.get("price")
 

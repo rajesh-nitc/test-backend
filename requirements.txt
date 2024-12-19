@@ -4,5 +4,7 @@ google-cloud-storage==2.19.0
 gunicorn==23.0.0
 langchain-text-splitters==0.3.3
 pandas==2.2.3
+pydantic-settings==2.7.0
 python-dotenv==1.0.1
+tiktoken==0.8.0
 uvicorn==0.32.1

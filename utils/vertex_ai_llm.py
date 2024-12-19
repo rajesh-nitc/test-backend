@@ -1,12 +1,13 @@
 import logging
-import os
 
+import tiktoken
 from vertexai.generative_models import (
     GenerationConfig,
     GenerationResponse,
     GenerativeModel,
 )
 
+from config.settings import settings
 from tools.tool import tool
 
 logger = logging.getLogger(__name__)
@@ -57,7 +58,7 @@ def get_model() -> GenerativeModel:
     Returns:
         GenerativeModel: A configured generative model instance.
     """
-    MODEL_LLM = os.getenv("MODEL_LLM")
+    MODEL_LLM = settings.model_llm
     if not MODEL_LLM:
         raise ValueError("MODEL_LLM environment variable is not set.")
 
@@ -68,3 +69,15 @@ def get_model() -> GenerativeModel:
         generation_config=GenerationConfig(temperature=0, candidate_count=1),
         tools=[tool],
     )
+
+
+# Function to count tokens using tiktoken
+def count_tokens_with_tiktoken(text: str) -> int:
+    """
+    Tokenize input text and count tokens using tiktoken.
+    """
+    encoding = tiktoken.get_encoding(
+        "cl100k_base"
+    )  # Replace with the tokenizer variant you need
+    tokens = encoding.encode(text)
+    return len(tokens)

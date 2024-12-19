@@ -2,11 +2,17 @@ import logging
 
 from vertexai.generative_models import GenerativeModel, Part
 
+from config.settings import settings
 from services.function_registry import FUNCTION_REGISTRY
 from utils.gcs_history import append_chat_to_gcs, load_same_day_history
-from utils.vertex_ai_llm import extract_function_call, extract_text
+from utils.vertex_ai_llm import (
+    count_tokens_with_tiktoken,
+    extract_function_call,
+    extract_text,
+)
 
 logger = logging.getLogger(__name__)
+MAX_TOKENS = settings.max_tokens
 
 
 def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -> str:
@@ -22,7 +28,13 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
     Returns:
         str: The final model response.
     """
-    logger.info(f"***** Received new prompt from user {user_id}: {prompt} *****")
+    logger.info(f"Received prompt from user {user_id}: {prompt}")
+
+    # Count tokens in the prompt
+    token_count = count_tokens_with_tiktoken(prompt)
+    logger.info(f"Token count: {token_count}")
+    if token_count > MAX_TOKENS:
+        return f"Oops! Your message has {token_count} tokens, but the limit is {MAX_TOKENS}. Please try a shorter version."
 
     # Retrieve or initialize the user's chat history for the same day
     history = load_same_day_history(user_id)

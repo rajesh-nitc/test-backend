@@ -1,42 +1,41 @@
 from dotenv import load_dotenv
 
 load_dotenv()
+
+
 import logging
-import os
 
 import vertexai
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from config.settings import settings
 from routers import prompt
 
-# Initialize logging
 logger = logging.getLogger(__name__)
 
 # Initialize the app
 app = FastAPI(
     title="genai-function-calling-api",
-    description=f"genai-function-calling-api with {os.getenv("MODEL_LLM")} and {os.getenv("MODEL_EMB")}.",
+    description=f"genai-function-calling-api with {settings.model_llm} and {settings.model_emb}.",
     version="1.0.0",
 )
 
 # Add Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=os.getenv("ALLOWED_ORIGINS", "*").split(
-        ","
-    ),  # Restrict origins in production
+    allow_origins=settings.allowed_origins.split(","),  # Restrict origins in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Initialize Vertex AI SDK
-vertexai.init(project=os.getenv("GOOGLE_CLOUD_PROJECT"), location=os.getenv("REGION"))
+vertexai.init(project=settings.google_cloud_project, location=settings.region)
 
 # Log startup configuration
 logger.info("FastAPI app starting...")
-logger.info(f"Running in {os.getenv('ENV', 'local')} mode.")
+logger.info(f"Running in {settings.env} mode.")
 logger.info("App is bound to host: 0.0.0.0, port: 8000")
 
 # Include Routers
