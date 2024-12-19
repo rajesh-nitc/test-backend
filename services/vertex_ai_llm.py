@@ -43,18 +43,15 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
     # Retrieve or initialize the user's chat history for the same day
     history = load_same_day_history(user_id)
 
-    # Extract the last two turns (user-model pairs) from history
+    # Extract the last two turns (user-model pairs)
     last_two_turns = extract_last_two_turns(history)  # type: ignore
     logger.info(f"Last two turns: {last_two_turns}")
 
-    # Construct the full conversation context from the history
+    # Combine elements in last_two_turns list into single string, with each element separated by newline char
     conversation = "\n".join(last_two_turns)
-    # if conversation:
-    #     conversation += "\n"  # Add a newline if there's existing history
 
     # Add the current user prompt to the conversation
     conversation += f"\n{prompt}"
-
     logger.info(f"Conversation: {conversation}")
 
     # Start a new chat session with the model
