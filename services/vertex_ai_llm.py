@@ -50,7 +50,7 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
     # Add the current user prompt to the conversation
     conversation += f"user: {prompt}\nmodel:"
 
-    logger.info(f"===== Conversation: {conversation} =====")
+    logger.info(f"Conversation: {conversation}")
 
     # Send the conversation history and new prompt to the model
     response = chat.send_message(conversation)
