@@ -25,8 +25,8 @@ make auth
 make embeddings
 ```
 
-7. Create and deploy Vertex Search Index Endpoint on the console
-8. Update `.env` with Index Endpoint related variables
+7. Deploy vertex search index endpoint on the console
+8. Update `.env` with endpoint related variables
 
 ## Run
 
