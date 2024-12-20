@@ -88,7 +88,7 @@ def save_to_gcs_as_json(dataframe: pd.DataFrame, bkt: str, blob_name: str):
 
     Args:
         dataframe (pd.DataFrame): DataFrame to save.
-        bucket (str): Name of the GCS bucket.
+        bkt (str): Name of the GCS bucket.
         blob_name (str): Destination path and file name in the GCS bucket.
     """
     # Convert DataFrame to JSON string
