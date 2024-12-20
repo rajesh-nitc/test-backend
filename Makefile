@@ -1,5 +1,8 @@
 include .env
 
+# Include this so that we can run "make tests"
+.PHONY: tests
+
 # Google Cloud Authentication
 auth:
 	gcloud auth application-default login
