@@ -17,7 +17,7 @@ repos:
       - id: check-builtin-literals
       - id: check-shebang-scripts-are-executable
       - id: file-contents-sorter
-        files: ^(requirements\.txt|requirements-test\.txt|\.env|\.gitignore|\.dockerignore)$
+        files: ^(requirements\.txt|requirements-test\.txt|\.gitignore|\.dockerignore)$
 
   # Removes unused imports and unused variables
   - repo: https://github.com/PyCQA/autoflake
@@ -46,7 +46,7 @@ repos:
     rev: 7.1.1
     hooks:
       - id: flake8
-        args: ["--max-line-length=150", "--ignore=E203,W503,E402"]
+        args: ["--max-line-length=250", "--ignore=E203,W503,E402"]
 
   # Mypy for type checking
   - repo: https://github.com/pre-commit/mirrors-mypy

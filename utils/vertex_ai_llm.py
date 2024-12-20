@@ -68,6 +68,7 @@ def get_model() -> GenerativeModel:
         LLM_MODEL,
         generation_config=GenerationConfig(temperature=0, candidate_count=1),
         tools=[tool],
+        system_instruction=settings.SYSTEM_INSTRUCTION,
     )
 
 

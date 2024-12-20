@@ -30,7 +30,7 @@ Examples:
 # Define the function declaration
 get_spend_func = FunctionDeclaration(
     name="get_spend_func",
-    description="Call this if the user is asking for spending information.",
+    description="Call this function for user queries about expenses, spending, or financial information.",
     parameters={
         "type": "object",
         "properties": {

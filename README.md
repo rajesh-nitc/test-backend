@@ -12,7 +12,7 @@ This API supports function calling with chat history stored in GCS. The last two
 1. A Google Cloud Project with the Vertex AI API enabled.
 2. Appropriate IAM roles.
 3. GCS buckets to store conversation history and embeddings.
-4. Configure the `.env` file
+4. Configure `config/settings.py` and vars in `Makefile`
 5. Authenticate locally with GCP:
 
 ```
@@ -26,7 +26,7 @@ make embeddings
 ```
 
 7. Deploy vertex search index endpoint on the console
-8. Update `.env` with endpoint related variables
+8. Update `config/settings.py` with endpoint related variables
 
 ## Run
 
@@ -45,6 +45,6 @@ make docker
 
 ```
 make prompt PROMPT='how much did i spend on entertainment this year?'
-make prompt PROMPT='suggest toys over $$2500?'
+make prompt PROMPT='suggest inddor toys for kids over $$2500?'
 
 ```

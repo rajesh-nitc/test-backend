@@ -22,20 +22,21 @@ Identify the price from user queries.
 
 Examples:
 - "indoor toys under $25": 25
-- "bicycles over ten dollars: 10
 """,
     "query": """
-Search query for the toy or game recommendations.
+The search query specifically for toys, games, or recommendations.
 Examples:
-- "suggest toys for a 7-year-old girl"
-- "recommend five indoor toys"
+- "Search toys for toddlers"
+- "Find five indoor games for kids"
+- "Recommend outdoor toys under $50"
+- "toys"
 """,
 }
 
 # Define the function declaration
 get_toys_func = FunctionDeclaration(
     name="get_toys_func",
-    description="Call this if the user is asking for information on toys or games",
+    description="Call this function for user queries related to toys, games, or recommendations for children.",
     parameters={
         "type": "object",
         "properties": {

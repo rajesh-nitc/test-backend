@@ -3,27 +3,75 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    APP_NAME: str = Field(..., env="APP_NAME")  # type: ignore
-    EMB_BLOB: str = Field(..., env="EMB_BLOB")  # type: ignore
-    EMB_BUCKET: str = Field(..., env="EMB_BUCKET")  # type: ignore
-    EMB_DEPLOYED_INDEX_ID: str = Field(..., env="EMB_DEPLOYED_INDEX_ID")  # type: ignore
-    EMB_DF_HEAD: int = Field(..., env="EMB_DF_HEAD")  # type: ignore
-    EMB_DIMENSIONALITY: int = Field(..., env="EMB_DIMENSIONALITY")  # type: ignore
-    EMB_INDEX_ENDPOINT: str = Field(..., env="EMB_INDEX_ENDPOINT")  # type: ignore
-    EMB_MODEL: str = Field(..., env="EMB_MODEL")  # type: ignore
-    EMB_TASK: str = Field(..., env="EMB_TASK")  # type: ignore
-    EMB_TOP_K: int = Field(..., env="EMB_TOP_K")  # type: ignore
-    ENV: str = Field(..., env="ENV")  # type: ignore
-    GOOGLE_CLOUD_PROJECT: str = Field(..., env="GOOGLE_CLOUD_PROJECT")  # type: ignore
-    LLM_BUCKET_FOLDER: str = Field(..., env="LLM_BUCKET_FOLDER")  # type: ignore
-    LLM_BUCKET: str = Field(..., env="LLM_BUCKET")  # type: ignore
-    LLM_MAX_TOKENS: int = Field(..., env="LLM_MAX_TOKENS")  # type: ignore
-    LLM_MODEL: str = Field(..., env="LLM_MODEL")  # type: ignore
-    LOG_LEVEL: str = Field(..., env="LOG_LEVEL")  # type: ignore
-    REGION: str = Field(..., env="REGION")  # type: ignore
+    APP_NAME: str = Field(
+        "genai-function-calling-api", description="The name of the application."
+    )
+    EMB_BLOB: str = Field(
+        "product_embeddings.json", description="Path to the embeddings blob file."
+    )
+    EMB_BUCKET: str = Field(
+        "bkt-bu1-d-function-calling-api-embedding",
+        description="Bucket for storing embeddings.",
+    )
+    EMB_DEPLOYED_INDEX_ID: str = Field(
+        "index_01_deploy_1734488317622", description="Deployed index ID for embeddings."
+    )
+    EMB_DF_HEAD: int = Field(
+        100, ge=1, description="The maximum number of data points in the embeddings."
+    )
+    EMB_DIMENSIONALITY: int = Field(
+        768, ge=1, description="Dimensionality of the embeddings."
+    )
+    EMB_INDEX_ENDPOINT: str = Field(
+        "projects/770674777462/locations/asia-south1/indexEndpoints/5963364040964046848",
+        description="Endpoint for the embeddings index.",
+    )
+    EMB_MODEL: str = Field(
+        "text-embedding-005", description="The embedding model to use."
+    )
+    EMB_TASK: str = Field(
+        "RETRIEVAL_DOCUMENT", description="The task for which the embeddings are used."
+    )
+    EMB_TOP_K: int = Field(
+        3,
+        ge=1,
+        description="The number of top results to retrieve from the embeddings.",
+    )
+    ENV: str = Field("local", description="The environment (local, dev, prod).")
+    GOOGLE_CLOUD_PROJECT: str = Field(
+        "prj-bu1-d-sample-base-9208", description="The Google Cloud project ID."
+    )
+    LLM_BUCKET: str = Field(
+        "bkt-bu1-d-function-calling-api-chat",
+        description="Bucket for storing language model chat histories.",
+    )
+    LLM_BUCKET_FOLDER: str = Field(
+        "chat_histories", description="Folder within the LLM bucket."
+    )
+    LLM_MAX_TOKENS: int = Field(
+        25, le=25, description="Maximum number of tokens for the LLM."
+    )
+    LLM_MODEL: str = Field("gemini-1.5-pro", description="The language model to use.")
+    LOG_LEVEL: str = Field("INFO", description="Logging level.")
+    REGION: str = Field(
+        "asia-south1", description="The region where the service is hosted."
+    )
+    SYSTEM_INSTRUCTION: str = Field(
+        """
+        - The conversation history is formatted as:
+            - Previous turns have 'user:' and 'model:' prefixes.
+            - A new user query is provided **without** these prefixes.
+        - Always treat new user queries (those without 'user:' and 'model:' prefixes) as independent prompts.
+        - Ignore the conversation history when determining the correct function to call. Focus **only on the new user query**.
+        - Only call functions for queries related to specific tasks like:
+            - Toy or game recommendations (e.g., 'suggest toys', 'find games').
+            - Spending or expense queries (e.g., 'how much did I spend on groceries', 'show my expenses for travel').
+        - For general conversational queries (e.g., greetings like 'hi', 'how are you?'), respond with natural language text and **do not call any functions**.""",
+        description="System instruction for the model.",
+    )
 
     class Config:
-        env_file = ".env"
+        env_file = None
 
 
 settings = Settings()  # type: ignore

@@ -8,7 +8,7 @@ LLM_BUCKET_FOLDER = settings.LLM_BUCKET_FOLDER
 
 
 def get_gcs_client():
-    return storage.Client()
+    return storage.Client(project=settings.GOOGLE_CLOUD_PROJECT)
 
 
 def get_chat_history_file_path(user_id: str) -> str:

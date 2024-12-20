@@ -5,11 +5,11 @@ import os
 
 import pandas as pd
 import vertexai
-from google.cloud import storage
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
 
 from config.settings import settings
+from utils.gcs_history import get_gcs_client
 
 file_path = os.path.join(os.path.dirname(__file__), "retail_toy_dataset.csv")
 print(file_path)
@@ -68,7 +68,9 @@ def generate_vector_embeddings(df: pd.DataFrame, batch_size=5):
     for i in range(0, len(chunked), batch_size):
         texts = [x["content"] for x in chunked[i : i + batch_size]]
         inputs = [TextEmbeddingInput(text, EMB_TASK) for text in texts]
-        embeddings = model.get_embeddings(inputs, auto_truncate=False, output_dimensionality=EMB_DIMENSIONALITY)  # type: ignore
+        embeddings = model.get_embeddings(
+            inputs, auto_truncate=False, output_dimensionality=EMB_DIMENSIONALITY
+        )  # type: ignore
         for x, e in zip(chunked[i : i + batch_size], embeddings):
             x["embedding"] = e.values
 
@@ -97,7 +99,7 @@ def save_to_gcs_as_json(dataframe: pd.DataFrame, bkt: str, blob_name: str):
     )  # 'records' for each row as a dict
 
     # Initialize GCS client
-    storage_client = storage.Client()
+    storage_client = get_gcs_client()
     bucket = storage_client.bucket(bkt)
     blob = bucket.blob(blob_name)
 

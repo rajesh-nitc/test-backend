@@ -49,7 +49,9 @@ def get_vector_index_data(function_args: dict):
     embeddings = model.get_embeddings(inputs, **kwargs)  # type: ignore
     feature_vector = [embedding.values for embedding in embeddings]
 
-    index_endpoint = aiplatform.MatchingEngineIndexEndpoint(index_endpoint_name=EMB_INDEX_ENDPOINT)  # type: ignore
+    index_endpoint = aiplatform.MatchingEngineIndexEndpoint(
+        index_endpoint_name=EMB_INDEX_ENDPOINT
+    )  # type: ignore
 
     try:
         response = index_endpoint.find_neighbors(
