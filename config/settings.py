@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    allowed_origins: str = Field(..., env="ALLOWED_ORIGINS")  # type: ignore
+    app_name: str = Field(..., env="APP_NAME")  # type: ignore
     blob_name: str = Field(..., env="BLOB_NAME")  # type: ignore
     bucket_chat: str = Field(..., env="BUCKET_CHAT")  # type: ignore
     bucket_emb: str = Field(..., env="BUCKET_EMB")  # type: ignore

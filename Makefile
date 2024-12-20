@@ -16,17 +16,17 @@ run:
 
 # Build and run the application in Docker
 docker:
-	sudo docker build -t genai-function-calling-api .
+	sudo docker build -t $(APP_NAME) .
 	sudo docker run -d -p 8000:8000 \
 	-v ~/.config/gcloud/application_default_credentials.json:/tmp/keys/credentials.json \
 	-e GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/credentials.json \
 	--env-file .env \
-	--name genai-function-calling-api \
-	genai-function-calling-api
+	--name $(APP_NAME) \
+	$(APP_NAME)
 
 docker_clean:
-	sudo docker stop genai-function-calling-api
-	sudo docker rm genai-function-calling-api
+	sudo docker stop $(APP_NAME)
+	sudo docker rm $(APP_NAME)
 
 # Run tests
 tests:

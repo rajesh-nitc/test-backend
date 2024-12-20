@@ -16,15 +16,15 @@ logger = logging.getLogger(__name__)
 
 # Initialize the app
 app = FastAPI(
-    title="genai-function-calling-api",
-    description=f"genai-function-calling-api with {settings.model_llm} and {settings.model_emb}.",
+    title=settings.app_name,
+    description=f"{settings.app_name} with {settings.model_llm} and {settings.model_emb}.",
     version="1.0.0",
 )
 
 # Add Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.allowed_origins.split(","),  # Restrict origins in production
+    allow_origins=["*"],  # Restrict origins in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
