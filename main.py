@@ -16,8 +16,8 @@ logger = logging.getLogger(__name__)
 
 # Initialize the app
 app = FastAPI(
-    title=settings.app_name,
-    description=f"{settings.app_name} with {settings.model_llm} and {settings.model_emb}.",
+    title=settings.APP_NAME,
+    description=f"{settings.APP_NAME} with {settings.LLM_MODEL} and {settings.EMB_MODEL}.",
     version="1.0.0",
 )
 
@@ -31,11 +31,11 @@ app.add_middleware(
 )
 
 # Initialize Vertex AI SDK
-vertexai.init(project=settings.google_cloud_project, location=settings.region)
+vertexai.init(project=settings.GOOGLE_CLOUD_PROJECT, location=settings.REGION)
 
 # Log startup configuration
 logger.info("FastAPI app starting...")
-logger.info(f"Running in {settings.env} mode.")
+logger.info(f"Running in {settings.ENV} mode.")
 logger.info("App is bound to host: 0.0.0.0, port: 8000")
 
 # Include Routers

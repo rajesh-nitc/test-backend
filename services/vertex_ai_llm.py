@@ -16,7 +16,7 @@ from utils.vertex_ai_llm import (
 )
 
 logger = logging.getLogger(__name__)
-MAX_TOKENS = settings.max_tokens
+LLM_MAX_TOKENS = settings.LLM_MAX_TOKENS
 
 
 def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -> str:
@@ -37,8 +37,8 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
     # Count tokens in the prompt
     token_count = count_tokens_with_tiktoken(prompt)
     logger.info(f"Token count: {token_count}")
-    if token_count > MAX_TOKENS:
-        return f"Oops! Your message has {token_count} tokens, but the limit is {MAX_TOKENS}. Please try a shorter version."
+    if token_count > LLM_MAX_TOKENS:
+        return f"Oops! Your message has {token_count} tokens, but the limit is {LLM_MAX_TOKENS}. Please try a shorter version."
 
     # Retrieve or initialize the user's chat history for the same day
     history = load_same_day_history(user_id)

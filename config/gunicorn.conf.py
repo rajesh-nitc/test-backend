@@ -3,10 +3,10 @@ import os
 from config.logging import setup_logging
 from config.settings import settings
 
-ENV = settings.env
+ENV = settings.ENV
 
 # Set up logging based on the environment's log level
-setup_logging(settings.log_level)
+setup_logging(settings.LOG_LEVEL)
 
 # Gunicorn configuration settings
 bind = "0.0.0.0:8000"  # Bind to all IPs on port 8000
@@ -15,7 +15,7 @@ worker_connections = 1250  # Max number of simultaneous clients
 timeout = 125  # Timeout for workers
 
 # Set Gunicorn log level from settings or default to 'info'
-loglevel = settings.log_level or "info"
+loglevel = settings.LOG_LEVEL or "info"
 
 # Log the decision for worker count
 if ENV == "local":

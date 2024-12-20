@@ -3,8 +3,8 @@ from google.cloud import storage
 from config.settings import settings
 from utils.date import get_today_date
 
-BUCKET_CHAT = settings.bucket_chat
-CHAT_HISTORY_FOLDER = settings.chat_history_folder
+LLM_BUCKET = settings.LLM_BUCKET
+LLM_BUCKET_FOLDER = settings.LLM_BUCKET_FOLDER
 
 
 def get_gcs_client():
@@ -16,7 +16,7 @@ def get_chat_history_file_path(user_id: str) -> str:
     Generate the GCS file path for the current day's chat history for the user.
     """
     today, _ = get_today_date()
-    return f"{CHAT_HISTORY_FOLDER}/{user_id}/{today}.txt"
+    return f"{LLM_BUCKET_FOLDER}/{user_id}/{today}.txt"
 
 
 def load_same_day_history(user_id: str) -> list:
@@ -30,7 +30,7 @@ def load_same_day_history(user_id: str) -> list:
         list: List of chat history lines, or an empty list if no history exists.
     """
     client = get_gcs_client()
-    bucket = client.bucket(BUCKET_CHAT)
+    bucket = client.bucket(LLM_BUCKET)
     file_path = get_chat_history_file_path(user_id)
 
     blob = bucket.blob(file_path)
@@ -49,7 +49,7 @@ def append_chat_to_gcs(user_id: str, message: str):
         message (str): Message to append to the history.
     """
     client = get_gcs_client()
-    bucket = client.bucket(BUCKET_CHAT)
+    bucket = client.bucket(LLM_BUCKET)
     file_path = get_chat_history_file_path(user_id)
 
     blob = bucket.blob(file_path)

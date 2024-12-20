@@ -7,7 +7,7 @@ DESCRIPTIONS = {
 Identify number of toys or games from user queries.
 
 Examples:
-- "suggest toys": default to {settings.default_top_k} if not provided by user
+- "suggest toys": default to {settings.EMB_TOP_K} if not provided by user
 - "recommend five indoor toys: 5
 """,
     "operator": """
