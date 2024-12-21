@@ -66,7 +66,8 @@ class Settings(BaseSettings):
             - A new user query is provided **without** these prefixes.
         - Always treat new user queries (those without 'user:' and 'model:' prefixes) as independent prompts.
         - Ignore the conversation history when determining the correct function to call. Focus **only on the new user query**.
-        - For general conversational queries (e.g., greetings like 'hi', 'how are you?'), respond with natural language text and **do not call any functions**.""",
+        - For general conversational queries (e.g., greetings like 'hi', 'how are you?'), respond with natural language text and **do not call any functions**.
+        """,
         description="System instruction for the model.",
     )
 
