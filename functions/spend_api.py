@@ -6,31 +6,31 @@ from utils.date import get_today_date
 date, day_of_week = get_today_date()
 
 DESCRIPTIONS = {
-    "date": f"""
-Identify the date from user queries.
-Today's date is {date} ({day_of_week}).
-Handle relative terms like "last year" or "this month" by calculating the appropriate start and end dates.
-
-Examples:
-- "How much did I spend on groceries this year?":
-  Start Date: YYYY-01-01, End Date: today's date
-- "What were my expenses in January?":
-  Start Date: YYYY-01-01, End Date: YYYY-01-31
-- "spend last year":
-  Start Date: YYYY-01-01, End Date: YYYY-12-31
-    """,
+    "FUNCTION": f"""
+Handle user queries about expenses, spending, or financial information.
+Extract the category, start_date, and end_date from user queries.
+Today's date is {date} ({day_of_week}). Handle relative terms like "last year" or "this month" by calculating the appropriate start and end dates.
+See extracted fields in the examples below for reference:
+    - What were my expenses this year?: category is null, start_date is YYYY-01-01, end_date is today's date
+    - How much did I spend on groceries last year?: category is groceries, start_date is YYYY-01-01, end_date is YYYY-12-31
+    - What were my expenses in January?: category is null, start_date is YYYY-01-01, end_date is YYYY-01-31
+    - my total spend: clarify the query with the user as you don't have enough information
+""",
+    "start_date": """
+Start date for the expenses query
+""",
+    "end_date": """
+End date for the expenses query
+""",
     "category": """
-Identify the spend category from user queries.
-Examples:
-- "What were my expenses this year?": null
-- "How much did I spend on groceries this year?": groceries
-    """,
+Category of the expenses query
+""",
 }
 
 # Define the function declaration
 get_spend_func = FunctionDeclaration(
     name="get_spend_func",
-    description="Call this function for user queries about expenses, spending, or financial information.",
+    description=DESCRIPTIONS["FUNCTION"],
     parameters={
         "type": "object",
         "properties": {
@@ -42,11 +42,11 @@ get_spend_func = FunctionDeclaration(
             },
             "start_date": {
                 "type": "string",
-                "description": DESCRIPTIONS["date"],
+                "description": DESCRIPTIONS["start_date"],
             },
             "end_date": {
                 "type": "string",
-                "description": DESCRIPTIONS["date"],
+                "description": DESCRIPTIONS["end_date"],
             },
         },
         "required": ["start_date", "end_date"],

@@ -3,40 +3,33 @@ from vertexai.generative_models import FunctionDeclaration
 from config.settings import settings
 
 DESCRIPTIONS = {
+    "FUNCTION": f"""
+Handles user queries related to toys, games, or recommendations for children
+Extract query, top_k, operator, and price from user queries
+See extracted fields in the examples below for refrence:
+    - Search toys for toddlers: query is full user query, top_k is {settings.EMB_TOP_K}, operator is null and price is null
+    - Find five indoor games for kids: query is full user query, top_k is 5, operator is null and price is null
+    - Recommend outdoor toys under $25: query is full user query, top_k is {settings.EMB_TOP_K}, operator is LESS and price is 25
+    - toys: query is full user query, top_k is {settings.EMB_TOP_K}, operator is null and price is null
+""",
     "top_k": f"""
-Identify number of toys or games from user queries.
-
-Examples:
-- "suggest toys": default to {settings.EMB_TOP_K} if not provided by user
-- "recommend five indoor toys: 5
+Number of toys or games to return in the response. Default value is {settings.EMB_TOP_K}
 """,
     "operator": """
-Identify the operator.
-
-Examples:
-- "indoor toys under $25": LESS
-- "bicycles over $25: GREATER
+Comparison operator for toy or game price
 """,
     "price": """
-Identify the price from user queries.
-
-Examples:
-- "indoor toys under $25": 25
+Price of the toy or game
 """,
     "query": """
-The search query specifically for toys, games, or recommendations.
-Examples:
-- "Search toys for toddlers"
-- "Find five indoor games for kids"
-- "Recommend outdoor toys under $50"
-- "toys"
+User query for toys or games
 """,
 }
 
 # Define the function declaration
 get_toys_func = FunctionDeclaration(
     name="get_toys_func",
-    description="Call this function for user queries related to toys, games, or recommendations for children.",
+    description=DESCRIPTIONS["FUNCTION"],
     parameters={
         "type": "object",
         "properties": {

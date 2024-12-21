@@ -54,7 +54,7 @@ class Settings(BaseSettings):
     LLM_MAX_OUTPUT_TOKENS: int = Field(
         100, le=100, description="Maximum number of output tokens for the LLM."
     )
-    LLM_MODEL: str = Field("gemini-1.5-flash", description="The language model to use.")
+    LLM_MODEL: str = Field("gemini-1.5-pro", description="The language model to use.")
     LOG_LEVEL: str = Field("INFO", description="Logging level.")
     REGION: str = Field(
         "asia-south1", description="The region where the service is hosted."
@@ -66,9 +66,6 @@ class Settings(BaseSettings):
             - A new user query is provided **without** these prefixes.
         - Always treat new user queries (those without 'user:' and 'model:' prefixes) as independent prompts.
         - Ignore the conversation history when determining the correct function to call. Focus **only on the new user query**.
-        - Only call functions for queries related to specific tasks like:
-            - Toy or game recommendations (e.g., 'suggest toys', 'find games').
-            - Spending or expense queries (e.g., 'how much did I spend on groceries', 'show my expenses for travel').
         - For general conversational queries (e.g., greetings like 'hi', 'how are you?'), respond with natural language text and **do not call any functions**.""",
         description="System instruction for the model.",
     )
