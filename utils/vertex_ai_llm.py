@@ -5,6 +5,8 @@ from vertexai.generative_models import (
     GenerationConfig,
     GenerationResponse,
     GenerativeModel,
+    HarmBlockThreshold,
+    HarmCategory,
 )
 
 from config.settings import settings
@@ -64,10 +66,22 @@ def get_model() -> GenerativeModel:
 
     logger.info(f"Initializing GenerativeModel with LLM_MODEL: {LLM_MODEL}")
 
+    safety_settings = {
+        HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+        HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+        HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+    }
+
     return GenerativeModel(
         LLM_MODEL,
-        generation_config=GenerationConfig(temperature=0, candidate_count=1),
+        generation_config=GenerationConfig(
+            temperature=0,
+            candidate_count=1,
+            max_output_tokens=settings.LLM_MAX_OUTPUT_TOKENS,
+        ),
         tools=[tool],
+        safety_settings=safety_settings,
         system_instruction=settings.SYSTEM_INSTRUCTION,
     )
 
