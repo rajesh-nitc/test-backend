@@ -14,7 +14,7 @@ See extracted fields in the examples below for reference:
     - What were my expenses this year?: category is null, start_date is YYYY-01-01, end_date is today's date
     - How much did I spend on groceries last year?: category is groceries, start_date is YYYY-01-01, end_date is YYYY-12-31
     - What were my expenses in January?: category is null, start_date is YYYY-01-01, end_date is YYYY-01-31
-    - my total spend: clarify the query with the user as you don't have enough information
+    - spend: clarify the query as you don't have enough information
 """,
     "start_date": """
 Start date for the expenses query
