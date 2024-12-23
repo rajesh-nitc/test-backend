@@ -19,7 +19,9 @@
 		"**/venv": true,
 		"**/__pycache__": true,
 		"**/.git": true,
-		"**/.vscode": true
+		"**/.vscode": true,
+		"**/.mypy_cache": true,
+		"**/.pytest_cache": true
 	},
 	"editor.tabSize": 4,
 	"editor.insertSpaces": false,
