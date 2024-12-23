@@ -50,7 +50,7 @@ docker: ## Build and run the application in Docker
         -e LLM_MODEL="gemini-1.5-pro" \
         -e LOG_LEVEL="INFO" \
         -e REGION="asia-south1" \
-        -e SYSTEM_INSTRUCTION="- The conversation history is formatted as:\n  - Previous turns have 'user:' and 'model:' prefixes.\n  - A new user query is provided **without** these prefixes.\n- Always treat new user queries (those without 'user:' and 'model:' prefixes) as independent prompts.\n- Ignore the conversation history when determining the correct function to call. Focus **only on the new user query**.\n- Only call functions for queries related to specific tasks like:\n  - Toy or game recommendations (e.g., 'suggest toys', 'find games').\n  - Spending or expense queries (e.g., 'how much did I spend on groceries', 'show my expenses for travel').\n- For general conversational queries (e.g., greetings like 'hi', 'how are you?'), respond with natural language text and **do not call any functions**." \
+        -e SYSTEM_INSTRUCTION="- The conversation history is formatted as:\n  - Previous turns have 'user:' and 'model:' prefixes.\n  - A new user query is provided **without** these prefixes.\n- Do not consider the conversation history when determining the correct function to call.\n- Ask the user for clarification if the user query is incomplete or ambiguous.\n- For general conversation, respond with friendly text and **do not call any functions**." \
         --name $(APP_NAME) \
         $(APP_NAME)
 

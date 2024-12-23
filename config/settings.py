@@ -62,9 +62,9 @@ class Settings(BaseSettings):
         - The conversation history is formatted as:
             - Previous turns have 'user:' and 'model:' prefixes.
             - A new user query is provided **without** these prefixes.
-        - Always treat new user queries (those without 'user:' and 'model:' prefixes) as independent prompts.
-        - Ignore the conversation history when determining the correct function to call. Focus **only on the new user query**.
-        - For general conversation, respond with friendly natural language text and **do not call any functions**.
+        - Do not consider the conversation history when determining the correct function to call.
+        - Ask the user for clarification if the user query is incomplete or ambiguous.
+        - For general conversation, respond with friendly text and **do not call any functions**.
         """,
         description="System instruction for the model.",
     )
