@@ -19,7 +19,9 @@ logger = logging.getLogger(__name__)
 LLM_MAX_INPUT_TOKENS = settings.LLM_MAX_INPUT_TOKENS
 
 
-def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -> str:
+async def generate_model_response(
+    prompt: str, model: GenerativeModel, user_id: str
+) -> str:
     """
     Generates a response from the model based on the given prompt, maintains conversation history by user_id,
     and returns the final model response. Chat history is stored in a GCP bucket by day.
@@ -62,7 +64,7 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
     chat = model.start_chat()
 
     # Send the conversation history and new prompt to the model
-    response = chat.send_message(conversation)
+    response = await chat.send_message_async(conversation)
 
     # Extract the function call or text from the model's response
     function_call = extract_function_call(response)
@@ -78,7 +80,7 @@ def generate_model_response(prompt: str, model: GenerativeModel, user_id: str) -
             raise ValueError(f"Unknown function called: {function_name}")
 
         # Send api response back to the model
-        response = chat.send_message(
+        response = await chat.send_message_async(
             Part.from_function_response(
                 name=function_name,
                 response={"content": api_response},
