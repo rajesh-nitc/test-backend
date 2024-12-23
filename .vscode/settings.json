@@ -17,5 +17,11 @@
     "**/__pycache__": true,
     "**/.git": true,
     "**/.vscode": true
+  },
+  "editor.tabSize": 4,
+  "editor.insertSpaces": false,
+  "[makefile]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false
   }
 }

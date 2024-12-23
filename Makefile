@@ -1,23 +1,31 @@
+# Variables
 APP_NAME=genai-function-calling-api
 GOOGLE_CLOUD_PROJECT=prj-bu1-d-sample-base-9208
 
-# Include this so that we can run "make tests"
-.PHONY: tests
+# Adding so that make does not conflict with files or directory with the same names as target
+# For e.g. "make tests" won't work unless we add tests as a phony target
+.PHONY: help auth run docker docker_clean tests prompt embeddings notebook precommit
 
-# Google Cloud Authentication
-auth:
+help: ## Self-documenting help command
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
+
+check_venv:
+	@if [ -z "$$VIRTUAL_ENV" ]; then \
+		echo "Error: Virtual environment is not activated. Please activate it and try again."; \
+		exit 1; \
+	fi
+
+auth: ## Authenticate with Google Cloud
 	gcloud auth application-default login
 	gcloud auth application-default set-quota-project $(GOOGLE_CLOUD_PROJECT)
 	gcloud config set project $(GOOGLE_CLOUD_PROJECT)
 
-# Run the application locally
-run:
+run: check_venv ## Run the application locally after authentication
 	pip install -r requirements-test.txt
 	pre-commit install
 	bash ./start.sh
 
-# Build and run the application in Docker
-docker:
+docker: ## Build and run the application in Docker
 	sudo docker build -t $(APP_NAME) .
 	sudo docker run -d -p 8000:8000 \
         -v ~/.config/gcloud/application_default_credentials.json:/tmp/keys/credentials.json \
@@ -45,24 +53,23 @@ docker:
         --name $(APP_NAME) \
         $(APP_NAME)
 
-docker_clean:
+docker_clean: ## Stop and remove the Docker container
 	sudo docker stop $(APP_NAME)
 	sudo docker rm $(APP_NAME)
 
-# Run tests
-tests:
+tests: check_venv ## Run basic tests
 	pytest -s
 
-# Send a prompt request using cURL
-prompt:
+prompt: ## Send a prompt request using cURL (requires PROMPT)
 	curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
   	-H 'Content-Type: application/json' \
   	-d '{ "prompt": "$(PROMPT)", "user_id": "rajesh-nitc" }'
 
-# Generate embeddings
-embeddings:
+embeddings: check_venv ## Generate embeddings using the helper module
 	python3 helpers/generate_embeddings.py
 
-# Create notebook from py:
-notebook:
+notebook: ## Create notebook from helper module
 	jupytext --to notebook helpers/generate_embeddings.py
+
+precommit: check_venv ## Run pre-commit checks
+	pre-commit run --all-files
