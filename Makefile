@@ -1,6 +1,7 @@
 # Variables
 APP_NAME=genai-function-calling-api
 GOOGLE_CLOUD_PROJECT=prj-bu1-d-sample-base-9208
+LLM_BUCKET=bkt-bu1-d-function-calling-api-chat
 
 # Adding so that make does not conflict with files or directory with the same names as target
 # For e.g. "make tests" won't work unless we add tests as a phony target
@@ -73,3 +74,6 @@ notebook: check_venv ## Create notebook from helper module
 
 precommit: check_venv ## Run pre-commit checks
 	pre-commit run --all-files
+
+clear_history: ## Clear chat history from gcs
+	gsutil -m rm -r gs://$(LLM_BUCKET)/**

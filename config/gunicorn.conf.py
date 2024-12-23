@@ -20,7 +20,9 @@ loglevel = settings.LOG_LEVEL or "info"
 # Log the decision for worker count
 if ENV == "local":
     workers = 1
-    print(f"{ENV} dev env detected. Using a single worker.")
+    print(f"{ENV.capitalize()} environment detected. Using {workers} worker.")
 else:
-    workers = os.cpu_count() or 1  # Use 1 as a fallback if cpu_count() returns None
-    print(f"Cloud {ENV} env detected. Using {workers} worker(s) based on CPU count.")
+    workers = os.cpu_count() or 1  # Default to 1 worker if cpu_count() is None
+    print(
+        f"{ENV.capitalize()} environment detected. Using {workers} worker(s) based on CPU count."
+    )

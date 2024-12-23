@@ -34,7 +34,7 @@ vertexai.init(project=settings.GOOGLE_CLOUD_PROJECT, location=settings.REGION)
 
 # Log startup configuration
 logger.info("FastAPI app starting...")
-logger.info(f"Running in {settings.ENV} mode.")
+logger.info(f"Running in {settings.ENV.capitalize()} mode.")
 logger.info("App is bound to host: 0.0.0.0, port: 8000")
 
 # Include Routers
