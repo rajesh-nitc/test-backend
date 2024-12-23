@@ -68,7 +68,7 @@ prompt: ## Send a prompt request using cURL (requires PROMPT)
 embeddings: check_venv ## Generate embeddings using the helper module
 	python3 helpers/generate_embeddings.py
 
-notebook: ## Create notebook from helper module
+notebook: check_venv ## Create notebook from helper module
 	jupytext --to notebook helpers/generate_embeddings.py
 
 precommit: check_venv ## Run pre-commit checks
