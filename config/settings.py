@@ -46,9 +46,6 @@ class Settings(BaseSettings):
     LLM_BUCKET_FOLDER: str = Field(
         "chat_histories", description="Folder within the LLM bucket."
     )
-    LLM_MAX_INPUT_TOKENS: int = Field(
-        25, le=25, description="Maximum number of prompt tokens for the LLM."
-    )
     LLM_MAX_OUTPUT_TOKENS: int = Field(
         100, le=100, description="Maximum number of output tokens for the LLM."
     )

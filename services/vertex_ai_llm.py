@@ -2,21 +2,15 @@ import logging
 
 from vertexai.generative_models import GenerativeModel, Part
 
-from config.settings import settings
 from services.function_registry import FUNCTION_REGISTRY
 from utils.gcs_history import (
     append_chat_to_gcs,
     extract_last_two_turns,
     load_same_day_history,
 )
-from utils.vertex_ai_llm import (
-    count_tokens_with_tiktoken,
-    extract_function_call,
-    extract_text,
-)
+from utils.vertex_ai_llm import extract_function_call, extract_text
 
 logger = logging.getLogger(__name__)
-LLM_MAX_INPUT_TOKENS = settings.LLM_MAX_INPUT_TOKENS
 
 
 async def generate_model_response(
@@ -36,12 +30,6 @@ async def generate_model_response(
     """
     logger.info(f"Received prompt from user {user_id}: {prompt}")
 
-    # Count tokens in the prompt
-    token_count = count_tokens_with_tiktoken(prompt)
-    logger.info(f"Token count: {token_count}")
-    if token_count > LLM_MAX_INPUT_TOKENS:
-        return f"Oops! Your message has {token_count} tokens, but the limit is {LLM_MAX_INPUT_TOKENS}. Please try a shorter version."
-
     # Retrieve or initialize the user's chat history for the same day
     history = load_same_day_history(user_id)
 
@@ -59,6 +47,13 @@ async def generate_model_response(
 
     # Log Conversation
     logger.info(f"Conversation: {conversation}")
+
+    # Log input tokens and billable characters
+    tokens_response = await model.count_tokens_async(conversation)
+    total_tokens = tokens_response.total_tokens
+    total_billable_characters = tokens_response.total_billable_characters
+    logger.info(f"total_tokens: {total_tokens}")
+    logger.info(f"total_billable_characters: {total_billable_characters}")
 
     # Start a new chat session with the model
     chat = model.start_chat()

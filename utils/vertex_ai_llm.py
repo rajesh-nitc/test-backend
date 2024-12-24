@@ -1,6 +1,5 @@
 import logging
 
-import tiktoken
 from vertexai.generative_models import (
     GenerationConfig,
     GenerationResponse,
@@ -84,15 +83,3 @@ def get_model() -> GenerativeModel:
         safety_settings=safety_settings,
         system_instruction=settings.SYSTEM_INSTRUCTION,
     )
-
-
-# Function to count tokens using tiktoken
-def count_tokens_with_tiktoken(text: str) -> int:
-    """
-    Tokenize input text and count tokens using tiktoken.
-    """
-    encoding = tiktoken.get_encoding(
-        "cl100k_base"
-    )  # Replace with the tokenizer variant you need
-    tokens = encoding.encode(text)
-    return len(tokens)

@@ -45,7 +45,6 @@ docker: ## Build and run the application in Docker
         -e GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT) \
         -e LLM_BUCKET="bkt-bu1-d-function-calling-api-chat" \
         -e LLM_BUCKET_FOLDER="chat_histories" \
-        -e LLM_MAX_INPUT_TOKENS=25 \
         -e LLM_MAX_OUTPUT_TOKENS=100 \
         -e LLM_MODEL="gemini-1.5-pro" \
         -e LOG_LEVEL="INFO" \
