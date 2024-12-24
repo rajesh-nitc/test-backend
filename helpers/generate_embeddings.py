@@ -69,7 +69,7 @@ def generate_vector_embeddings(df: pd.DataFrame, batch_size=5):
         texts = [x["content"] for x in chunked[i : i + batch_size]]
         inputs = [TextEmbeddingInput(text, EMB_TASK) for text in texts]
         embeddings = model.get_embeddings(
-            inputs, auto_truncate=False, output_dimensionality=EMB_DIMENSIONALITY
+            inputs, auto_truncate=False, output_dimensionality=EMB_DIMENSIONALITY  # type: ignore
         )  # type: ignore
         for x, e in zip(chunked[i : i + batch_size], embeddings):
             x["embedding"] = e.values

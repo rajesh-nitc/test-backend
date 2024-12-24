@@ -27,8 +27,8 @@ User query for toys or games
 }
 
 # Define the function declaration
-get_toys_func = FunctionDeclaration(
-    name="get_toys_func",
+search_toys_func = FunctionDeclaration(
+    name="search_toys_func",
     description=DESCRIPTIONS["FUNCTION"],
     parameters={
         "type": "object",

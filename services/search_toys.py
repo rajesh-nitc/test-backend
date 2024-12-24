@@ -1,11 +1,11 @@
 import logging
 
-from services.vertex_ai_vector_index import get_vector_index_data
+from services.vertex_ai_vector_search import get_vector_index_data
 
 logger = logging.getLogger(__name__)
 
 
-def get_toys(function_args: dict):
+def search_toys(function_args: dict):
 
     try:
         ids = get_vector_index_data(function_args=function_args)

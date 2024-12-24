@@ -1,8 +1,8 @@
-from services.spend_api import get_spend
-from services.toy_search import get_toys
+from services.api_spend import get_spend
+from services.search_toys import search_toys
 
 # A registry of available functions and their handlers
 FUNCTION_REGISTRY = {
     "get_spend_func": get_spend,
-    "get_toys_func": get_toys,
+    "search_toys_func": search_toys,
 }
