@@ -5,7 +5,7 @@ LLM_BUCKET=bkt-bu1-d-function-calling-api-chat
 
 # Adding so that make does not conflict with files or directory with the same names as target
 # For e.g. "make tests" won't work unless we add tests as a phony target
-.PHONY: help auth run docker docker_clean tests prompt embeddings notebook precommit
+.PHONY: help auth run docker docker_clean tests prompt embeddings notebook precommit clear_history
 
 help: ## Self-documenting help command
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
