@@ -2,7 +2,7 @@ import logging
 
 from vertexai.generative_models import GenerativeModel, Part
 
-from services.function_registry import FUNCTION_REGISTRY
+from config.registry import FUNCTION_REGISTRY
 from utils.gcs_history import (
     append_chat_to_gcs,
     extract_last_two_turns,
