@@ -1,6 +1,6 @@
 import logging
 
-from models.api_spend import MockExternalApiRequest
+from models.api_spend import SpendApiRequestData
 
 logger = logging.getLogger(__name__)
 
@@ -16,8 +16,8 @@ def get_spend(function_args: dict) -> dict:
     """
 
     try:
-        validate_function_args = MockExternalApiRequest(**function_args)
-        logger.info(f"Validated function_args: {validate_function_args}")
+        api_request_data = SpendApiRequestData(**function_args)
+        logger.info(type(api_request_data))
         return {"data": {"amount": "$25"}}
 
     except Exception as e:
