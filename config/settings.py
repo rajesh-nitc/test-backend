@@ -66,8 +66,5 @@ class Settings(BaseSettings):
         description="System instruction for the model.",
     )
 
-    class Config:
-        env_file = None
-
 
 settings = Settings()  # type: ignore
