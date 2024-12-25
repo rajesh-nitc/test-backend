@@ -15,6 +15,9 @@
 		"-s"
 	],
 	"python.testing.autoTestDiscoverOnSaveEnabled": true,
+	"terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}"
+    },
 	"search.exclude": {
 		"**/venv": true,
 		"**/__pycache__": true,
