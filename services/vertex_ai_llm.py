@@ -41,7 +41,7 @@ async def generate_model_response(
         function_name, function_args = next(iter(function_call.items()))
         logger.info(f"function_name: {function_name}, function_args: {function_args}")
 
-        # Fetch response using the appropriate function handler
+        # Call function from the registry
         if function_name in FUNCTION_REGISTRY:
             api_response = FUNCTION_REGISTRY[function_name](function_args)
         else:
@@ -55,11 +55,11 @@ async def generate_model_response(
             )
         )
 
-        # Extract the final text response from the model
+        # Final text response
         model_response = extract_text(response)
 
     else:
-        # If there is no function call, extract the text from the initial response
+        # If there is no function call, extract the text response
         model_response = extract_text(response)
 
     # Append message to the GCS chat history
