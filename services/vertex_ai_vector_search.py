@@ -18,6 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 def get_vector_index_data(function_args: dict):
+    """
+    Get search data using the query and numeric filter.
+    """
     query = function_args.get("query")
     if not query:
         raise ValueError("Missing required parameter: 'query'")

@@ -1,6 +1,10 @@
+import json
+
 from google.cloud import storage
+from vertexai.generative_models import Content, Part
 
 from config.settings import settings
+from models.chat_message import ChatMessage
 from utils.date import get_today_date
 
 LLM_BUCKET = settings.LLM_BUCKET
@@ -8,6 +12,9 @@ LLM_BUCKET_FOLDER = settings.LLM_BUCKET_FOLDER
 
 
 def get_gcs_client():
+    """
+    Get a Google Cloud Storage client.
+    """
     return storage.Client(project=settings.GOOGLE_CLOUD_PROJECT)
 
 
@@ -16,18 +23,12 @@ def get_chat_history_file_path(user_id: str) -> str:
     Generate the GCS file path for the current day's chat history for the user.
     """
     today, _ = get_today_date()
-    return f"{LLM_BUCKET_FOLDER}/{user_id}/{today}.txt"
+    return f"{LLM_BUCKET_FOLDER}/{user_id}/{today}.json"
 
 
-def load_same_day_history(user_id: str) -> list:
+def load_same_day_messages(user_id: str) -> list[Content]:
     """
-    Load the current day's chat history for the user from GCS.
-
-    Args:
-        user_id (str): Unique identifier for the user.
-
-    Returns:
-        list: List of chat history lines, or an empty list if no history exists.
+    Load the same day messages for the user.
     """
     client = get_gcs_client()
     bucket = client.bucket(LLM_BUCKET)
@@ -35,61 +36,37 @@ def load_same_day_history(user_id: str) -> list:
 
     blob = bucket.blob(file_path)
     if blob.exists():
-        # Download and split the history into lines
-        return blob.download_as_text().splitlines()
-    return []
-
-
-def append_chat_to_gcs(user_id: str, message: str):
-    """
-    Append a message to the current day's chat history for the user in GCS.
-
-    Args:
-        user_id (str): Unique identifier for the user.
-        message (str): Message to append to the history.
-    """
-    client = get_gcs_client()
-    bucket = client.bucket(LLM_BUCKET)
-    file_path = get_chat_history_file_path(user_id)
-
-    blob = bucket.blob(file_path)
-    if blob.exists():
-        # Append to existing file
-        existing_data = blob.download_as_text()
-        new_data = f"{existing_data}\n{message}"
+        messages = json.loads(blob.download_as_text())
+        # Convert dicts to ChatMessage instances
+        chat_messages = [ChatMessage(**msg) for msg in messages]
     else:
-        # Start a new file
-        new_data = message
+        chat_messages = []
 
-    # Upload the updated chat history
-    blob.upload_from_string(new_data, content_type="text/plain")
+    # Convert ChatMessage to Content objects
+    contents = [
+        Content(role=chat_message.role, parts=[Part.from_text(chat_message.content)])
+        for chat_message in chat_messages
+    ]
+    return contents
 
 
-def extract_last_two_turns(history: list) -> list:
+def append_message_to_gcs(user_id: str, message: ChatMessage):
     """
-    Extracts the last two user-model exchange pairs from the chat history, ignoring blank lines.
-
-    Args:
-        history (list): The chat history as a list of lines (each line being a user or model turn).
-
-    Returns:
-        list: The last two user-model exchanges in chronological order, excluding blank lines.
+    Append a new message to the same day messages for the user.
     """
-    if not history:
-        return []
+    client = get_gcs_client()
+    bucket = client.bucket(LLM_BUCKET)
+    file_path = get_chat_history_file_path(user_id)
+    blob = bucket.blob(file_path)
+    if blob.exists():
+        # Download the existing file
+        messages = json.loads(blob.download_as_text())
+    else:
+        # Start with an empty list if the file does not exist
+        messages = []
 
-    # Initialize a list to store the last two exchanges
-    turns = []
+    # Convert ChatMessage to dict and append
+    messages.append(message.model_dump())
 
-    # We want to loop backwards and collect pairs (user, model), skipping blank lines
-    for i in range(len(history) - 1, -1, -1):
-        line = history[i].strip()  # Remove leading/trailing whitespace
-        if line:  # Ignore blank lines
-            turns.append(line)
-
-        # If we've added 4 valid lines (2 user-model pairs), stop collecting
-        if len(turns) == 4:
-            break
-
-    # Reverse the turns list to maintain the correct chronological order (oldest first)
-    return turns[::-1]
+    # Upload the updated list back to GCS
+    blob.upload_from_string(json.dumps(messages), content_type="application/json")

@@ -6,13 +6,8 @@ logger = logging.getLogger(__name__)
 
 
 def get_spend(function_args: dict) -> dict:
-    """_summary_
-
-    Args:
-        function_args (dict): _description_
-
-    Returns:
-        dict: _description_
+    """
+    Get spend data using the function args from the model response.
     """
 
     try:

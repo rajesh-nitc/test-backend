@@ -56,12 +56,7 @@ class Settings(BaseSettings):
     )
     SYSTEM_INSTRUCTION: str = Field(
         """
-        - The conversation history is formatted as:
-            - Previous turns have 'user:' and 'model:' prefixes.
-            - A new user query is provided **without** these prefixes.
-        - Do not consider the conversation history when determining the correct function to call.
-        - Ask clarifying questions if not enough information is available.
-        - For general conversation, respond with friendly text and **do not call any functions**.
+        Ask clarifying questions if not enough information is available.
         """,
         description="System instruction for the model.",
     )

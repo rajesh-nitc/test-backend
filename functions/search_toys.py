@@ -7,10 +7,10 @@ DESCRIPTIONS = {
 Handles user queries related to toys, games, or recommendations for children
 Extract query, top_k, operator, and price from user queries
 See extracted fields in the examples below for refrence:
-    - Search toys for toddlers: query is full user query, top_k is {settings.EMB_TOP_K}, operator is null and price is null
-    - Find five indoor games for kids: query is full user query, top_k is 5, operator is null and price is null
+    - Search toys for toddlers: query is full user query, top_k is {settings.EMB_TOP_K}, operator is None and price is None
+    - Find five indoor games for kids: query is full user query, top_k is 5, operator is None and price is None
     - Recommend outdoor toys under $25: query is full user query, top_k is {settings.EMB_TOP_K}, operator is LESS and price is 25
-    - toys: query is full user query, top_k is {settings.EMB_TOP_K}, operator is null and price is null
+    - toys: query is full user query, top_k is {settings.EMB_TOP_K}, operator is None and price is None
 """,
     "top_k": f"""
 Number of toys or games to return in the response. Default value is {settings.EMB_TOP_K}

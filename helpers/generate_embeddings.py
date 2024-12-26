@@ -87,11 +87,6 @@ def generate_vector_embeddings(df: pd.DataFrame, batch_size=5):
 def save_to_gcs_as_json(dataframe: pd.DataFrame, bkt: str, blob_name: str):
     """
     Save a DataFrame as a JSON in a GCS bucket.
-
-    Args:
-        dataframe (pd.DataFrame): DataFrame to save.
-        bkt (str): Name of the GCS bucket.
-        blob_name (str): Destination path and file name in the GCS bucket.
     """
     # Convert DataFrame to JSON string
     json_string = dataframe.to_json(

@@ -16,13 +16,7 @@ logger = logging.getLogger(__name__)
 
 def extract_function_call(response: GenerationResponse) -> dict:
     """
-    Extracts a single function call from the model's response.
-
-    Args:
-        response (GenerationResponse): The model's response.
-
-    Returns:
-        dict: A dictionary representing the function call and its arguments.
+    Extracts single function call from the model's response.
     """
     if response.candidates and response.candidates[0].function_calls:
         function_call = response.candidates[0].function_calls[0]
@@ -34,13 +28,8 @@ def extract_function_call(response: GenerationResponse) -> dict:
 
 
 def extract_text(response: GenerationResponse) -> str:
-    """_summary_
-
-    Args:
-        response (GenerationResponse): _description_
-
-    Returns:
-        str: _description_
+    """
+    Extracts text from the model's response.
     """
     # Extract text from the model's response
     text = response.candidates[0].content.parts[0].text
@@ -51,13 +40,7 @@ def extract_text(response: GenerationResponse) -> str:
 
 def get_model() -> GenerativeModel:
     """
-    Returns a configured GenerativeModel object.
-
-    Raises:
-        ValueError: If the LLM_MODEL environment variable is not set.
-
-    Returns:
-        GenerativeModel: A configured generative model instance.
+    Initialize the GenerativeModel.
     """
     LLM_MODEL = settings.LLM_MODEL
     if not LLM_MODEL:

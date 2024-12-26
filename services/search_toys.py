@@ -6,6 +6,9 @@ logger = logging.getLogger(__name__)
 
 
 def search_toys(function_args: dict):
+    """
+    Search for toys using the function args from the model response.
+    """
 
     try:
         ids = get_vector_index_data(function_args=function_args)
