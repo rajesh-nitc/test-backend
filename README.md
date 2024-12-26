@@ -12,20 +12,9 @@ This API supports function calling with Gemini models. User history from the sam
 ### Prerequisites
 
 1. A Google Cloud Project with the Vertex AI API enabled.
-
-   - `prj-bu1-d-sample-base-9208`
-
-2. GCS buckets:
-
-   - `bkt-bu1-d-function-calling-api-chat`
-   - `bkt-bu1-d-function-calling-api-embedding`
-
-3. IAM roles:
-
-   - `roles/aiplatform.user` on the project.
-   - `roles/storage.objectUser` on the GCS buckets.
-
-4. Configure `config/settings.py` and variables in `Makefile`
+2. GCS buckets: one for chat history and one for embeddings.
+3. IAM roles: Vertex AI User and Storage Object User.
+4. Update `config/settings.py` and variables in `Makefile`
 5. Authenticate locally with GCP:
 
 ```
@@ -33,8 +22,6 @@ make auth
 ```
 
 6. Generate embeddings:
-
-   The module `helpers/generate_embeddings.py` will save emb json in emb bucket which will be used to create vector search index on the console.
 
 ```
 make embeddings
