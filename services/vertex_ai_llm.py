@@ -21,15 +21,15 @@ async def generate_model_response(
     # Retrieve user's chat history for the same day
     history = load_same_day_messages(user_id)
 
-    # Log input tokens and billable characters
-    tokens_response = await model.count_tokens_async(history or prompt)
-    total_tokens = tokens_response.total_tokens
-    total_billable_characters = tokens_response.total_billable_characters
-    logger.info(f"total_tokens: {total_tokens}")
-    logger.info(f"total_billable_characters: {total_billable_characters}")
-
     # Start a new chat session with history
     chat = model.start_chat(history=history)
+
+    # Log input tokens and billable characters
+    tokens_response = await model.count_tokens_async(chat.history or prompt)
+    logger.info(f"total_tokens: {tokens_response.total_tokens}")
+    logger.info(
+        f"total_billable_characters: {tokens_response.total_billable_characters}"
+    )
 
     # Send new prompt to the model
     response = await chat.send_message_async(prompt)
