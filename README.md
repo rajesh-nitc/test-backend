@@ -1,6 +1,6 @@
 # genai-function-calling-api
 
-This API supports function calling with chat history stored in GCS. The last two turns of conversation are retrieved and fed to the model to ensure context-aware, multi-turn responses.
+This API supports function calling with chat history stored in GCS. User history from the same day is provided to the model to maintain multi-turn context.
 
 ## Features
 
@@ -67,6 +67,6 @@ make docker
 make prompt PROMPT='how much did i spend on entertainment this year?'
 
 # Generation with Vector Search
-make prompt PROMPT='suggest indoor toys for kids under $$25?'
+make prompt PROMPT='suggest toys like Uno under $$25?'
 
 ```
