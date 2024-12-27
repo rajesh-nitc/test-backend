@@ -58,6 +58,7 @@ class Settings(BaseSettings):
         "gemini-1.5-flash",
         "gemini-2.0-flash-exp",
         # "gemini-2.0-flash-thinking-exp-1219", # does not support function calling
+        # "gemini-1.5-flash-8b", # small model, not available in vertex ai yet
     ] = Field("gemini-1.5-pro", description="The language model to use.")
     LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = Field(
         "INFO", description="Logging level."
