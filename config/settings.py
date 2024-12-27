@@ -18,7 +18,11 @@ class Settings(BaseSettings):
     EMB_DEPLOYED_INDEX_ID: str = Field(
         "index_01_deploy_1734488317622", description="Deployed index ID for embeddings."
     )
-    EMB_DF_HEAD: int = Field(100, ge=1, description="To avoid quota exceeded error.")
+    EMB_DF_HEAD: int = Field(
+        100,
+        ge=1,
+        description="Work on first 100 records only. To avoid quota exceeded error.",
+    )
     EMB_DIMENSIONALITY: int = Field(
         768, ge=1, description="Dimensionality of the embeddings."
     )
