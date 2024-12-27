@@ -11,19 +11,31 @@ This API supports function calling with Gemini models. User history from the sam
 
 ### Prerequisites
 
-1. A Google Cloud Project with the Vertex AI API enabled
-2. GCS buckets: one for chat history and one for embeddings
-3. IAM roles: Vertex AI User and Storage Object User
-4. Update `config/settings.py` and variables in `Makefile`
-5. Authenticate locally with GCP: ```make auth```
-6. Generate embeddings: ```make embeddings```
-7. Deploy vertex search index endpoint on the console
-8. Update `config/settings.py` with endpoint variables
-9. Create virtual environment:
+1. **GCP Project**: Ensure Vertex AI API is enabled.
+2. **GCS Buckets**: Create buckets for storing chat history and embeddings.
+3. **IAM Roles**: Assign the following roles to your user account:
+   - Vertex AI User
+   - Storage Object User
+4. **Virtual Environment**: Set up and activate a Python virtual environment:
 
 ```
+
 python3 -m venv venv
 source venv/bin/activate
+```
+
+5. **Embeddings** _(optional, required only if feature #2 is used)_:
+
+```
+make generate_embeddings
+```
+
+6. **Vector Search** _(optional, required only if feature #2 is used)_: Deploy a search index via the console, using the embeddings JSON generated in step 5.
+7. **Configuration**: Update variables in `config/settings.py` and `Makefile` as per your project setup.
+8. **Authentication**: Authenticate locally with GCP using the command:
+
+```
+   make auth
 ```
 
 ### Run
