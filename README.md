@@ -27,7 +27,7 @@ source venv/bin/activate
 5. **Embeddings** _(optional, required only if feature #2 is used)_:
 
 ```
-make generate_embeddings
+make embeddings
 ```
 
 6. **Vector Search** _(optional, required only if feature #2 is used)_: Deploy a search index via the console, using the embeddings JSON generated in step 5.

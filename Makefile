@@ -37,7 +37,7 @@ docker: ## Build and run the application in Docker
         -e EMB_DEPLOYED_INDEX_ID="index_01_deploy_1734488317622" \
         -e EMB_DF_HEAD=100 \
         -e EMB_DIMENSIONALITY=768 \
-        -e EMB_INDEX_ENDPOINT="projects/770674777462/locations/asia-south1/indexEndpoints/5963364040964046848" \
+        -e EMB_INDEX_ENDPOINT="projects/770674777462/locations/us-central1/indexEndpoints/5963364040964046848" \
         -e EMB_MODEL="text-embedding-005" \
         -e EMB_TASK="RETRIEVAL_DOCUMENT" \
         -e EMB_TOP_K=3 \
@@ -48,7 +48,7 @@ docker: ## Build and run the application in Docker
         -e LLM_MAX_OUTPUT_TOKENS=100 \
         -e LLM_MODEL="gemini-1.5-pro" \
         -e LOG_LEVEL="INFO" \
-        -e REGION="asia-south1" \
+        -e REGION="us-central1" \
         -e SYSTEM_INSTRUCTION="Ask clarifying questions if not enough information is available." \
         --name $(APP_NAME) \
         $(APP_NAME)
@@ -66,7 +66,7 @@ prompt: ## Send a prompt request using cURL (requires PROMPT)
   	-d '{ "prompt": "$(PROMPT)", "user_id": "rajesh-nitc" }'
 
 embeddings: check_venv ## Generate embeddings using the helper module
-	python3 helpers/generate_embeddings.py
+	PYTHONPATH=. python3 helpers/generate_embeddings.py
 
 notebook: check_venv ## Create notebook from helper module
 	jupytext --to notebook helpers/generate_embeddings.py

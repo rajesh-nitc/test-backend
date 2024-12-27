@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import Field
 from pydantic_settings import BaseSettings
 
@@ -21,10 +23,10 @@ class Settings(BaseSettings):
         768, ge=1, description="Dimensionality of the embeddings."
     )
     EMB_INDEX_ENDPOINT: str = Field(
-        "projects/770674777462/locations/asia-south1/indexEndpoints/5963364040964046848",
+        "projects/770674777462/locations/us-central1/indexEndpoints/5963364040964046848",
         description="Endpoint for the embeddings index.",
     )
-    EMB_MODEL: str = Field(
+    EMB_MODEL: Literal["text-embedding-004", "text-embedding-005"] = Field(
         "text-embedding-005", description="The embedding model to use."
     )
     EMB_TASK: str = Field(
@@ -35,7 +37,9 @@ class Settings(BaseSettings):
         ge=1,
         description="The number of top results to retrieve from the embeddings.",
     )
-    ENV: str = Field("local", description="The environment (local, dev, prod).")
+    ENV: Literal["local", "dev", "npr", "prod"] = Field(
+        "local", description="The environment."
+    )
     GOOGLE_CLOUD_PROJECT: str = Field(
         "prj-bu1-d-sample-base-9208", description="The Google Cloud project ID."
     )
@@ -49,10 +53,17 @@ class Settings(BaseSettings):
     LLM_MAX_OUTPUT_TOKENS: int = Field(
         100, le=100, description="Maximum number of output tokens for the LLM."
     )
-    LLM_MODEL: str = Field("gemini-1.5-pro", description="The language model to use.")
-    LOG_LEVEL: str = Field("INFO", description="Logging level.")
-    REGION: str = Field(
-        "asia-south1", description="The region where the service is hosted."
+    LLM_MODEL: Literal[
+        "gemini-1.5-pro",
+        "gemini-1.5-flash",
+        "gemini-2.0-flash-exp",
+        # "gemini-2.0-flash-thinking-exp-1219", # does not support function calling
+    ] = Field("gemini-1.5-pro", description="The language model to use.")
+    LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = Field(
+        "INFO", description="Logging level."
+    )
+    REGION: Literal["us-central1"] = Field(
+        "us-central1", description="The region where the service is hosted."
     )
     SYSTEM_INSTRUCTION: str = Field(
         """
