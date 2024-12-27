@@ -17,7 +17,7 @@ repos:
       - id: check-builtin-literals
       - id: check-shebang-scripts-are-executable
       - id: file-contents-sorter
-        files: ^(requirements\.txt|requirements-test\.txt|\.gitignore|\.dockerignore)$
+        files: ^(requirements\.txt|requirements-test\.txt|\.gitignore)$
 
   # Removes unused imports and unused variables
   - repo: https://github.com/PyCQA/autoflake
