@@ -1,56 +1,9 @@
-# Handle line endings for text files automatically
 * text=auto
-
-# Ensure Python source files use LF line endings
+*.csv text eol=lf
+*.json text eol=lf
+*.md text eol=lf
 *.py text eol=lf
-
-# Treat JSON, YAML, and similar configuration files as text
-*.json text
-*.yml text
-*.yaml text
-
-# Shell scripts should also use LF line endings
 *.sh text eol=lf
-
-# Enforce binary treatment for non-text files
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.pdf binary
-*.zip binary
-*.tar binary
-*.gz binary
-
-# Ignore diffs for compiled Python files and other build artifacts
-*.pyc binary
-*.pyo binary
-*.pyd binary
-
-# Prevent diffs for virtual environment folders and related binaries
-venv/** binary
-env/** binary
-
-# Lock files (e.g., Pipfile.lock) should use union merges to reduce conflicts
-*.lock merge=union
-
-# Manage text files for web assets
-*.html text
-*.css text
-*.js text
-
-# Diff-friendly settings for Markdown and reStructuredText documentation
-*.md text
-*.rst text
-
-# Handle Dockerfiles and Kubernetes YAML consistently
-Dockerfile text
-docker-compose.yml text eol=lf
-kubernetes/*.yaml text
-
-# Handle log and database files as binary
-*.log binary
-*.db binary
-
-# Set default behavior for unknown file types
-* text=auto
+*.yaml text eol=lf
+Dockerfile text eol=lf
+Makefile text eol=lf

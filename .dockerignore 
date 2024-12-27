@@ -1,7 +1,9 @@
 .git/
 .gitattributes
 .gitignore
+.mypy_cache/
 .pre-commit-config.yaml
+.pytest_cache/
 .vscode/
 **pycache**/
 helpers/
