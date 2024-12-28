@@ -41,7 +41,7 @@ docker: ## Build and run the application in Docker
         -e EMB_MODEL="text-embedding-005" \
         -e EMB_TASK="RETRIEVAL_DOCUMENT" \
         -e EMB_TOP_K=3 \
-        -e ENV="local" \
+        -e ENV="dev" \
         -e GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT) \
         -e LLM_BUCKET="bkt-bu1-d-function-calling-api-chat" \
         -e LLM_BUCKET_FOLDER="chat_histories" \

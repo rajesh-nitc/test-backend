@@ -18,11 +18,7 @@ timeout = 125  # Timeout for workers
 loglevel = settings.LOG_LEVEL or "info"
 
 # Log the decision for worker count
-if ENV == "local":
-    workers = 1
-    print(f"{ENV.capitalize()} environment detected. Using {workers} worker.")
-else:
-    workers = os.cpu_count() or 1  # Default to 1 worker if cpu_count() is None
-    print(
-        f"{ENV.capitalize()} environment detected. Using {workers} worker(s) based on CPU count."
-    )
+workers = os.cpu_count() or 1  # Default to 1 worker if cpu_count() is None
+print(
+    f"{ENV.capitalize()} environment detected. Using {workers} worker(s) based on CPU count."
+)
