@@ -16,9 +16,6 @@ worker_class = "uvicorn.workers.UvicornWorker"  # Use Uvicorn workers with Gunic
 worker_connections = 250  # Max number of simultaneous clients
 timeout = 25  # Timeout for workers
 loglevel = "WARNING"  # Log only warnings and errors
+workers = max(2, os.cpu_count() // 2)  # type: ignore # Use half the CPU cores or at least 2 workers
 
-# Log the decision for worker count
-workers = os.cpu_count() or 1  # Default to 1 worker if cpu_count() is None
-logger.info(
-    f"{ENV.capitalize()} environment detected. Using {workers} worker(s) based on CPU count."
-)
+logger.info(f"{ENV.capitalize()} environment detected. Using {workers} worker(s).")
