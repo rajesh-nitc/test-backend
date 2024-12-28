@@ -41,7 +41,7 @@ class Settings(BaseSettings):
         ge=1,
         description="The number of top results to retrieve from the embeddings.",
     )
-    ENV: Literal["dev", "npr", "prod"] = Field(
+    ENV: Literal["dev", "npr", "prd"] = Field(
         "dev", description="Application environment."
     )
     GOOGLE_CLOUD_PROJECT: str = Field(
