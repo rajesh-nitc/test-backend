@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 # Gunicorn configuration
 bind = "0.0.0.0:8000"  # Bind to all IPs on port 8000
 worker_class = "uvicorn.workers.UvicornWorker"  # Use Uvicorn workers with Gunicorn
-worker_connections = 1250  # Max number of simultaneous clients
-timeout = 125  # Timeout for workers
+worker_connections = 250  # Max number of simultaneous clients
+timeout = 25  # Timeout for workers
 loglevel = "WARNING"  # Log only warnings and errors
 
 # Log the decision for worker count
