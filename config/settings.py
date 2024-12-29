@@ -49,7 +49,7 @@ class Settings(BaseSettings):
     )
     LLM_BUCKET: str = Field(
         "bkt-bu1-d-function-calling-api-chat",
-        description="Bucket for storing language model chat histories.",
+        description="Bucket for storing user chat history.",
     )
     LLM_BUCKET_FOLDER: str = Field(
         "chat_histories", description="Folder within the LLM bucket."
@@ -63,13 +63,11 @@ class Settings(BaseSettings):
         "gemini-2.0-flash-exp",
         # "gemini-2.0-flash-thinking-exp-1219", # does not support function calling
         # "gemini-1.5-flash-8b", # small model, not available in vertex ai yet
-    ] = Field("gemini-1.5-pro", description="The language model to use.")
+    ] = Field("gemini-1.5-pro", description="The foundation LLM model to use.")
     LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = Field(
         "INFO", description="Logging level."
     )
-    REGION: Literal["us-central1"] = Field(
-        "us-central1", description="The region where the service is hosted."
-    )
+    REGION: Literal["us-central1"] = Field("us-central1", description="The GCP region.")
     SYSTEM_INSTRUCTION: str = Field(
         """
         Ask clarifying questions if not enough information is available.

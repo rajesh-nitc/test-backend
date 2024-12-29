@@ -11,7 +11,7 @@ LLM_BUCKET = settings.LLM_BUCKET
 LLM_BUCKET_FOLDER = settings.LLM_BUCKET_FOLDER
 
 
-def get_gcs_client():
+def get_gcs_client() -> storage.Client:
     """
     Get a Google Cloud Storage client.
     """
@@ -50,7 +50,7 @@ def load_same_day_messages(user_id: str) -> list[Content]:
     return contents
 
 
-def append_message_to_gcs(user_id: str, message: ChatMessage):
+def append_message_to_gcs(user_id: str, message: ChatMessage) -> None:
     """
     Append a new message to the same day messages for the user.
     """

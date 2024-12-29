@@ -12,6 +12,6 @@ router: APIRouter = APIRouter()
 async def get_prompt_response(
     request: PromptRequest,
     model: GenerativeModel = Depends(get_model),
-):
+) -> PromptResponse:
     result = await generate_model_response(request.prompt, model, request.user_id)
     return PromptResponse(response=result)

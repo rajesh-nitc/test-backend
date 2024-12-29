@@ -17,7 +17,7 @@ EMB_TASK = settings.EMB_TASK
 logger = logging.getLogger(__name__)
 
 
-def get_vector_index_data(function_args: dict):
+def get_vector_index_data(function_args: dict) -> list[dict[str, str]]:
     """
     Get search data using the query and numeric filter.
     """

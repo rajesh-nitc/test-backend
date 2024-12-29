@@ -16,5 +16,5 @@ def get_spend(function_args: dict) -> dict:
         return {"data": {"amount": "$25"}}
 
     except Exception as e:
-        logger.error(f"Error occurred: {e}")
+        logger.error(e)
         return {"error": "An error occurred, please try again later."}

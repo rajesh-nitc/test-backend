@@ -1,6 +1,7 @@
 from logging.config import dictConfig
+from typing import Any
 
-LOGGING_CONFIG = {
+LOGGING_CONFIG: Any = {
     "version": 1,
     "disable_existing_loggers": True,
     "formatters": {
@@ -28,7 +29,7 @@ LOGGING_CONFIG = {
 }
 
 
-def setup_logging(log_level="INFO"):
+def setup_logging(log_level="INFO") -> None:
     LOGGING_CONFIG["handlers"]["console"]["level"] = log_level
     LOGGING_CONFIG["loggers"][""]["level"] = log_level
     dictConfig(LOGGING_CONFIG)

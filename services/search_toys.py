@@ -5,7 +5,7 @@ from services.vertex_ai_vector_search import get_vector_index_data
 logger = logging.getLogger(__name__)
 
 
-def search_toys(function_args: dict):
+def search_toys(function_args: dict) -> list[dict[str, str]]:
     """
     Search for toys using the function args from the model response.
     """
@@ -16,5 +16,5 @@ def search_toys(function_args: dict):
         return ids
 
     except Exception as e:
-        logger.error(f"Error occurred: {e}")
-        return {"error": "An error occurred, please try again later."}
+        logger.error(e)
+        return [{"error": "An error occurred, please try again later."}]
