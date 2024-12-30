@@ -72,7 +72,7 @@ notebook: check_venv ## Create notebook from helper module
 	jupytext --to notebook helpers/generate_embeddings.py
 
 precommit: check_venv ## Run pre-commit checks
-	pre-commit run --all-files
+	pre-commit run --all-files --verbose
 
 clear_history: ## Clear chat history from gcs
 	gsutil -m rm -r gs://$(LLM_BUCKET)/**

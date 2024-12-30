@@ -19,34 +19,15 @@ repos:
       - id: file-contents-sorter
         files: ^(requirements\.txt|requirements-test\.txt|\.gitignore)$
 
-  # Removes unused imports and unused variables
-  - repo: https://github.com/PyCQA/autoflake
-    rev: v2.2.1
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.8.4
     hooks:
-      - id: autoflake
-        args: ["--remove-unused-variables", "--remove-all-unused-imports"]
-
-  # Black for code formatting
-  - repo: https://github.com/psf/black
-    rev: "24.10.0"
-    hooks:
-      - id: black
-        types_or: [python, pyi]
-        language_version: python3
-
-  # isort for sorting imports (compatible with Black)
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        args: ["--profile", "black"]
-
-  # Flake8 for linting
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.1
-    hooks:
-      - id: flake8
-        args: ["--max-line-length=250", "--ignore=E203,W503,E402"]
+      # Run the linter.
+      - id: ruff
+        args: ["--fix", "--ignore", "E402"]
+      # Run the formatter.
+      - id: ruff-format
 
   # Mypy for type checking
   - repo: https://github.com/pre-commit/mirrors-mypy
@@ -56,22 +37,8 @@ repos:
         args: ["--ignore-missing-imports", "--explicit-package-bases"]
         exclude: tests/
 
-  # PyUpgrade
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.19.1
-    hooks:
-      - id: pyupgrade
-        args: ["--py311-plus"]
-
   # ShellCheck
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
-
-  # Common security issues
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.8.0
-    hooks:
-      - id: bandit
-        exclude: tests/
