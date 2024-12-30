@@ -4,6 +4,7 @@
 .mypy_cache/
 .pre-commit-config.yaml
 .pytest_cache/
+.ruff_cache/
 .vscode/
 **pycache**/
 helpers/
