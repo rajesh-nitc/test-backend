@@ -30,9 +30,9 @@ source venv/bin/activate
 make embeddings
 ```
 
-6. **Vector Search** _(optional, required only if feature #2 is used)_: Deploy a search index via the console, using the embeddings JSON generated in step 5.
+6. **Vector Search** _(optional, required only if feature #2 is used)_: Deploy a search index via the console, using the embeddings JSON generated in previous step.
 7. **Configuration**: Update variables in `config/settings.py` and `Makefile` as per your project setup.
-8. **Authentication**: Authenticate locally with GCP using the command:
+8. **Authentication**: Authenticate locally with GCP:
 
 ```
    make auth
