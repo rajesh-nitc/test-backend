@@ -53,7 +53,7 @@ async def generate_model_response(
                 f"function_name: {function_name}, function_args: {function_args}"
             )
 
-            # Call function from the registry
+            # Call function handler from the registry
             api_response = FUNCTION_REGISTRY[function_name](function_args)
 
             # Send api response back to the model
