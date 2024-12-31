@@ -34,40 +34,40 @@ async def generate_model_response(
     # Send new prompt to the model
     response = await chat.send_message_async(prompt)
 
-    # Extract the function call or text from the model's response
-    function_call = extract_function_call(response)
+    function_calling_in_process = True
+    while function_calling_in_process:
+        function_call = extract_function_call(response)
 
-    if function_call:
-        function_name, function_args = next(iter(function_call.items()))
-        logger.info(f"function_name: {function_name}, function_args: {function_args}")
-
-        # Call function from the registry
-        if function_name in FUNCTION_REGISTRY:
-            api_response = FUNCTION_REGISTRY[function_name](function_args)
-        else:
-            raise ValueError(f"Unknown function called: {function_name}")
-
-        # Send api response back to the model
-        response = await chat.send_message_async(
-            Part.from_function_response(
-                name=function_name,
-                response={"content": api_response},
+        if function_call:
+            function_name, function_args = next(iter(function_call.items()))
+            logger.info(
+                f"function_name: {function_name}, function_args: {function_args}"
             )
-        )
 
-        # Final text response
-        model_response = extract_text(response)
+            # Call function from the registry
+            if function_name in FUNCTION_REGISTRY:
+                api_response = FUNCTION_REGISTRY[function_name](function_args)
 
-    else:
-        # If there is no function call, extract the text response
-        model_response = extract_text(response)
+            # Send api response back to the model
+            response = await chat.send_message_async(
+                Part.from_function_response(
+                    name=function_name,
+                    response={"content": api_response},
+                )
+            )
+
+            # "response" could be a function call or text. Hence, the while loop
+
+        else:
+            function_calling_in_process = False
+            response_final = extract_text(response)
 
     # Append message to the GCS chat history
     append_message_to_gcs(
         user_id=user_id, message=ChatMessage(role="user", content=prompt)
     )
     append_message_to_gcs(
-        user_id=user_id, message=ChatMessage(role="model", content=model_response)
+        user_id=user_id, message=ChatMessage(role="model", content=response_final)
     )
 
-    return model_response
+    return response_final
