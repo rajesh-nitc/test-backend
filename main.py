@@ -9,7 +9,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config.settings import settings
-from routers import prompt
+from routers import health, prompt
 
 logger = logging.getLogger(__name__)
 
@@ -39,9 +39,4 @@ logger.info("App is bound to host: 0.0.0.0, port: 8000")
 
 # Include Routers
 app.include_router(prompt.router, prefix="/api", tags=["Prompt"])
-
-
-# Health Check Route
-@app.get("/health", tags=["Health"])
-async def health_check() -> dict[str, str]:
-    return {"status": "ok"}
+app.include_router(health.router, prefix="/api", tags=["Health"])
