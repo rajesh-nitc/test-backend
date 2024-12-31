@@ -2,6 +2,7 @@ import logging
 
 from vertexai.generative_models import GenerativeModel, Part
 
+from config.settings import settings
 from config.registry import FUNCTION_REGISTRY
 from models.chat_message import ChatMessage
 from utils.gcs_history import append_message_to_gcs, load_same_day_messages
@@ -34,10 +35,18 @@ async def generate_model_response(
     # Send new prompt to the model
     response = await chat.send_message_async(prompt)
 
+    # Function calling loop
     function_calling_in_process = True
-    while function_calling_in_process:
-        function_call = extract_function_call(response)
+    iteration_count = 0
+    LLM_FUNCTION_CALLING_ITERATIONS = settings.LLM_FUNCTION_CALLING_ITERATIONS
 
+    while function_calling_in_process:
+        iteration_count += 1
+        if iteration_count > LLM_FUNCTION_CALLING_ITERATIONS:
+            logger.warning("Exceeded maximum iterations in function-calling loop.")
+            break
+
+        function_call = extract_function_call(response)
         if function_call:
             function_name, function_args = next(iter(function_call.items()))
             logger.info(
@@ -45,8 +54,7 @@ async def generate_model_response(
             )
 
             # Call function from the registry
-            if function_name in FUNCTION_REGISTRY:
-                api_response = FUNCTION_REGISTRY[function_name](function_args)
+            api_response = FUNCTION_REGISTRY[function_name](function_args)
 
             # Send api response back to the model
             response = await chat.send_message_async(

@@ -54,6 +54,9 @@ class Settings(BaseSettings):
     LLM_BUCKET_FOLDER: str = Field(
         "chat_histories", description="Folder within the LLM bucket."
     )
+    LLM_FUNCTION_CALLING_ITERATIONS: int = Field(
+        2, ge=1, description="Iterations for function calling while loop."
+    )
     LLM_MAX_OUTPUT_TOKENS: int = Field(
         100, le=100, description="Maximum number of output tokens for the LLM."
     )
