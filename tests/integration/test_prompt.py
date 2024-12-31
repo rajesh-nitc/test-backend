@@ -11,7 +11,7 @@ def test_prompt():
         "prompt": "how much did i spend on travel last month",
         "user_id": "rajesh-nitc",
     }
-    response = client.post("api/v1/prompt", json=payload)
+    response = client.post("api/prompt", json=payload)
 
     # Print the response for debugging
     print(f"Response Status Code: {response.status_code}")

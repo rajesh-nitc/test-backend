@@ -61,7 +61,7 @@ tests: check_venv ## Run basic tests
 	PYTHONPATH=. pytest -s
 
 prompt: ## Send a prompt request using cURL (requires PROMPT)
-	curl -X 'POST' 'http://localhost:8000/api/v1/prompt' \
+	curl -X 'POST' 'http://localhost:8000/api/prompt' \
   	-H 'Content-Type: application/json' \
   	-d '{ "prompt": "$(PROMPT)", "user_id": "rajesh-nitc" }'
 

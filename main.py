@@ -38,7 +38,7 @@ logger.info(f"Running in {settings.ENV.capitalize()} mode.")
 logger.info("App is bound to host: 0.0.0.0, port: 8000")
 
 # Include Routers
-app.include_router(prompt.router, prefix="/api/v1", tags=["Prompt"])
+app.include_router(prompt.router, prefix="/api", tags=["Prompt"])
 
 
 # Health Check Route
