@@ -53,7 +53,7 @@ make docker
 
 ```
 # Generation with APIs
-make prompt PROMPT='weather in bangalore'
+make prompt PROMPT='how is the weather in bangalore and mumbai'
 make prompt PROMPT='how much did i spend on entertainment this year?'
 
 # Generation with Vector Search
