@@ -8,7 +8,7 @@ LLM_BUCKET=bkt-bu1-d-function-calling-api-chat
 .PHONY: help auth run docker docker_clean tests prompt embeddings notebook precommit clear_history
 
 help: ## Self-documenting help command
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
 check_venv:
 	@if [ -z "$$VIRTUAL_ENV" ]; then \
@@ -76,6 +76,9 @@ notebook: check_venv ## Create notebook from helper module
 
 precommit: check_venv ## Run pre-commit checks
 	pre-commit run --all-files
+
+precommit_update: check_venv ## Update pre-commit hooks
+	pre-commit autoupdate
 
 clear_history: ## Clear chat history from gcs
 	gsutil -m rm -r gs://$(LLM_BUCKET)/**

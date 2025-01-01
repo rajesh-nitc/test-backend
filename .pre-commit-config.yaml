@@ -21,7 +21,7 @@ repos:
 
   # Removes unused imports and unused variables
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.2.1
+    rev: v2.3.1
     hooks:
       - id: autoflake
         args: ["--remove-unused-variables", "--remove-all-unused-imports"]
@@ -32,7 +32,7 @@ repos:
     hooks:
       - id: black
         types_or: [python, pyi]
-        language_version: python3
+        language_version: python3.12
 
   # isort for sorting imports (compatible with Black)
   - repo: https://github.com/PyCQA/isort
@@ -50,7 +50,7 @@ repos:
 
   # Mypy for type checking
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.13.0
+    rev: v1.14.1
     hooks:
       - id: mypy
         args: ["--ignore-missing-imports", "--explicit-package-bases"]
@@ -61,7 +61,7 @@ repos:
     rev: v3.19.1
     hooks:
       - id: pyupgrade
-        args: ["--py311-plus"]
+        args: ["--py312-plus"]
 
   # Common security issues
   - repo: https://github.com/PyCQA/bandit
