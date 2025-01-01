@@ -26,6 +26,7 @@ run: check_venv ## Run the application locally after authentication
 	pre-commit install
 	bash ./start.sh
 
+# Add your OpenWeather API key
 docker: ## Build and run the application in Docker
 	sudo docker build -t $(APP_NAME) .
 	sudo docker run -d -p 8000:8000 \
@@ -43,11 +44,13 @@ docker: ## Build and run the application in Docker
         -e EMB_TOP_K=3 \
         -e ENV="dev" \
         -e GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT) \
+		-e HTTP_CLIENT_BASE_URL="https://api.openweathermap.org" \
         -e LLM_BUCKET="bkt-bu1-d-function-calling-api-chat" \
         -e LLM_BUCKET_FOLDER="chat_histories" \
         -e LLM_MAX_OUTPUT_TOKENS=100 \
         -e LLM_MODEL="gemini-1.5-pro" \
         -e LOG_LEVEL="INFO" \
+		-e OPENWEATHER_API_KEY="" \
         -e REGION="us-central1" \
         -e SYSTEM_INSTRUCTION="Ask clarifying questions if not enough information is available." \
         --name $(APP_NAME) \
