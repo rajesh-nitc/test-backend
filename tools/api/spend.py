@@ -10,7 +10,7 @@ DESCRIPTIONS = {
 Handle user queries about expenses, spending, or financial information.
 Extract the category, start_date, and end_date from user queries.
 Today's date is {date} ({day_of_week}). Handle relative terms like "last year" or "this month" by calculating the appropriate start and end dates.
-See extracted fields in the examples below for reference:
+Example usage:
     - What were my expenses this year?: category is null, start_date is YYYY-01-01, end_date is today's date
     - How much did I spend on groceries last year?: category is groceries, start_date is YYYY-01-01, end_date is YYYY-12-31
     - What were my expenses in January?: category is null, start_date is YYYY-01-01, end_date is YYYY-01-31

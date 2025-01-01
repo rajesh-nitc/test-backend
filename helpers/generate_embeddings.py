@@ -9,7 +9,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
 
 from config.settings import settings
-from utils.gcs_history import get_gcs_client
+from utils.gcs import get_gcs_client
 
 file_path = os.path.join(os.path.dirname(__file__), "retail_toy_dataset.csv")
 print(file_path)

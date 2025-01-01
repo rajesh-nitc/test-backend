@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from config.settings import settings
 from routers import health, prompt
+from utils.http import http_client_lifespan
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +19,7 @@ app = FastAPI(
     title=settings.APP_NAME,
     description=f"{settings.APP_NAME} with {settings.LLM_MODEL} and {settings.EMB_MODEL}.",
     version="1.0.0",
+    lifespan=http_client_lifespan,
 )
 
 # Add Middleware

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from vertexai.generative_models import GenerativeModel
 
-from models.prompt import PromptRequest, PromptResponse
-from services.vertex_ai_llm import generate_model_response
-from utils.vertex_ai_llm import get_model
+from models.common.prompt import PromptRequest, PromptResponse
+from services.common.llm import generate_model_response
+from utils.llm import get_model
 
 router: APIRouter = APIRouter()
 

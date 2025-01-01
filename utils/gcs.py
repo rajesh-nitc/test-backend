@@ -4,7 +4,7 @@ from google.cloud import storage
 from vertexai.generative_models import Content, Part
 
 from config.settings import settings
-from models.chat_message import ChatMessage
+from models.common.chat_message import ChatMessage
 from utils.date import get_today_date
 
 LLM_BUCKET = settings.LLM_BUCKET

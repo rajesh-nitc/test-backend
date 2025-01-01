@@ -47,15 +47,15 @@ class Settings(BaseSettings):
     GOOGLE_CLOUD_PROJECT: str = Field(
         "prj-bu1-d-sample-base-9208", description="The Google Cloud project ID."
     )
+    HTTP_CLIENT_BASE_URL: str = Field(
+        "https://api.openweathermap.org", description="Open weather API base url"
+    )
     LLM_BUCKET: str = Field(
         "bkt-bu1-d-function-calling-api-chat",
         description="Bucket for storing user chat history.",
     )
     LLM_BUCKET_FOLDER: str = Field(
         "chat_histories", description="Folder within the LLM bucket."
-    )
-    LLM_FUNCTION_CALLING_ITERATIONS: int = Field(
-        2, ge=1, description="Iterations for function calling while loop."
     )
     LLM_MAX_OUTPUT_TOKENS: int = Field(
         100, le=100, description="Maximum number of output tokens for the LLM."
@@ -70,6 +70,11 @@ class Settings(BaseSettings):
     LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = Field(
         "INFO", description="Logging level."
     )
+    OPENWEATHER_API_KEY: str = Field(
+        ...,  # Required field (this means it must be provided through env)
+        env="OPENWEATHER_API_KEY",  # Fetches the value from the environment
+        description="OpenWeather API key.",
+    )  # type: ignore
     REGION: Literal["us-central1"] = Field("us-central1", description="The GCP region.")
     SYSTEM_INSTRUCTION: str = Field(
         """

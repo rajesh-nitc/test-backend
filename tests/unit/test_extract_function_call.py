@@ -1,7 +1,7 @@
 from unittest.mock import Mock
 
 # Import the function to test
-from utils.vertex_ai_llm import extract_function_call
+from utils.llm import extract_function_call
 
 
 def test_extract_function_call_valid_response():
