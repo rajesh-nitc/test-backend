@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 from vertexai.generative_models import (
     GenerationConfig,
@@ -18,7 +19,6 @@ logger = logging.getLogger(__name__)
 def get_model() -> GenerativeModel:
     """
     Initialize the GenerativeModel.
-    candidate_count=1 is intentional.
     """
     LLM_MODEL = settings.LLM_MODEL
     if not LLM_MODEL:
@@ -46,18 +46,22 @@ def get_model() -> GenerativeModel:
     )
 
 
-def extract_function_call(response: GenerationResponse) -> dict:
+def extract_function_calls(response: GenerationResponse) -> list[dict]:
     """
-    Extracts function call from the model's response.
+    Extracts function calls from the model's response.
     """
     try:
-        if response.candidates and response.candidates[0].function_calls:
-            function_call = response.candidates[0].function_calls[0]
-            function_call_dict = {function_call.name: dict(function_call.args)}
-            return function_call_dict
-
-        logger.info("No function call found in the model response.")
-        return {}
+        function_calls = []
+        if response.candidates[0].function_calls:
+            for function_call in response.candidates[0].function_calls:
+                function_call_dict: dict[str, Any] = {function_call.name: {}}
+                for key, value in function_call.args.items():
+                    function_call_dict[function_call.name][key] = value
+                function_calls.append(function_call_dict)
+            return function_calls
+        else:
+            logger.info("No function call found in the model response.")
+            return []
     except Exception as e:
         logger.error(f"Error extracting function call from response: {e}")
         raise ResponseExtractionError("Failed to extract function call from response.")

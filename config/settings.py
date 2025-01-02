@@ -68,10 +68,10 @@ class Settings(BaseSettings):
     LLM_MODEL: Literal[
         "gemini-1.5-pro",
         "gemini-1.5-flash",
-        "gemini-2.0-flash-exp",
+        "gemini-2.0-flash-exp",  # free for now?
         # "gemini-2.0-flash-thinking-exp-1219", # does not support function calling
         # "gemini-1.5-flash-8b", # small model, not available in vertex ai yet
-    ] = Field("gemini-1.5-flash", description="The foundation LLM model to use.")
+    ] = Field("gemini-2.0-flash-exp", description="The foundation LLM model to use.")
     LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = Field(
         "INFO", description="Logging level."
     )
