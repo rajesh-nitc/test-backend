@@ -41,7 +41,6 @@ docker: ## Build and run the application in Docker
         -e EMB_DIMENSIONALITY=768 \
         -e EMB_INDEX_ENDPOINT="projects/770674777462/locations/us-central1/indexEndpoints/5963364040964046848" \
         -e EMB_MODEL="text-embedding-005" \
-        -e EMB_TASK="RETRIEVAL_DOCUMENT" \
         -e EMB_TOP_K=3 \
         -e ENV="dev" \
         -e GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT) \

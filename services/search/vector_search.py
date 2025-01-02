@@ -12,7 +12,6 @@ EMB_MODEL = settings.EMB_MODEL
 EMB_INDEX_ENDPOINT = settings.EMB_INDEX_ENDPOINT
 EMB_DEPLOYED_INDEX_ID = settings.EMB_DEPLOYED_INDEX_ID
 EMB_DIMENSIONALITY = settings.EMB_DIMENSIONALITY
-EMB_TASK = settings.EMB_TASK
 
 logger = logging.getLogger(__name__)
 
@@ -45,7 +44,7 @@ def get_vector_index_data(function_args: dict) -> list[dict[str, str]]:
     query_list = [query]
 
     model = TextEmbeddingModel.from_pretrained(EMB_MODEL)  # type: ignore
-    inputs = [TextEmbeddingInput(text, EMB_TASK) for text in query_list]  # type: ignore
+    inputs = [TextEmbeddingInput(text, "RETRIEVAL_DOCUMENT") for text in query_list]  # type: ignore
     kwargs = (
         dict(output_dimensionality=EMB_DIMENSIONALITY) if EMB_DIMENSIONALITY else {}
     )

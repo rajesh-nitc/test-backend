@@ -33,9 +33,6 @@ class Settings(BaseSettings):
     EMB_MODEL: Literal["text-embedding-004", "text-embedding-005"] = Field(
         "text-embedding-005", description="The embedding model to use."
     )
-    EMB_TASK: str = Field(
-        "RETRIEVAL_DOCUMENT", description="The task for which the embeddings are used."
-    )
     EMB_TOP_K: int = Field(
         3,
         ge=1,

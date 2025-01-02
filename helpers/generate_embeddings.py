@@ -18,7 +18,6 @@ GOOGLE_CLOUD_PROJECT = settings.GOOGLE_CLOUD_PROJECT
 EMB_MODEL = settings.EMB_MODEL
 EMB_BUCKET = settings.EMB_BUCKET
 EMB_DIMENSIONALITY = settings.EMB_DIMENSIONALITY
-EMB_TASK = settings.EMB_TASK
 EMB_BLOB = settings.EMB_BLOB
 EMB_DF_HEAD = settings.EMB_DF_HEAD
 
@@ -67,7 +66,7 @@ def generate_vector_embeddings(df: pd.DataFrame, batch_size=5):
 
     for i in range(0, len(chunked), batch_size):
         texts = [x["content"] for x in chunked[i : i + batch_size]]
-        inputs = [TextEmbeddingInput(text, EMB_TASK) for text in texts]
+        inputs = [TextEmbeddingInput(text, "RETRIEVAL_DOCUMENT") for text in texts]
         embeddings = model.get_embeddings(
             inputs,  # type: ignore
             auto_truncate=False,
