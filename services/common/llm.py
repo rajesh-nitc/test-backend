@@ -78,7 +78,7 @@ async def generate_model_response(
                     "Mismatch in the number of api responses and function calls."
                 )
 
-            # Send all responses as a list of Part objects
+            # Send all api responses back to model
             response = await chat.send_message_async(api_responses)
 
         else:
