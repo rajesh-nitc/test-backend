@@ -77,9 +77,9 @@ class Settings(BaseSettings):
     )
     OPENWEATHER_API_KEY: str = Field(
         ...,  # Required field (this means it must be provided through env)
-        env="OPENWEATHER_API_KEY",  # Fetches the value from the environment
+        json_schema_extra={"env": "OPENWEATHER_API_KEY"},
         description="OpenWeather API key.",
-    )  # type: ignore
+    )
     REGION: Literal["us-central1"] = Field("us-central1", description="The GCP region.")
     SYSTEM_INSTRUCTION: str = Field(
         """
