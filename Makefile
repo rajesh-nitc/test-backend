@@ -1,7 +1,8 @@
 # Variables
 APP_NAME=genai-function-calling-api
 GOOGLE_CLOUD_PROJECT=prj-bu1-d-sample-base-9208
-LLM_BUCKET=bkt-bu1-d-function-calling-api-chat
+LLM_CHAT_BUCKET=bkt-bu1-d-function-calling-api-chat
+LLM_QUOTA_BUCKET=bkt-bu1-d-function-calling-api-quota
 
 # Adding so that make does not conflict with files or directory with the same names as target
 # For e.g. "make tests" won't work unless we add tests as a phony target
@@ -45,8 +46,10 @@ docker: ## Build and run the application in Docker
         -e ENV="dev" \
         -e GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT) \
 		-e HTTP_CLIENT_BASE_URL="https://api.openweathermap.org" \
-        -e LLM_BUCKET="bkt-bu1-d-function-calling-api-chat" \
-        -e LLM_BUCKET_FOLDER="chat_histories" \
+        -e LLM_CHAT_BUCKET="bkt-bu1-d-function-calling-api-chat" \
+		-e LLM_PROMPT_TOKENS_LIMIT=2500 \
+		-e LLM_QUOTA_BUCKET="bkt-bu1-d-function-calling-api-quota" \
+		-e LLM_QUOTA_TOKENS_LIMIT=2500 \
         -e LLM_MAX_OUTPUT_TOKENS=100 \
         -e LLM_MODEL="gemini-1.5-pro" \
         -e LOG_LEVEL="INFO" \
@@ -80,5 +83,6 @@ precommit: check_venv ## Run pre-commit checks
 precommit_update: check_venv ## Update pre-commit hooks
 	pre-commit autoupdate
 
-clear_history: ## Clear chat history from gcs
-	gsutil -m rm -r gs://$(LLM_BUCKET)/**
+clear_buckets: ## Clear bucket contents from gcs
+	gsutil -m rm -r gs://$(LLM_CHAT_BUCKET)/**
+	gsutil -m rm -r gs://$(LLM_QUOTA_BUCKET)/**

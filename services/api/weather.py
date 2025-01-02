@@ -26,7 +26,7 @@ async def get_location_coordinates(function_args: dict) -> list[dict]:
 
     except Exception as e:
         logger.error(e)
-        return [{"error": "An error occurred, please try again later."}]
+        return [{"error": str(e)}]
 
 
 async def get_weather_by_coordinates(function_args: dict) -> dict:
@@ -53,4 +53,4 @@ async def get_weather_by_coordinates(function_args: dict) -> dict:
 
     except Exception as e:
         logger.error(e)
-        return {"error": "An error occurred, please try again later."}
+        return {"error": str(e)}

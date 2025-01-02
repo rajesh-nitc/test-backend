@@ -12,9 +12,9 @@ async def get_spend(function_args: dict) -> dict:
 
     try:
         model_instance = SpendApiRequestData.model_validate(function_args)
-        logger.info(model_instance.model_dump())
+        logger.info(f"Validated function arguments: {model_instance.model_dump()}")
         return {"data": {"amount": "$25"}}
 
     except Exception as e:
         logger.error(e)
-        return {"error": "An error occurred, please try again later."}
+        return {"error": str(e)}

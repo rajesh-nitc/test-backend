@@ -50,12 +50,17 @@ class Settings(BaseSettings):
     HTTP_CLIENT_BASE_URL: str = Field(
         "https://api.openweathermap.org", description="Open weather API base url"
     )
-    LLM_BUCKET: str = Field(
+    LLM_CHAT_BUCKET: str = Field(
         "bkt-bu1-d-function-calling-api-chat",
-        description="Bucket for storing user chat history.",
+        description="Bucket for storing chat history by user.",
     )
-    LLM_BUCKET_FOLDER: str = Field(
-        "chat_histories", description="Folder within the LLM bucket."
+    LLM_PROMPT_TOKENS_LIMIT: int = Field(2500, description="New prompt tokens limit.")
+    LLM_QUOTA_BUCKET: str = Field(
+        "bkt-bu1-d-function-calling-api-quota",
+        description="Bucket for storing llm quota usage by user.",
+    )
+    LLM_QUOTA_TOKENS_LIMIT: int = Field(
+        2500, description="Total LLM tokens usage limit per user per day."
     )
     LLM_MAX_OUTPUT_TOKENS: int = Field(
         100, le=100, description="Maximum number of output tokens for the LLM."

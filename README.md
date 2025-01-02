@@ -12,7 +12,7 @@ This API supports function calling with Gemini models. User history from the sam
 ### Prerequisites
 
 1. **GCP Project**: Ensure Vertex AI API is enabled.
-2. **GCS Buckets**: Create buckets for storing chat history and embeddings.
+2. **GCS Buckets**: Create buckets for storing chat, quota and embeddings.
 3. **IAM Roles**: Assign the following roles to your user account:
    - Vertex AI User
    - Storage Object User
