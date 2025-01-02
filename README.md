@@ -1,6 +1,6 @@
 # genai-function-calling-api
 
-This API supports function calling with Gemini models. User history from the same day is fed to the model to maintain multi-turn context.
+This API supports function calling with Gemini LLM models. User history from the same day is fed to the model to maintain multi-turn context.
 
 ## Features
 

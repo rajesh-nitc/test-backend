@@ -71,7 +71,6 @@ def extract_text(response: GenerationResponse) -> str:
         # Extract text from the model's response
         text = response.candidates[0].content.parts[0].text
         logger.info(f"Found text: {text}")
-
         return text
     except Exception as e:
         logger.error(f"Error extracting text from response: {e}")
