@@ -16,7 +16,7 @@ async def generate_model_response(
     prompt: str, model: GenerativeModel, user_id: str
 ) -> str:
     """
-    Generate model response.
+    Generate Model response.
     """
     logger.info(f"Received prompt from user {user_id}: {prompt}")
 
@@ -36,7 +36,7 @@ async def generate_model_response(
     # Start a new chat session with history
     chat = model.start_chat(history=history)
 
-    # Send new prompt to the model
+    # Send new prompt to Model
     response = await chat.send_message_async(prompt)
 
     # Log Model response to prompt
@@ -49,7 +49,7 @@ async def generate_model_response(
         # Extract function call(s)
         function_calls = extract_function_calls(response)
         if function_calls:
-            # Hold the api response(s)
+            # Hold api response(s)
             api_responses = []
 
             for function_call in function_calls:
@@ -58,10 +58,10 @@ async def generate_model_response(
                     f"function_name: {function_name}, function_args: {function_args}"
                 )
 
-                # Call the function handler and store the response
+                # Call api
                 api_response = await FUNCTION_REGISTRY[function_name](function_args)
 
-                # Append api response(s)
+                # Append api response
                 api_responses.append(
                     Part.from_function_response(
                         name=function_name,
@@ -78,7 +78,7 @@ async def generate_model_response(
                     "Number of function call(s) and number of api response(s) should match."
                 )
 
-            # Send api response(s) back to model
+            # Send api response(s) back to Model
             response = await chat.send_message_async(api_responses)
 
             # Log Model response to api response(s)
