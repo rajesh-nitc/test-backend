@@ -1,7 +1,6 @@
 -r requirements.txt
-jupytext==1.16.6
-langchain-text-splitters==0.3.3 # needed for helpers/generate_embeddings.py
-pandas==2.2.3 # needed for helpers/generate_embeddings.py
+jupytext==1.16.6 # See usage in Makefile
+langchain-text-splitters==0.3.3 # Required for helpers/generate_embeddings.py
+pandas==2.2.3 # Required for helpers/generate_embeddings.py
 pre-commit==4.0.1
-pytest-asyncio==0.25.0
 pytest==8.3.4
