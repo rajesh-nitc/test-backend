@@ -9,7 +9,6 @@
 **pycache**/
 helpers/
 Makefile
-pytest.ini
 README.md
 requirements-test.txt
 tests/
