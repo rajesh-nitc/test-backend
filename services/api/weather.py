@@ -13,7 +13,6 @@ async def get_location_coordinates(function_args: dict) -> dict:
 
     try:
         model_instance = OpenWeatherGeocodingRequestData.model_validate(function_args)
-        logger.info(model_instance.model_dump())
         client = HTTPClientSingleton.get_instance()
         response = await client.get(
             "/geo/1.0/direct",
@@ -21,12 +20,10 @@ async def get_location_coordinates(function_args: dict) -> dict:
         )
         response.raise_for_status()
         data = response.json()
+        logger.info(data)
         required_data = {
             "lat": data[0]["lat"],
             "lon": data[0]["lon"],
-            "name": data[0]["name"],
-            "state": data[0]["state"],
-            "country": data[0]["country"],
         }
         return required_data
 
@@ -42,7 +39,6 @@ async def get_weather_by_coordinates(function_args: dict) -> dict:
 
     try:
         model_instance = OpenWeatherRequestData.model_validate(function_args)
-        logger.info(model_instance.model_dump())
         client = HTTPClientSingleton.get_instance()
         response = await client.get(
             "/data/2.5/weather",
@@ -54,6 +50,7 @@ async def get_weather_by_coordinates(function_args: dict) -> dict:
         )
         response.raise_for_status()
         data = response.json()
+        logger.info(data)
         return data
 
     except Exception as e:
