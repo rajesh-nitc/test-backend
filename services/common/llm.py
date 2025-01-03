@@ -4,10 +4,11 @@ from vertexai.generative_models import GenerativeModel, Part
 
 from config.exceptions import PromptExceededError, QuotaExceededError
 from config.registry import FUNCTION_REGISTRY
-from utils.gcs import get_same_day_chat_messages
+from utils.gcs import get_same_day_chat_messages, update_quota_to_gcs
 from utils.llm import extract_function_calls, extract_text
 from utils.postchecks import postchecks
 from utils.prechecks import prechecks
+from utils.text import dedent_and_strip
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +19,7 @@ async def generate_model_response(
     """
     Generate Model response.
     """
+    prompt = dedent_and_strip(prompt)
     logger.info(f"Received prompt from user {user_id}: {prompt}")
 
     # Perform prechecks
@@ -38,6 +40,9 @@ async def generate_model_response(
 
     # Send new prompt to Model
     response = await chat.send_message_async(prompt)
+
+    # Update quota usage
+    update_quota_to_gcs(response, user_id)
 
     # Log Model response to prompt
     logger.info(f"Model response to prompt: {response}")
@@ -81,6 +86,9 @@ async def generate_model_response(
             # Send api response(s) back to Model
             response = await chat.send_message_async(api_responses)
 
+            # Update quota usage
+            update_quota_to_gcs(response, user_id)
+
             # Log Model response to api response(s)
             logger.info(f"Model response to api response(s): {response}")
 
@@ -89,6 +97,6 @@ async def generate_model_response(
             final_response = extract_text(response)
 
     # Perform postchecks
-    await postchecks(prompt, final_response, response, user_id)
+    await postchecks(prompt, final_response, user_id)
 
     return final_response

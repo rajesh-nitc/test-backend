@@ -46,9 +46,9 @@ docker: ## Build and run the application in Docker
         -e GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT) \
 		-e HTTP_CLIENT_BASE_URL="https://api.openweathermap.org" \
         -e LLM_CHAT_BUCKET="bkt-bu1-d-function-calling-api-chat" \
-		-e LLM_PROMPT_TOKENS_LIMIT=2500 \
+		-e LLM_PROMPT_TOKENS_LIMIT=1250 \
 		-e LLM_QUOTA_BUCKET="bkt-bu1-d-function-calling-api-quota" \
-		-e LLM_QUOTA_TOKENS_LIMIT=2500 \
+		-e LLM_QUOTA_TOKENS_LIMIT=12500 \
         -e LLM_MAX_OUTPUT_TOKENS=100 \
         -e LLM_MODEL="gemini-2.0-flash-exp" \
         -e LOG_LEVEL="INFO" \

@@ -6,7 +6,7 @@ from utils.http import HTTPClientSingleton
 logger = logging.getLogger(__name__)
 
 
-async def get_location_coordinates(function_args: dict) -> list[dict]:
+async def get_location_coordinates(function_args: dict) -> dict:
     """
     Get location coordinates from OpenWeather Geocoding API
     """
@@ -19,14 +19,20 @@ async def get_location_coordinates(function_args: dict) -> list[dict]:
             "/geo/1.0/direct",
             params={"q": model_instance.location, "appid": model_instance.appid},
         )
-        logger.info(f"api_response: {response.text}")
         response.raise_for_status()
         data = response.json()
-        return data
+        required_data = {
+            "lat": data[0]["lat"],
+            "lon": data[0]["lon"],
+            "name": data[0]["name"],
+            "state": data[0]["state"],
+            "country": data[0]["country"],
+        }
+        return required_data
 
     except Exception as e:
         logger.error(e)
-        return [{"error": str(e)}]
+        return {"error": str(e)}
 
 
 async def get_weather_by_coordinates(function_args: dict) -> dict:
@@ -46,7 +52,6 @@ async def get_weather_by_coordinates(function_args: dict) -> dict:
                 "appid": model_instance.appid,
             },
         )
-        logger.info(f"api_response: {response.text}")
         response.raise_for_status()
         data = response.json()
         return data

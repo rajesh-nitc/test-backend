@@ -1,19 +1,15 @@
 import logging
 
-from vertexai.generative_models import GenerationResponse
-
-from config.exceptions import GCSFileError, QuotaUpdateError
+from config.exceptions import GCSFileError
 from models.common.chat import ChatMessage
-from utils.gcs import append_chat_message_to_gcs, update_quota_to_gcs
+from utils.gcs import append_chat_message_to_gcs
 
 logger = logging.getLogger(__name__)
 
 
-async def postchecks(
-    prompt: str, final_response: str, response: GenerationResponse, user_id: str
-) -> None:
+async def postchecks(prompt: str, final_response: str, user_id: str) -> None:
     """
-    Perform postchecks after the response is generated.
+    Perform postchecks after final response is generated.
 
     :param prompt: The prompt string.
     :param final_response: The final response content.
@@ -30,11 +26,4 @@ async def postchecks(
         )
     except GCSFileError as e:
         logger.error(f"Failed to append chat messages for user {user_id}: {e}")
-        raise
-
-    try:
-        # Update quota usage in GCS
-        update_quota_to_gcs(response, user_id)
-    except QuotaUpdateError as e:
-        logger.error(f"Failed to update quota for user {user_id}: {e}")
         raise

@@ -92,7 +92,7 @@ def append_chat_message_to_gcs(user_id: str, message: ChatMessage) -> None:
 
 def update_quota_to_gcs(response: GenerationResponse, user_id: str) -> None:
     """
-    Update quota usage to the same day quota for the user.
+    Update quota after each Model response.
     """
     try:
         client = get_gcs_client()
@@ -127,9 +127,6 @@ def update_quota_to_gcs(response: GenerationResponse, user_id: str) -> None:
         current_quota["prompt_token_count"] += prompt_token_count
         current_quota["candidates_token_count"] += candidates_token_count
         current_quota["total_token_count"] += total_token_count
-
-        # Log tokens used
-        logger.info(f"User {user_id} used {total_token_count} tokens ")
 
         # Save updated quota back to GCS
         blob.upload_from_string(

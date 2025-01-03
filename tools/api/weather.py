@@ -1,15 +1,21 @@
 from vertexai.generative_models import FunctionDeclaration
 
+from utils.text import dedent_and_strip
+
 DESCRIPTIONS_COORDINATES = {
-    "FUNCTION": """
+    "FUNCTION": dedent_and_strip(
+        """
 Retrieves the latitude and longitude of a given location using OpenWeather's Geocoding API.
 Example usage:
     - weather in Bengaluru: location is Bengaluru,IN
     - weather in New York: location is New York,NY,US
-""",
-    "location": """
+"""
+    ),
+    "location": dedent_and_strip(
+        """
 City name, state code (only for the US) and country code divided by comma. Please use ISO 3166-1 alpha-2 country codes.
-""",
+"""
+    ),
 }
 
 # Define the function declaration
@@ -29,13 +35,15 @@ get_location_coordinates_func = FunctionDeclaration(
 )
 
 DESCRIPTIONS_WEATHER = {
-    "FUNCTION": """
+    "FUNCTION": dedent_and_strip(
+        """
 Retrieves the current weather details for a given location based on latitude and longitude using OpenWeather's Weather API.
 Example usage:
     - Get weather for lat=12.9716 and long=77.5946 (Bengaluru, IN)
-""",
-    "latitude": "The latitude of the location.",
-    "longitude": "The longitude of the location.",
+"""
+    ),
+    "latitude": dedent_and_strip("The latitude of the location."),
+    "longitude": dedent_and_strip("The longitude of the location."),
 }
 
 # Define the function declaration
