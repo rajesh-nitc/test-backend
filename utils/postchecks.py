@@ -10,13 +10,13 @@ logger = logging.getLogger(__name__)
 
 
 async def postchecks(
-    prompt: str, response_final: str, response: GenerationResponse, user_id: str
+    prompt: str, final_response: str, response: GenerationResponse, user_id: str
 ) -> None:
     """
     Perform postchecks after the response is generated.
 
     :param prompt: The prompt string.
-    :param response_final: The final response content.
+    :param final_response: The final response content.
     :param response: The full response object from the model.
     :param user_id: The user ID.
     """
@@ -26,7 +26,7 @@ async def postchecks(
             user_id=user_id, message=ChatMessage(role="user", content=prompt)
         )
         append_chat_message_to_gcs(
-            user_id=user_id, message=ChatMessage(role="model", content=response_final)
+            user_id=user_id, message=ChatMessage(role="model", content=final_response)
         )
     except GCSFileError as e:
         logger.error(f"Failed to append chat messages for user {user_id}: {e}")

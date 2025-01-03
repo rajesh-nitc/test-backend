@@ -39,17 +39,17 @@ async def generate_model_response(
     # Send new prompt to the model
     response = await chat.send_message_async(prompt)
 
-    # Log response
-    logger.info(f"Model response: {response}")
+    # Log Model response to prompt
+    logger.info(f"Model response to prompt: {response}")
 
     # Function calling loop
     function_calling_in_process = True
     while function_calling_in_process:
 
-        # Extract function calls
+        # Extract function call(s)
         function_calls = extract_function_calls(response)
         if function_calls:
-            # Create a list to hold all the api responses
+            # Hold the api response(s)
             api_responses = []
 
             for function_call in function_calls:
@@ -61,7 +61,7 @@ async def generate_model_response(
                 # Call the function handler and store the response
                 api_response = await FUNCTION_REGISTRY[function_name](function_args)
 
-                # Append api response
+                # Append api response(s)
                 api_responses.append(
                     Part.from_function_response(
                         name=function_name,
@@ -69,23 +69,26 @@ async def generate_model_response(
                     )
                 )
 
-            # Ensure the number of api responses match the number of function calls
+            # Number of function call(s) and number of api response(s) should match.
             if len(api_responses) != len(function_calls):
                 logger.error(
-                    "Mismatch in the number of api responses and function calls."
+                    "Number of function call(s) and number of api response(s) should match."
                 )
                 raise ValueError(
-                    "Mismatch in the number of api responses and function calls."
+                    "Number of function call(s) and number of api response(s) should match."
                 )
 
-            # Send all api responses back to model
+            # Send api response(s) back to model
             response = await chat.send_message_async(api_responses)
+
+            # Log Model response to api response(s)
+            logger.info(f"Model response to api response(s): {response}")
 
         else:
             function_calling_in_process = False
-            response_final = extract_text(response)
+            final_response = extract_text(response)
 
     # Perform postchecks
-    await postchecks(prompt, response_final, response, user_id)
+    await postchecks(prompt, final_response, response, user_id)
 
-    return response_final
+    return final_response

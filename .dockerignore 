@@ -4,6 +4,7 @@
 .mypy_cache/
 .pre-commit-config.yaml
 .pytest_cache/
+.venv/
 .vscode/
 **pycache**/
 helpers/
@@ -12,4 +13,3 @@ pytest.ini
 README.md
 requirements-test.txt
 tests/
-venv/

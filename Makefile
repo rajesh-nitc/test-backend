@@ -50,7 +50,7 @@ docker: ## Build and run the application in Docker
 		-e LLM_QUOTA_BUCKET="bkt-bu1-d-function-calling-api-quota" \
 		-e LLM_QUOTA_TOKENS_LIMIT=2500 \
         -e LLM_MAX_OUTPUT_TOKENS=100 \
-        -e LLM_MODEL="gemini-1.5-pro" \
+        -e LLM_MODEL="gemini-2.0-flash-exp" \
         -e LOG_LEVEL="INFO" \
 		-e OPENWEATHER_API_KEY="" \
         -e REGION="us-central1" \

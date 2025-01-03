@@ -20,8 +20,8 @@ This API supports function calling with Gemini LLM models. User history from the
 
 ```
 
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 5. **Embeddings** _(optional, required only if feature #2 is used)_:
