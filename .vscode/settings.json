@@ -12,7 +12,8 @@
 	"python.testing.pytestEnabled": true,
 	"python.testing.pytestArgs": [
 		"tests",
-		"-s"
+		"-m",
+		"integration"
 	],
 	"python.testing.autoTestDiscoverOnSaveEnabled": true,
 	"terminal.integrated.env.linux": {
