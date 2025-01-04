@@ -43,8 +43,16 @@ Example usage:
     - Get weather for lat=12.9716 and lon=77.5946
 """
     ),
-    "latitude": dedent_and_strip("Latitude"),
-    "longitude": dedent_and_strip("Longitude"),
+    "latitude": dedent_and_strip(
+        """
+Latitude
+"""
+    ),
+    "longitude": dedent_and_strip(
+        """
+Longitude
+"""
+    ),
 }
 
 # Define the function declaration
