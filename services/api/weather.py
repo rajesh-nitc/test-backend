@@ -34,7 +34,7 @@ async def get_location_coordinates(function_args: dict) -> dict:
 
 async def get_weather_by_coordinates(function_args: dict) -> dict:
     """
-    Get weather data from coordinates using OpenWeather Weather API
+    Get weather data by coordinates using OpenWeather Weather API
     """
 
     try:

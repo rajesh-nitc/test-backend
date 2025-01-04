@@ -3,7 +3,7 @@ import logging
 from vertexai.generative_models import GenerativeModel
 
 from config.exceptions import PromptExceededError, QuotaExceededError
-from utils.gcs import get_same_day_chat_messages, update_quota_to_gcs
+from utils.gcs import get_chat_messages, update_quota_to_gcs
 from utils.llm import extract_function_calls, extract_text, process_function_calls
 from utils.postchecks import postchecks
 from utils.prechecks import prechecks
@@ -32,7 +32,7 @@ async def generate_model_response(
         return f"Error: {str(e)}"
 
     # Retrieve user's chat history for the same day
-    history = get_same_day_chat_messages(user_id)
+    history = get_chat_messages(user_id)
 
     # Start a new chat session with history
     chat = model.start_chat(history=history)

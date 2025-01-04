@@ -26,7 +26,7 @@ def get_gcs_client() -> storage.Client:
         raise GCSClientError("Failed to initialize GCS client.")
 
 
-def get_today_file_path(user_id: str) -> str:
+def get_file_path(user_id: str) -> str:
     """
     Generate the GCS file path for the current day's chat history for the user.
     """
@@ -34,14 +34,14 @@ def get_today_file_path(user_id: str) -> str:
     return f"{user_id}/{today}.json"
 
 
-def get_same_day_chat_messages(user_id: str) -> list[Content]:
+def get_chat_messages(user_id: str) -> list[Content]:
     """
     Get the same day messages for the user.
     """
     try:
         client = get_gcs_client()
         bucket = client.bucket(LLM_CHAT_BUCKET)
-        file_path = get_today_file_path(user_id)
+        file_path = get_file_path(user_id)
 
         blob = bucket.blob(file_path)
         if blob.exists():
@@ -71,7 +71,7 @@ def append_chat_message_to_gcs(user_id: str, message: ChatMessage) -> None:
     try:
         client = get_gcs_client()
         bucket = client.bucket(LLM_CHAT_BUCKET)
-        file_path = get_today_file_path(user_id)
+        file_path = get_file_path(user_id)
         blob = bucket.blob(file_path)
         if blob.exists():
             # Download the existing file
@@ -97,7 +97,7 @@ def update_quota_to_gcs(response: GenerationResponse, user_id: str) -> None:
     try:
         client = get_gcs_client()
         bucket = client.bucket(LLM_QUOTA_BUCKET)
-        file_path = get_today_file_path(user_id)
+        file_path = get_file_path(user_id)
         blob = bucket.blob(file_path)
 
         # Extract token counts from response

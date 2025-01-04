@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 async def get_spend(function_args: dict) -> dict:
     """
-    Get spend data using the function args from the model response.
+    Get spend data from the API. This function is a placeholder for the actual API call.
     """
 
     try:

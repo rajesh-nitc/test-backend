@@ -13,25 +13,24 @@ Handle user queries about expenses, spending, or financial information.
 Extract the category, start_date, and end_date from user queries.
 Today's date is {date} ({day_of_week}). Handle relative terms like "last year" or "this month" by calculating the appropriate start and end dates.
 Example usage:
-    - What were my expenses this year?: category is null, start_date is YYYY-01-01, end_date is today's date
+    - What were my expenses this year?: category is None, start_date is YYYY-01-01, end_date is today's date
     - How much did I spend on groceries last year?: category is groceries, start_date is YYYY-01-01, end_date is YYYY-12-31
-    - What were my expenses in January?: category is null, start_date is YYYY-01-01, end_date is YYYY-01-31
-    - spend: clarify the query as you don't have enough information
+    - What were my expenses in January?: category is None, start_date is YYYY-01-01, end_date is YYYY-01-31
 """
     ),
     "start_date": dedent_and_strip(
         """
-Start date for the expenses query
+Start date
 """
     ),
     "end_date": dedent_and_strip(
         """
-End date for the expenses query
+End date
 """
     ),
     "category": dedent_and_strip(
         """
-Category of the expenses query
+Category
 """
     ),
 }

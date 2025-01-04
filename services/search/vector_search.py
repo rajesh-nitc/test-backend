@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 def get_vector_index_data(function_args: dict) -> list[dict[str, str]]:
     """
-    Get search data using the query and numeric filter.
+    Get nearest neighbors from the Vector Search index
     """
     query = function_args.get("query")
     if not query:

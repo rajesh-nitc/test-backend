@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 async def search_toys(function_args: dict) -> list[dict[str, str]]:
     """
-    Search for toys using the function args from the model response.
+    Search for toys in the Vector Search index
     """
     try:
         model_instance = SearchToysApiRequestData.model_validate(function_args)

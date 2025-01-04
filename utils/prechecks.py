@@ -4,7 +4,7 @@ from vertexai.generative_models import GenerativeModel
 
 from config.exceptions import PromptExceededError, QuotaExceededError
 from config.settings import settings
-from utils.gcs import get_gcs_client, get_today_file_path
+from utils.gcs import get_file_path, get_gcs_client
 
 LLM_CHAT_BUCKET = settings.LLM_CHAT_BUCKET
 LLM_QUOTA_BUCKET = settings.LLM_QUOTA_BUCKET
@@ -36,7 +36,7 @@ async def check_quota(user_id: str, quota_limit: int) -> None:
     """
     client = get_gcs_client()
     bucket = client.bucket(LLM_QUOTA_BUCKET)
-    file_path = get_today_file_path(user_id)
+    file_path = get_file_path(user_id)
     blob = bucket.blob(file_path)
 
     try:

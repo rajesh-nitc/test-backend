@@ -13,7 +13,8 @@ Example usage:
     ),
     "location": dedent_and_strip(
         """
-City name, state code (only for the US) and country code divided by comma. Please use ISO 3166-1 alpha-2 country codes.
+City name, state code (only for the US) and country code divided by comma.
+Use ISO 3166-1 alpha-2 country codes.
 """
     ),
 }
@@ -39,11 +40,11 @@ DESCRIPTIONS_WEATHER = {
         """
 Retrieves the current weather details for a given location based on latitude and longitude using OpenWeather's Weather API.
 Example usage:
-    - Get weather for lat=12.9716 and long=77.5946 (Bengaluru, IN)
+    - Get weather for lat=12.9716 and lon=77.5946
 """
     ),
-    "latitude": dedent_and_strip("The latitude of the location."),
-    "longitude": dedent_and_strip("The longitude of the location."),
+    "latitude": dedent_and_strip("Latitude"),
+    "longitude": dedent_and_strip("Longitude"),
 }
 
 # Define the function declaration
