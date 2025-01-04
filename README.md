@@ -13,10 +13,10 @@ This API supports function calling with Gemini LLM models on Vertex AI. The mode
 
 1. **GCP Project**: Ensure Vertex AI API is enabled.
 2. **GCS Buckets**: Create buckets for storing chat, quota and embeddings.
-3. **IAM Roles**: Assign the following roles to your user account:
+3. **IAM Roles**: Ensure that your user account has at least the following roles:
    - Vertex AI User
    - Storage Object User
-4. **Virtual Environment**: Set up and activate a Python virtual environment:
+4. **Virtual Environment**:
 
 ```
 
