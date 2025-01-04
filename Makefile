@@ -63,7 +63,7 @@ docker_clean: ## Stop and remove the Docker container
 	sudo docker rm $(APP_NAME)
 
 tests: check_venv ## Run basic tests
-	PYTHONPATH=. pytest -s
+	pytest -m integration
 
 prompt: ## Send a prompt request using cURL (requires PROMPT)
 	curl -X 'POST' 'http://localhost:8000/api/prompt' \
