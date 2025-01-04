@@ -33,16 +33,22 @@ async def generate_model_response(
 
     # Retrieve user's chat history for the same day
     history = get_same_day_chat_messages(user_id)
+
     # Start a new chat session with history
     chat = model.start_chat(history=history)
+
     # Send new prompt to Model
     response = await chat.send_message_async(prompt)
+
     # Update quota usage
     update_quota_to_gcs(response, user_id)
+
     # Log Model response to prompt
     logger.info(f"Model response to prompt: {response}")
+
     # Final Model response
     final_response = ""
+
     # Function calling loop
     function_calling_in_process = True
     while function_calling_in_process:
