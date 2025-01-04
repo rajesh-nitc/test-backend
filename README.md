@@ -1,6 +1,6 @@
 # genai-function-calling-api
 
-This API supports function calling with Gemini LLM models on Vertex AI. Chat history per user per day is fed to the model to maintain multi-turn context. Quota usage limit can be set per user per day.
+This API supports function calling with Gemini LLM Models on Vertex AI. The model is provided with the day's chat history to maintain multi-turn context. The model's usage limit can be configured to manage costs.
 
 ## Features
 
