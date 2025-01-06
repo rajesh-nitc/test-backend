@@ -62,8 +62,9 @@ docker_clean: ## Stop and remove the Docker container
 	sudo docker stop $(APP_NAME)
 	sudo docker rm $(APP_NAME)
 
+# --test-cases="weather,spend,toys"
 tests: check_venv ## Run basic tests
-	pytest -m integration
+	pytest -m integration --test-cases=""
 
 prompt: ## Send a prompt request using cURL (requires PROMPT)
 	curl -X 'POST' 'http://localhost:8000/api/prompt' \

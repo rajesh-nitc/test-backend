@@ -7,28 +7,10 @@ from main import app
 
 client = TestClient(app)
 
-test_use_cases = [
-    {
-        "prompt": "how is the weather in bengaluru and mumbai?",
-        "user_id": "test_user_1",
-        "expected_keywords": ["bengaluru", "mumbai"],
-    },
-    {
-        "prompt": "how much did i spend on entertainment this year?",
-        "user_id": "test_user_2",
-        "expected_keywords": ["spent", "entertainment"],
-    },
-    {
-        "prompt": "suggest toys like Uno under $25?",
-        "user_id": "test_user_3",
-        "expected_keywords": ["toys"],
-    },
-]
-
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_use_cases_concurrent():
+async def test_use_cases_concurrent(test_use_cases):  # Inject the fixture here
     """Test use cases concurrently."""
 
     async def make_api_call(prompt, user_id, expected_keywords):
