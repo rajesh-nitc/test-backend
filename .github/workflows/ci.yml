@@ -57,4 +57,4 @@ jobs:
           echo "SAFE_BRANCH_NAME=${SAFE_BRANCH_NAME}" >> $GITHUB_ENV
 
       - name: Build Docker image
-        run: docker build -t genai-function-calling-api:${SAFE_BRANCH_NAME}-${{ github.sha::7 }} .
+        run: docker build -t genai-function-calling-api:${SAFE_BRANCH_NAME}-${{ github.sha.substring(0, 7) }} .
