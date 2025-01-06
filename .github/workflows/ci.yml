@@ -53,7 +53,7 @@ jobs:
 
       - name: Sanitize branch name
         run: |
-          SAFE_BRANCH_NAME=$(echo "${GITHUB_REF_NAME}" | sed 's|refs/heads/||' | tr '/' '-' | tr -c '[:alnum:]-' '-')
+          SAFE_BRANCH_NAME=$(echo "${GITHUB_REF}" | sed 's|refs/heads/||' | tr '/' '-' | tr -c '[:alnum:]-' '-' | sed 's/^-//;s/-$//;s/--*/-/g')
           echo "SAFE_BRANCH_NAME=${SAFE_BRANCH_NAME}" >> $GITHUB_ENV
 
       - name: Get GitHub Short SHA
