@@ -56,11 +56,5 @@ jobs:
           SAFE_BRANCH_NAME=$(echo "${GITHUB_REF}" | sed 's|refs/heads/||' | tr '/' '-' | tr -c '[:alnum:]-' '-' | sed 's/^-//;s/-$//;s/--*/-/g')
           echo "SAFE_BRANCH_NAME=${SAFE_BRANCH_NAME}" >> $GITHUB_ENV
 
-      - name: Get GitHub Short SHA
-        id: get_github_shortsha
-        run: |
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
-
       - name: Build Docker image
-        run: docker build -t genai-function-calling-api:${SAFE_BRANCH_NAME}-${SHORT_SHA} .
+        run: docker build -t genai-function-calling-api:${SAFE_BRANCH_NAME}-${GITHUB_SHA:0:7} .
