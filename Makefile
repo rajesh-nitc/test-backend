@@ -84,7 +84,7 @@ precommit: check_venv ## Run pre-commit checks
 precommit_update: check_venv ## Update pre-commit hooks
 	pre-commit autoupdate
 
-clear_buckets: ## Clear bucket contents from gcs
+clear_buckets: ## Clear gcs bucket contents (To clear the history and quota)
 	gsutil -m rm -r gs://$(LLM_CHAT_BUCKET)/**
 	gsutil -m rm -r gs://$(LLM_QUOTA_BUCKET)/**
 
