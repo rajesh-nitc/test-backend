@@ -41,11 +41,15 @@ jobs:
           source .venv/bin/activate
           pre-commit run --all-files
 
+      - name: Set up GCP auth
+        run: |
+          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/credentials.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/credentials.json" >> $GITHUB_ENV
+
       # Run all test cases with --test-cases="weather,spend,toys"
       - name: Run tests with pytest
         env:
           PYTHONPATH: "$GITHUB_WORKSPACE"
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
         run: |
           source .venv/bin/activate
