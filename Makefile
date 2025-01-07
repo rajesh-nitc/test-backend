@@ -6,10 +6,11 @@ LLM_QUOTA_BUCKET=bkt-bu1-d-function-calling-api-quota
 
 # Adding so that make does not conflict with files or directory with the same names as target
 # For e.g. "make tests" won't work unless we add tests as a phony target
-.PHONY: help auth run docker docker_clean tests prompt embeddings notebook precommit clear_history
+.PHONY: help auth run docker docker_clean tests prompt embeddings notebook precommit \
+precommit_update clear_buckets gcp_credentials_base64
 
 help: ## Self-documenting help command
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
 check_venv:
 	@if [ -z "$$VIRTUAL_ENV" ]; then \
@@ -63,7 +64,7 @@ docker_clean: ## Stop and remove the Docker container
 	sudo docker rm $(APP_NAME)
 
 # --test-cases="weather,spend,toys"
-tests: check_venv ## Run basic tests
+tests: check_venv ## Run test use cases
 	pytest -m integration --test-cases=""
 
 prompt: ## Send a prompt request using cURL (requires PROMPT)
@@ -87,7 +88,7 @@ clear_buckets: ## Clear bucket contents from gcs
 	gsutil -m rm -r gs://$(LLM_CHAT_BUCKET)/**
 	gsutil -m rm -r gs://$(LLM_QUOTA_BUCKET)/**
 
-gcp_credentials_base64: ## Encode GCP creds JSON (Use this for Github Actions Repository secret)
+gcp_credentials_base64: ## Base64 encode GCP creds JSON (Use this for Github Actions Repository secret)
 	base64 ~/.config/gcloud/application_default_credentials.json > credentials.json.base64
 	cat credentials.json.base64
 	rm credentials.json.base64
