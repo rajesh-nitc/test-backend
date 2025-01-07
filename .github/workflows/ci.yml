@@ -35,21 +35,20 @@ jobs:
           source .venv/bin/activate
           pip install --upgrade pip
           pip install -r requirements-test.txt
-          pip install pre-commit
 
       - name: Run pre-commit hooks
         run: |
           source .venv/bin/activate
           pre-commit run --all-files
 
-      # --test-cases="weather,spend,toys"
+      # Run all test cases with --test-cases="weather,spend,toys"
       - name: Run tests with pytest
         env:
           PYTHONPATH: "$GITHUB_WORKSPACE"
           OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
         run: |
           source .venv/bin/activate
-          pytest -m integration --test-cases=""
+          pytest -m integration --test-cases="weather,spend,toys"
 
       - name: Sanitize branch name
         run: |
