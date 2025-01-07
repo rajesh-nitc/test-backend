@@ -86,3 +86,8 @@ precommit_update: check_venv ## Update pre-commit hooks
 clear_buckets: ## Clear bucket contents from gcs
 	gsutil -m rm -r gs://$(LLM_CHAT_BUCKET)/**
 	gsutil -m rm -r gs://$(LLM_QUOTA_BUCKET)/**
+
+gcp_credentials_base64: ## Encode GCP creds JSON (Use this for Github Actions Repository secret)
+	base64 ~/.config/gcloud/application_default_credentials.json > credentials.json.base64
+	cat credentials.json.base64
+	rm credentials.json.base64

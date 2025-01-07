@@ -43,7 +43,7 @@ jobs:
 
       - name: Set up GCP auth
         run: |
-          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/credentials.json
+          echo "${{ secrets.GCP_CREDENTIALS_BASE64 }}" | base64 --decode > $HOME/credentials.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/credentials.json" >> $GITHUB_ENV
 
       # Run all test cases with --test-cases="weather,spend,toys"
