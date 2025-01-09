@@ -4,8 +4,26 @@ This API supports function calling with Gemini LLM models on Vertex AI. The mode
 
 ## Features
 
-1. Generation with APIs
-2. Generation with Vector Search
+1. Generation with APIs _(get_weather, get spend)_
+2. Generation with Vector Search _(search_toys)_
+
+## Agent
+
+```
+def get_agent() -> Agent:
+
+    return Agent(
+        name=f"{settings.APP_NAME}-agent",
+        model=settings.LLM_MODEL,
+        system_instruction=settings.LLM_SYSTEM_INSTRUCTION,
+        functions=[
+            get_location_coordinates_func,
+            get_weather_by_coordinates_func,
+            get_spend_func,
+            search_toys_func,
+        ],
+    )
+```
 
 ## 🚀 Getting Started
 

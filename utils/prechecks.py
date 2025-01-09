@@ -1,9 +1,8 @@
 import json
 
-from vertexai.generative_models import GenerativeModel
-
 from config.exceptions import PromptExceededError, QuotaExceededError
 from config.settings import settings
+from utils.agent import Agent
 from utils.gcs import get_file_path, get_gcs_client
 
 LLM_CHAT_BUCKET = settings.LLM_CHAT_BUCKET
@@ -12,27 +11,17 @@ LLM_QUOTA_TOKENS_LIMIT = settings.LLM_QUOTA_TOKENS_LIMIT
 LLM_PROMPT_TOKENS_LIMIT = settings.LLM_PROMPT_TOKENS_LIMIT
 
 
-async def prechecks(prompt: str, model: GenerativeModel, user_id: str) -> None:
+async def prechecks(prompt: str, agent: Agent, user_id: str) -> None:
     """
     Perform prechecks before prompt is passed to the Model.
-
-    :param prompt: The prompt string.
-    :param model: The generative model to use for counting tokens.
-    :param user_id: The user ID.
-    :raises QuotaExceededError: If the total token count exceeds the limit.
-    :raises PromptExceededError: If the prompt token count exceeds the limit.
     """
     await check_quota(user_id, LLM_QUOTA_TOKENS_LIMIT)
-    await check_prompt(prompt, model, user_id, LLM_PROMPT_TOKENS_LIMIT)
+    await check_prompt(prompt, agent, user_id, LLM_PROMPT_TOKENS_LIMIT)
 
 
 async def check_quota(user_id: str, quota_limit: int) -> None:
     """
     Check if the user's total token count exceeds the specified LLM Quota limit.
-
-    :param user_id: The user ID.
-    :param quota_limit: The maximum allowed token count.
-    :raises QuotaExceededError: If the total token count exceeds the limit.
     """
     client = get_gcs_client()
     bucket = client.bucket(LLM_QUOTA_BUCKET)
@@ -60,17 +49,12 @@ async def check_quota(user_id: str, quota_limit: int) -> None:
 
 
 async def check_prompt(
-    prompt: str, model: GenerativeModel, user_id: str, prompt_limit: int
+    prompt: str, agent: Agent, user_id: str, prompt_limit: int
 ) -> None:
     """
     Check if the prompt's token count exceeds the specified LLM Prompt limit.
-
-    :param prompt: The prompt string.
-    :param model: The generative model to use for counting tokens.
-    :param user_id: The user ID.
-    :raises PromptExceededError: If the prompt token count exceeds the limit.
     """
-    tokens_response = await model.count_tokens_async(prompt)
+    tokens_response = await agent.get_model().count_tokens_async(prompt)
     tokens = tokens_response.total_tokens
     if tokens > prompt_limit:
         raise PromptExceededError(

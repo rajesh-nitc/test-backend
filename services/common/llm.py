@@ -1,8 +1,7 @@
 import logging
 
-from vertexai.generative_models import GenerativeModel
-
 from config.exceptions import PromptExceededError, QuotaExceededError
+from utils.agent import Agent
 from utils.gcs import get_chat_messages, update_quota_to_gcs
 from utils.llm import extract_function_calls, extract_text, process_function_calls
 from utils.postchecks import postchecks
@@ -12,9 +11,7 @@ from utils.text import dedent_and_strip
 logger = logging.getLogger(__name__)
 
 
-async def generate_model_response(
-    prompt: str, model: GenerativeModel, user_id: str
-) -> str:
+async def generate_model_response(prompt: str, agent: Agent, user_id: str) -> str:
     """
     Generate Model response.
     """
@@ -23,7 +20,7 @@ async def generate_model_response(
 
     # Perform prechecks
     try:
-        await prechecks(prompt, model, user_id)
+        await prechecks(prompt, agent, user_id)
     except QuotaExceededError as e:
         logger.error(f"Quota check failed for user {user_id}: {str(e)}")
         return f"Error: {str(e)}"
@@ -35,7 +32,7 @@ async def generate_model_response(
     history = get_chat_messages(user_id)
 
     # Start a new chat session with history
-    chat = model.start_chat(history=history)
+    chat = agent.get_model().start_chat(history=history)
 
     # Send new prompt to Model
     response = await chat.send_message_async(prompt)

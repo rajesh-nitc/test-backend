@@ -51,18 +51,6 @@ class Settings(BaseSettings):
         "bkt-bu1-d-function-calling-api-chat",
         description="Bucket for storing chat history.",
     )
-    LLM_PROMPT_TOKENS_LIMIT: int = Field(
-        2500,
-        description="Maximum prompt tokens including user input, tools, and system instructions.",
-    )
-    LLM_QUOTA_BUCKET: str = Field(
-        "bkt-bu1-d-function-calling-api-quota",
-        description="Bucket for storing llm quota usage.",
-    )
-    LLM_QUOTA_TOKENS_LIMIT: int = Field(
-        12500,
-        description="Total LLM token usage allowed per user per day.",
-    )
     LLM_MAX_OUTPUT_TOKENS: int = Field(
         100, le=100, description="Maximum output tokens."
     )
@@ -75,6 +63,26 @@ class Settings(BaseSettings):
         # "gemini-2.0-flash-thinking-exp-1219", # does not support function calling
         # "gemini-1.5-flash-8b", # small model, not available in vertex ai
     ] = Field("gemini-2.0-flash-exp", description="The foundation model to use.")
+    LLM_PROMPT_TOKENS_LIMIT: int = Field(
+        2500,
+        description="Maximum prompt tokens including user input, tools, and system instructions.",
+    )
+    LLM_QUOTA_BUCKET: str = Field(
+        "bkt-bu1-d-function-calling-api-quota",
+        description="Bucket for storing llm quota usage.",
+    )
+    LLM_QUOTA_TOKENS_LIMIT: int = Field(
+        12500,
+        description="Total LLM token usage allowed per user per day.",
+    )
+    LLM_SYSTEM_INSTRUCTION: str = Field(
+        dedent_and_strip(
+            """
+        Ask clarifying questions if not enough information is available.
+        """
+        ),
+        description="System instruction for the Model.",
+    )
     LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = Field(
         "INFO", description="Logging level."
     )
@@ -84,14 +92,6 @@ class Settings(BaseSettings):
         description="OpenWeather API key.",
     )
     REGION: Literal["us-central1"] = Field("us-central1", description="The GCP region.")
-    SYSTEM_INSTRUCTION: str = Field(
-        dedent_and_strip(
-            """
-        Ask clarifying questions if not enough information is available.
-        """
-        ),
-        description="System instruction for the Model.",
-    )
 
 
 settings = Settings()  # type: ignore

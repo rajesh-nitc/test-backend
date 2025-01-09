@@ -48,14 +48,14 @@ docker: ## Build and run the application in Docker
 		-e HTTP_CLIENT_BASE_URL="https://api.openweathermap.org" \
         -e LLM_CHAT_BUCKET="bkt-bu1-d-function-calling-api-chat" \
 		-e LLM_PROMPT_TOKENS_LIMIT=1250 \
+		-e LLM_MAX_OUTPUT_TOKENS=100 \
+        -e LLM_MODEL="gemini-2.0-flash-exp" \
 		-e LLM_QUOTA_BUCKET="bkt-bu1-d-function-calling-api-quota" \
 		-e LLM_QUOTA_TOKENS_LIMIT=12500 \
-        -e LLM_MAX_OUTPUT_TOKENS=100 \
-        -e LLM_MODEL="gemini-2.0-flash-exp" \
+        -e LLM_SYSTEM_INSTRUCTION="Ask clarifying questions if not enough information is available." \
         -e LOG_LEVEL="INFO" \
 		-e OPENWEATHER_API_KEY="" \
         -e REGION="us-central1" \
-        -e SYSTEM_INSTRUCTION="Ask clarifying questions if not enough information is available." \
         --name $(APP_NAME) \
         $(APP_NAME)
 

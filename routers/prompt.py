@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
-from vertexai.generative_models import GenerativeModel
 
+from functions.registry import get_agent
 from models.common.prompt import PromptRequest, PromptResponse
 from services.common.llm import generate_model_response
-from utils.llm import get_model
+from utils.agent import Agent
 
 router: APIRouter = APIRouter()
 
@@ -11,7 +11,7 @@ router: APIRouter = APIRouter()
 @router.post("/prompt", response_model=PromptResponse)
 async def get_prompt_response(
     request: PromptRequest,
-    model: GenerativeModel = Depends(get_model),
+    agent: Agent = Depends(get_agent),
 ) -> PromptResponse:
-    result = await generate_model_response(request.prompt, model, request.user_id)
+    result = await generate_model_response(request.prompt, agent, request.user_id)
     return PromptResponse(response=result)
