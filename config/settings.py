@@ -55,10 +55,8 @@ class Settings(BaseSettings):
         100, le=100, description="Maximum output tokens."
     )
     LLM_MODEL: Literal[
-        "gemini-1.5-pro-001",
-        "gemini-1.5-flash-001",
-        "gemini-1.5-pro-002",
-        "gemini-1.5-flash-002",
+        "gemini-1.5-pro",
+        "gemini-1.5-flash",
         "gemini-2.0-flash-exp",
         # "gemini-2.0-flash-thinking-exp-1219", # does not support function calling
         # "gemini-1.5-flash-8b", # small model, not available in vertex ai
