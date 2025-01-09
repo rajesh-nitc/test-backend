@@ -6,7 +6,7 @@ def get_location_coordinates_func(location: str) -> dict:
 
 
 def get_weather_by_coordinates_func(lat: float, lon: float) -> dict:
-    return {"data": "data"}
+    return {}
 
 
 get_location_coordinates_func.__doc__ = coordinates

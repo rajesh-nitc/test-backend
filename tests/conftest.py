@@ -26,7 +26,7 @@ def test_use_cases(request):
         "toys": {
             "prompt": "suggest toys like Uno under $25?",
             "user_id": "test_user_3",
-            "expected_keywords": ["toys"],
+            "expected_keywords": ["toy", "toys"],
         },
     }
     selected_tests = request.config.getoption("--test-cases").split(",")
