@@ -1,5 +1,3 @@
-from typing import Any
-
 from pydantic import BaseModel
 
 
@@ -9,4 +7,4 @@ class PromptRequest(BaseModel):
 
 
 class PromptResponse(BaseModel):
-    response: Any
+    response: str
