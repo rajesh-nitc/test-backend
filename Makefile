@@ -24,7 +24,6 @@ auth: ## Authenticate with Google Cloud
 	gcloud config set project $(GOOGLE_CLOUD_PROJECT)
 
 run: check_venv ## Run the application locally after authentication
-	pip install -r requirements-test.txt
 	pre-commit install
 	bash ./start.sh
 

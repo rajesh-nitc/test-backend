@@ -31,8 +31,8 @@ async def generate_model_response(prompt: str, agent: Agent, user_id: str) -> st
     # Retrieve user's chat history for the same day
     history = get_chat_messages(user_id)
 
-    # Start a new chat session with history
-    chat = agent.get_model().start_chat(history=history)
+    # Start a new chat session with history. response_validation=False -> To avoid blocked model responses
+    chat = agent.get_model().start_chat(history=history, response_validation=False)
 
     # Send new prompt to Model
     response = await chat.send_message_async(prompt)

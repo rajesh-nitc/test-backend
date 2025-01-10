@@ -38,8 +38,8 @@ class Settings(BaseSettings):
         ge=1,
         description="Default top results to retrieve.",
     )
-    ENV: Literal["dev", "npr", "prd"] = Field(
-        "dev", description="Application environment."
+    ENV: Literal["local", "dev", "npr", "prd"] = Field(
+        "local", description="Application environment."
     )
     GOOGLE_CLOUD_PROJECT: str = Field(
         "prj-bu1-d-sample-base-9208", description="The Google Cloud project ID."
@@ -55,14 +55,16 @@ class Settings(BaseSettings):
         100, le=100, description="Maximum output tokens."
     )
     LLM_MODEL: Literal[
-        "gemini-1.5-pro",
-        "gemini-1.5-flash",
+        "gemini-1.5-pro-001",
+        "gemini-1.5-flash-001",
+        "gemini-1.5-pro-002",
+        "gemini-1.5-flash-002",
         "gemini-2.0-flash-exp",
         # "gemini-2.0-flash-thinking-exp-1219", # does not support function calling
         # "gemini-1.5-flash-8b", # small model, not available in vertex ai
     ] = Field("gemini-2.0-flash-exp", description="The foundation model to use.")
     LLM_PROMPT_TOKENS_LIMIT: int = Field(
-        2500,
+        12500,
         description="Maximum prompt tokens including user input, tools, and system instructions.",
     )
     LLM_QUOTA_BUCKET: str = Field(
@@ -70,13 +72,14 @@ class Settings(BaseSettings):
         description="Bucket for storing llm quota usage.",
     )
     LLM_QUOTA_TOKENS_LIMIT: int = Field(
-        12500,
+        25000,
         description="Total LLM token usage allowed per user per day.",
     )
     LLM_SYSTEM_INSTRUCTION: str = Field(
         dedent_and_strip(
             """
         Ask clarifying questions if not enough information is available.
+        Don't explain what you are doing, just provide the result.
         """
         ),
         description="System instruction for the Model.",

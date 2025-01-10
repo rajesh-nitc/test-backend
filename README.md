@@ -40,6 +40,7 @@ def get_agent() -> Agent:
 
 python3 -m venv .venv
 source .venv/bin/activate
+pip install -r requirements-test.txt
 ```
 
 5. **Embeddings** _(optional, required only if feature #2 is used)_:
