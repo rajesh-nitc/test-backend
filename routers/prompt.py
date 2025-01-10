@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from functions.registry import get_agent
+from functions.agent import get_agent
 from models.common.prompt import PromptRequest, PromptResponse
 from services.common.llm import generate_model_response
 from utils.agent import Agent

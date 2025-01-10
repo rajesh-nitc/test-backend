@@ -4,7 +4,7 @@ from typing import Any
 from vertexai.generative_models import GenerationResponse, Part
 
 from config.exceptions import ResponseExtractionError
-from functions.registry import FUNCTION_REGISTRY
+from functions.agent import FUNCTION_REGISTRY
 
 logger = logging.getLogger(__name__)
 
