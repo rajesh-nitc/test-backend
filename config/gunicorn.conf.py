@@ -16,7 +16,6 @@ worker_class = "uvicorn.workers.UvicornWorker"  # Use Uvicorn workers with Gunic
 worker_connections = 250  # Max number of simultaneous clients
 timeout = 25  # Timeout for workers
 loglevel = "WARNING"  # Log only warnings and errors
-num_cpus = multiprocessing.cpu_count()
 
 if ENV == "local":
     workers = 2
