@@ -24,7 +24,6 @@ auth: ## Authenticate with Google Cloud
 	gcloud config set project $(GOOGLE_CLOUD_PROJECT)
 
 run: check_venv ## Run the application locally after authentication
-	pre-commit install
 	bash ./start.sh
 
 # Add your OpenWeather API key
