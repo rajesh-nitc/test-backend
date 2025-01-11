@@ -1,6 +1,13 @@
 # genai-function-calling-api
 
-This API supports function calling with Azure OpenAI models and Google Gemini models on Vertex AI. The model is provided with the day's chat history to maintain multi-turn context.
+This API supports function calling with Azure OpenAI models and Gemini models on Vertex AI. The model is provided with the day's chat history to maintain multi-turn context.
+
+## Models Tested
+
+- **gpt-4o-mini**
+- **gemini-1.5-pro**
+- **gemini-1.5-flash**
+- **gemini-2.0-flash-exp**
 
 ## Features
 
@@ -57,7 +64,7 @@ make embeddings
    make auth
 ```
 
-10. Make sure history is cleared before you switch from Google model to Azure OpenAI model or vice versa:
+10. **GCS history**: History is cleared before switching from Azure OpenAI model to Gemini model or vice versa:
 
 ```
 make clear_bucket
