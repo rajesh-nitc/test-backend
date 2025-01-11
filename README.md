@@ -1,6 +1,6 @@
 # genai-function-calling-api
 
-This API supports function calling with Gemini LLM models on Vertex AI. The model is provided with the day's chat history to maintain multi-turn context. The model's usage limit can be configured to manage costs.
+This API supports function calling with Azure OpenAI models and Google Gemini models on Vertex AI. The model is provided with the day's chat history to maintain multi-turn context.
 
 ## Features
 
@@ -29,12 +29,11 @@ def get_agent() -> Agent:
 
 ### Prerequisites
 
-1. **GCP Project**: Ensure Vertex AI API is enabled.
-2. **GCS Buckets**: Create buckets for storing chat, quota and embeddings.
-3. **IAM Roles**: Ensure that your user account has at least the following roles:
-   - Vertex AI User
-   - Storage Object User
-4. **Virtual Environment**:
+1. **Azure OpenAI**: Azure OpenAI service on Azure and model deployment on Azure AI Foundry.
+2. **GCP Project**: Vertex AI API is enabled.
+3. **GCS Buckets**: Buckets for storing chat and embeddings.
+4. **IAM roles**: Appropriate IAM roles on Azure and GCP.
+5. **Virtual Environment**:
 
 ```
 
@@ -44,18 +43,24 @@ pip install -r requirements-test.txt
 pre-commit install
 ```
 
-5. **Embeddings** _(optional, required only if feature #2 is used)_:
+6. **Embeddings** _(optional, required only if feature #2 is used)_:
 
 ```
 make embeddings
 ```
 
-6. **Vector Search** _(optional, required only if feature #2 is used)_: Deploy a search index via the console, using the embeddings JSON generated in previous step.
-7. **Configuration**: Update variables in `config/settings.py` and `Makefile` as per your project setup.
-8. **Authentication**: Authenticate locally with GCP:
+7. **Vector Search** _(optional, required only if feature #2 is used)_: Vector search index is deployed on GCP via the console, using the embeddings JSON generated in previous step.
+8. **Configuration**: Configured variables in `config/settings.py` and `Makefile`.
+9. **GCP Authentication**:
 
 ```
    make auth
+```
+
+10. Make sure history is cleared before you switch from Google model to Azure OpenAI model or vice versa:
+
+```
+make clear_bucket
 ```
 
 ### Run

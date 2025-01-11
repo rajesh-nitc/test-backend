@@ -26,7 +26,6 @@ coordinates = dedent_and_strip(
 weather = dedent_and_strip(
     """
     Retrieves the current weather details for a given location based on latitude and longitude using OpenWeather's Weather API.
-    Example usage:
-    - Get weather for lat=12.9716 and lon=77.5946
+    Convert the temperature from Kelvin to Celsius using the formula: Celsius = Kelvin - 273.15. Return the result in Celsius.
 """
 )

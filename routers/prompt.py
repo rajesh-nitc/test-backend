@@ -13,5 +13,5 @@ async def get_prompt_response(
     request: PromptRequest,
     agent: Agent = Depends(get_agent),
 ) -> PromptResponse:
-    result = await generate_model_response(request.prompt, agent, request.user_id)
+    result = await generate_model_response(agent, request.prompt, request.user_id)
     return PromptResponse(response=result)

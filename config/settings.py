@@ -10,6 +10,15 @@ class Settings(BaseSettings):
     APP_NAME: str = Field(
         "genai-function-calling-api", description="Name of the application."
     )
+    AZURE_OPENAI_API_KEY: str = Field(
+        ...,
+        json_schema_extra={"env": "AZURE_OPENAI_API_KEY"},
+        description="Azure OpenAI API key.",
+    )
+    AZURE_OPENAI_ENDPOINT: str = Field(
+        "https://oai-function-calling-api.openai.azure.com/",
+        description="Azure OpenAI endpoint.",
+    )
     EMB_BLOB: str = Field(
         "product_embeddings.json", description="Embeddings JSON file."
     )
@@ -55,26 +64,11 @@ class Settings(BaseSettings):
         100, le=100, description="Maximum output tokens."
     )
     LLM_MODEL: Literal[
-        "gemini-1.5-pro-001",
-        "gemini-1.5-flash-001",
-        "gemini-1.5-pro-002",
-        "gemini-1.5-flash-002",
-        "gemini-2.0-flash-exp",
-        # "gemini-2.0-flash-thinking-exp-1219", # does not support function calling
-        # "gemini-1.5-flash-8b", # small model, not available in vertex ai
-    ] = Field("gemini-2.0-flash-exp", description="The foundation model to use.")
-    LLM_PROMPT_TOKENS_LIMIT: int = Field(
-        12500,
-        description="Maximum prompt tokens including user input, tools, and system instructions.",
-    )
-    LLM_QUOTA_BUCKET: str = Field(
-        "bkt-bu1-d-function-calling-api-quota",
-        description="Bucket for storing llm quota usage.",
-    )
-    LLM_QUOTA_TOKENS_LIMIT: int = Field(
-        25000,
-        description="Total LLM token usage allowed per user per day.",
-    )
+        "google/gemini-1.5-pro",
+        "google/gemini-1.5-flash",
+        "google/gemini-2.0-flash-exp",
+        "openai/gpt-4o-mini",
+    ] = Field("google/gemini-2.0-flash-exp", description="The foundation model to use.")
     LLM_SYSTEM_INSTRUCTION: str = Field(
         dedent_and_strip(
             """

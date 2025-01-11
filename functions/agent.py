@@ -20,7 +20,6 @@ FUNCTION_REGISTRY = {
 
 
 def get_agent() -> Agent:
-
     return Agent(
         name=f"{settings.APP_NAME}-agent",
         model=settings.LLM_MODEL,

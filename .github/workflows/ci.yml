@@ -51,6 +51,7 @@ jobs:
         env:
           PYTHONPATH: "$GITHUB_WORKSPACE"
           OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
         run: |
           source .venv/bin/activate
           pytest -m integration --test-cases="weather,spend,toys"

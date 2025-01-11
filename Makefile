@@ -2,12 +2,11 @@
 APP_NAME=genai-function-calling-api
 GOOGLE_CLOUD_PROJECT=prj-bu1-d-sample-base-9208
 LLM_CHAT_BUCKET=bkt-bu1-d-function-calling-api-chat
-LLM_QUOTA_BUCKET=bkt-bu1-d-function-calling-api-quota
 
 # Adding so that make does not conflict with files or directory with the same names as target
 # For e.g. "make tests" won't work unless we add tests as a phony target
 .PHONY: help auth run docker docker_clean tests prompt embeddings notebook precommit \
-precommit_update clear_buckets gcp_credentials_base64
+precommit_update clear_bucket gcp_credentials_base64
 
 help: ## Self-documenting help command
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
@@ -26,13 +25,15 @@ auth: ## Authenticate with Google Cloud
 run: check_venv ## Run the application locally after authentication
 	bash ./start.sh
 
-# Add your OpenWeather API key
+# Add AZURE_OPENAI_API_KEY and OpenWeather API key
 docker: ## Build and run the application in Docker
 	sudo docker build -t $(APP_NAME) .
 	sudo docker run -d -p 8000:8000 \
         -v ~/.config/gcloud/application_default_credentials.json:/tmp/keys/credentials.json \
         -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/credentials.json \
         -e APP_NAME=$(APP_NAME) \
+		-e AZURE_OPENAI_API_KEY="" \
+		-e AZURE_OPENAI_ENDPOINT="https://oai-function-calling-api.openai.azure.com/" \
         -e EMB_BLOB="product_embeddings.json" \
         -e EMB_BUCKET="bkt-bu1-d-function-calling-api-embedding" \
         -e EMB_DEPLOYED_INDEX_ID="index_01_deploy_1734488317622" \
@@ -45,11 +46,8 @@ docker: ## Build and run the application in Docker
         -e GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT) \
 		-e HTTP_CLIENT_BASE_URL="https://api.openweathermap.org" \
         -e LLM_CHAT_BUCKET="bkt-bu1-d-function-calling-api-chat" \
-		-e LLM_PROMPT_TOKENS_LIMIT=1250 \
 		-e LLM_MAX_OUTPUT_TOKENS=100 \
         -e LLM_MODEL="gemini-2.0-flash-exp" \
-		-e LLM_QUOTA_BUCKET="bkt-bu1-d-function-calling-api-quota" \
-		-e LLM_QUOTA_TOKENS_LIMIT=12500 \
         -e LLM_SYSTEM_INSTRUCTION="Ask clarifying questions if not enough information is available." \
         -e LOG_LEVEL="INFO" \
 		-e OPENWEATHER_API_KEY="" \
@@ -82,9 +80,8 @@ precommit: check_venv ## Run pre-commit checks
 precommit_update: check_venv ## Update pre-commit hooks
 	pre-commit autoupdate
 
-clear_buckets: ## Clear gcs bucket contents (To clear the history and quota)
+clear_bucket: ## Clear gcs bucket contents (To clear the history)
 	gsutil -m rm -r gs://$(LLM_CHAT_BUCKET)/**
-	gsutil -m rm -r gs://$(LLM_QUOTA_BUCKET)/**
 
 gcp_credentials_base64: ## Base64 encode GCP creds JSON (Use this for Github Actions Repository secret)
 	base64 ~/.config/gcloud/application_default_credentials.json > credentials.json.base64
