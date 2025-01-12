@@ -46,7 +46,7 @@ jobs:
           echo "${{ secrets.GCP_CREDENTIALS_BASE64 }}" | base64 --decode > $HOME/credentials.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/credentials.json" >> $GITHUB_ENV
 
-      # Run test cases with --test-cases="weather,spend,toys"
+      # Run test cases with --test-cases="weather,toys"
       - name: Run tests with pytest
         env:
           PYTHONPATH: "$GITHUB_WORKSPACE"
@@ -54,7 +54,7 @@ jobs:
           AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
         run: |
           source .venv/bin/activate
-          pytest -m integration --test-cases="weather,spend,toys"
+          pytest -m integration --test-cases="weather,toys"
 
       - name: Sanitize branch name
         run: |

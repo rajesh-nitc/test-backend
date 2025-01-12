@@ -27,7 +27,7 @@ def get_gcs_client() -> storage.Client:
 
 def get_file_path(user_id: str) -> str:
     """
-    Generate the GCS file path for the current day's chat history for the user.
+    Generate the GCS file path for the current day.
     """
     today, _ = get_today_date()
     return f"{user_id}/{today}.json"
@@ -35,11 +35,8 @@ def get_file_path(user_id: str) -> str:
 
 def get_chat_messages(agent, user_id: str) -> list:
     """
-    Get the same day messages for the user, formatted for the specified model type.
-
-    :param user_id: The ID of the user.
-    :param model_type: The type of model ('gemini' for Google Vertex AI, 'openai' for OpenAI).
-    :return: A list of messages formatted for the specified model type.
+    Get the same day messages for the user.
+    Prepared for the specified model.
     """
     try:
         client = get_gcs_client()
@@ -78,7 +75,7 @@ def get_chat_messages(agent, user_id: str) -> list:
         raise GCSFileError("Failed to fetch chat messages.")
 
 
-def append_chat_message_to_gcs(agent, user_id: str, message: ChatMessage) -> None:
+def append_chat_message_to_gcs(user_id: str, message: ChatMessage) -> None:
     """
     Append a new message to the same day messages for the user.
     """

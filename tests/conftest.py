@@ -5,8 +5,8 @@ def pytest_addoption(parser):
     parser.addoption(
         "--test-cases",
         action="store",
-        default="",  # "weather,spend,toys" # default is don't run any
-        help="Comma-separated list of test case names to run, e.g., 'weather,spend,toys'",
+        default="",  # "weather,toys" # default is don't run any
+        help="Comma-separated list of test case names to run, e.g., 'weather,toys'",
     )
 
 
@@ -14,18 +14,13 @@ def pytest_addoption(parser):
 def test_use_cases(request):
     all_cases = {
         "weather": {
-            "prompt": "how is the weather in bengaluru and mumbai?",
+            "prompt": "what is 1+1 and how is the weather in bengaluru and mumbai?",
             "user_id": "test_user_1",
-            "expected_keywords": ["bengaluru", "mumbai"],
-        },
-        "spend": {
-            "prompt": "how much did i spend on entertainment this year?",
-            "user_id": "test_user_2",
-            "expected_keywords": ["spent", "entertainment"],
+            "expected_keywords": ["2", "bengaluru", "mumbai"],
         },
         "toys": {
             "prompt": "suggest toys like Uno under $25?",
-            "user_id": "test_user_3",
+            "user_id": "test_user_2",
             "expected_keywords": ["toy", "toys"],
         },
     }

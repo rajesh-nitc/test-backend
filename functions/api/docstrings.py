@@ -1,18 +1,4 @@
-from utils.date import get_today_date
 from utils.text import dedent_and_strip
-
-date, day_of_week = get_today_date()
-
-spend = dedent_and_strip(
-    f"""
-    Extract the category, start_date, and end_date from user queries.
-    Today's date is {date} ({day_of_week}). Handle relative terms like "last year" or "this month".
-    Example usage:
-    - What were my expenses this year?: category is None, start_date is YYYY-01-01, end_date is today's date
-    - How much did I spend on groceries last year?: category is groceries, start_date is YYYY-01-01, end_date is YYYY-12-31
-    - What were my expenses in January?: category is None, start_date is YYYY-01-01, end_date is YYYY-01-31
-    """
-)
 
 coordinates = dedent_and_strip(
     """

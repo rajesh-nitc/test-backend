@@ -16,7 +16,7 @@ class Settings(BaseSettings):
         description="Azure OpenAI API key.",
     )
     AZURE_OPENAI_ENDPOINT: str = Field(
-        "https://oai-function-calling-api.openai.azure.com/",
+        "https://oai-function-calling-03.openai.azure.com/",
         description="Azure OpenAI endpoint.",
     )
     EMB_BLOB: str = Field(
@@ -64,10 +64,12 @@ class Settings(BaseSettings):
         100, le=100, description="Maximum output tokens."
     )
     LLM_MODEL: Literal[
+        "openai/gpt-4",
+        "openai/gpt-4o",
+        "openai/gpt-4o-mini",
         "google/gemini-1.5-pro",
         "google/gemini-1.5-flash",
         "google/gemini-2.0-flash-exp",
-        "openai/gpt-4o-mini",
     ] = Field("google/gemini-2.0-flash-exp", description="The foundation model to use.")
     LLM_SYSTEM_INSTRUCTION: str = Field(
         dedent_and_strip(

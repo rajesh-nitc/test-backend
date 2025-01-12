@@ -4,21 +4,22 @@ This API supports function calling with Azure OpenAI models and Gemini models on
 
 ## Models Tested
 
-- **gpt-4o-mini**
-- **gemini-1.5-pro**
-- **gemini-1.5-flash**
-- **gemini-2.0-flash-exp**
+- **openai/gpt-4**
+- **openai/gpt-4o**
+- **openai/gpt-4o-mini**
+- **google/gemini-1.5-pro**
+- **google/gemini-1.5-flash**
+- **google/gemini-2.0-flash-exp**
 
 ## Features
 
-1. **Generation with APIs** _(get_location_coordinates_func, get_weather_by_coordinates_func, get_spend_func)_
+1. **Generation with APIs** _(get_location_coordinates_func, get_weather_by_coordinates_func)_
 2. **Generation with Vector Search** _(search_toys_func)_
 
 ## Agent
 
 ```
 def get_agent() -> Agent:
-
     return Agent(
         name=f"{settings.APP_NAME}-agent",
         model=settings.LLM_MODEL,
@@ -26,7 +27,6 @@ def get_agent() -> Agent:
         functions=[
             get_location_coordinates_func,
             get_weather_by_coordinates_func,
-            get_spend_func,
             search_toys_func,
         ],
     )
@@ -53,21 +53,21 @@ pre-commit install
 6. **Embeddings** _(optional, required only if feature #2 is used)_:
 
 ```
-make embeddings
+make gcp_embeddings
 ```
 
-7. **Vector Search** _(optional, required only if feature #2 is used)_: Vector search index is deployed on GCP via the console, using the embeddings JSON generated in previous step.
+7. **Vertex AI Vector Search** _(optional, required only if feature #2 is used)_: Vector search index is deployed via the console, using the embeddings JSON generated in previous step.
 8. **Configuration**: Configured variables in `config/settings.py` and `Makefile`.
 9. **GCP Authentication**:
 
 ```
-   make auth
+   make gcp_auth
 ```
 
-10. **GCS history**: History is cleared before switching from Azure OpenAI model to Gemini model or vice versa:
+10. **Model Switch**: Clear chat history before switching from Azure OpenAI model to Gemini model or the vice versa:
 
 ```
-make clear_bucket
+make gcp_clear_history
 ```
 
 ### Run
@@ -85,8 +85,7 @@ make docker
 
 ```
 # Generation with APIs
-make prompt PROMPT='how is the weather in bengaluru and mumbai?'
-make prompt PROMPT='how much did i spend on entertainment this year?'
+make prompt PROMPT='what is 1+1 and how is the weather in bengaluru and mumbai?'
 
 # Generation with Vector Search
 make prompt PROMPT='suggest toys like Uno under $$25?'

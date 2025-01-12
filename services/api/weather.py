@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 async def get_location_coordinates(function_args: dict) -> dict:
     """
-    Get location coordinates from OpenWeather Geocoding API
+    Get coordinates by location from OpenWeather Geocoding API
     """
 
     try:

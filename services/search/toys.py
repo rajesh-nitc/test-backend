@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 async def search_toys(function_args: dict) -> list[dict[str, str]]:
     """
-    Search for toys in the Vector Search index
+    Calls Vertex AI Vector Search index and return list of toys
     """
     try:
         model_instance = SearchToysApiRequestData.model_validate(function_args)
