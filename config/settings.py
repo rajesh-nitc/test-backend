@@ -30,9 +30,9 @@ class Settings(BaseSettings):
         "index_01_deploy_1734488317622", description="Vector search index ID."
     )
     EMB_DF_HEAD: int = Field(
-        100,
+        250,
         ge=1,
-        description="Take first 100 records only. To avoid quota exceeded error.",
+        description="Take first 250 records only.",
     )
     EMB_DIMENSIONALITY: int = Field(768, ge=1, description="Embeddings dimensionality.")
     EMB_INDEX_ENDPOINT: str = Field(

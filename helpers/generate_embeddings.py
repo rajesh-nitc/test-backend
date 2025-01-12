@@ -1,5 +1,3 @@
-import os
-
 import pandas as pd
 import vertexai
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -8,8 +6,6 @@ from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
 from config.settings import settings
 from utils.gcs import get_gcs_client
 
-file_path = os.path.join(os.path.dirname(__file__), "retail_toy_dataset.csv")
-print(file_path)
 REGION = settings.REGION
 GOOGLE_CLOUD_PROJECT = settings.GOOGLE_CLOUD_PROJECT
 EMB_MODEL = settings.EMB_MODEL
@@ -17,6 +13,7 @@ EMB_BUCKET = settings.EMB_BUCKET
 EMB_DIMENSIONALITY = settings.EMB_DIMENSIONALITY
 EMB_BLOB = settings.EMB_BLOB
 EMB_DF_HEAD = settings.EMB_DF_HEAD
+file_path = "data/retail_toy_dataset.csv"
 
 
 def load_dataset(location) -> pd.DataFrame:
