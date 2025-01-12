@@ -27,5 +27,5 @@ class ModelHandler(ABC):
         pass
 
     @abstractmethod
-    async def get_role(self):
+    def get_role(self):
         pass
