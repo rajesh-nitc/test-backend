@@ -1,6 +1,7 @@
 from collections.abc import Callable
 from typing import Any
 
+import vertexai
 from openai import AzureOpenAI
 from pydantic import BaseModel
 from vertexai.generative_models import (
@@ -27,7 +28,11 @@ class Agent(BaseModel):
         Initialize the GenerativeModel or OpenAI client.
         """
         if self.model.startswith("google"):
-            # Google Gemini-specific setup
+
+            vertexai.init(
+                project=settings.GOOGLE_CLOUD_PROJECT, location=settings.REGION
+            )
+
             safety_settings = {
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
                 HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
@@ -55,13 +60,11 @@ class Agent(BaseModel):
             )
         elif self.model.startswith("openai"):
 
-            # Initialize the Azure OpenAI client
-            client = AzureOpenAI(
+            return AzureOpenAI(
                 azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
                 api_key=settings.AZURE_OPENAI_API_KEY,
                 api_version="2024-02-01",
             )
-            return client
 
         else:
             raise ValueError(f"Unsupported model type: {self.model}")

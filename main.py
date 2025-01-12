@@ -1,6 +1,5 @@
 import logging
 
-import vertexai
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -26,9 +25,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Initialize Vertex AI SDK
-vertexai.init(project=settings.GOOGLE_CLOUD_PROJECT, location=settings.REGION)
 
 # Log startup configuration
 logger.info("FastAPI app starting...")
