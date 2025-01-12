@@ -5,8 +5,8 @@ LLM_CHAT_BUCKET=bkt-bu1-d-function-calling-api-chat
 
 # Adding so that make does not conflict with files or directory with the same names as target
 # For e.g. "make tests" won't work unless we add tests as a phony target
-.PHONY: help gcp_auth run docker docker_clean tests prompt gcp_embeddings notebook precommit \
-precommit_update gcp_clear_history gcp_credentials_base64
+.PHONY: help gcp_auth gcp_clear_history gcp_credentials_base64 gcp_embeddings run prompt \
+tests notebook precommit docker docker_clean
 
 help: ## Self-documenting help command
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
@@ -51,9 +51,6 @@ notebook: check_venv ## Create jupyter notebook from python module
 precommit: check_venv ## Run pre-commit checks
 	pre-commit run --all-files
 
-precommit_update: check_venv ## Update pre-commit hooks
-	pre-commit autoupdate
-
 # Add AZURE_OPENAI_API_KEY and OpenWeather API key
 docker: ## Build and run the application in Docker
 	sudo docker build -t $(APP_NAME) .
@@ -76,7 +73,7 @@ docker: ## Build and run the application in Docker
 		-e HTTP_CLIENT_BASE_URL="https://api.openweathermap.org" \
         -e LLM_CHAT_BUCKET="bkt-bu1-d-function-calling-api-chat" \
 		-e LLM_MAX_OUTPUT_TOKENS=100 \
-        -e LLM_MODEL="google/gemini-1.5-flash" \
+        -e LLM_MODEL="google/gemini-2.0-flash-exp" \
         -e LLM_SYSTEM_INSTRUCTION="Ask clarifying questions if not enough information is available. Don't explain what you are doing, just provide the result" \
         -e LOG_LEVEL="INFO" \
 		-e OPENWEATHER_API_KEY="" \
