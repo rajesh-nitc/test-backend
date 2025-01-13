@@ -4,7 +4,6 @@ import logging
 from google.cloud import storage
 from vertexai.generative_models import Content, Part
 
-from config.exceptions import GCSClientError, GCSFileError
 from config.settings import settings
 from models.common.chat import ChatMessage
 from utils.date import get_today_date
@@ -22,7 +21,7 @@ def get_gcs_client() -> storage.Client:
         return storage.Client(project=settings.GOOGLE_CLOUD_PROJECT)
     except Exception as e:
         logger.error(f"Failed to initialize GCS client: {e}")
-        raise GCSClientError("Failed to initialize GCS client.")
+        raise
 
 
 def get_file_path(user_id: str) -> str:
@@ -72,7 +71,7 @@ def get_chat_messages(agent, user_id: str) -> list:
 
     except Exception as e:
         logger.error(f"Error fetching chat messages for user {user_id}: {e}")
-        raise GCSFileError("Failed to fetch chat messages.")
+        raise
 
 
 def append_chat_message_to_gcs(user_id: str, message: ChatMessage) -> None:
@@ -97,4 +96,4 @@ def append_chat_message_to_gcs(user_id: str, message: ChatMessage) -> None:
         blob.upload_from_string(json.dumps(messages), content_type="application/json")
     except Exception as e:
         logger.error(f"Error appending chat message for user {user_id}: {e}")
-        raise GCSFileError("Failed to append chat message.")
+        raise

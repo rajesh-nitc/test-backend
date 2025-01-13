@@ -2,19 +2,50 @@ import json
 import logging
 from typing import Any
 
-from config.exceptions import (
-    ModelResponseError,
-    ProcessingFuncationCallsError,
-    ResponseExtractionError,
-)
 from core.interface import ModelHandler
 from functions.agent import FUNCTION_REGISTRY
+from models.common.chat import ChatMessage
 from utils.schema import function_to_openai_schema
 
 logger = logging.getLogger(__name__)
 
 
 class OpenAIModelHandler(ModelHandler):
+    async def _get_model_response(self) -> Any:
+        """
+        Model response
+        """
+        try:
+            response = await self.agent.get_client().chat.completions.create(  # type: ignore
+                model=self.agent.model.split("/")[1],  # type: ignore
+                messages=self.agent.messages,  # type: ignore
+                tools=[function_to_openai_schema(func) for func in self.agent.functions],  # type: ignore
+                temperature=0,
+                tool_choice="auto",
+            )
+            return response
+        except Exception:
+            raise
+
+    async def get_response_to_prompt(self, prompt, history):
+        """
+        Model response to prompt
+        """
+        try:
+            self.agent.messages.clear()
+            for message in history:
+                self.agent.messages.append(
+                    ChatMessage(role=message["role"], content=message["content"])
+                )
+            self.agent.messages.append(
+                ChatMessage(role="system", content=self.agent.system_instruction)
+            )
+            self.agent.messages.append(ChatMessage(role="user", content=prompt))
+            return await self._get_model_response()
+        except Exception as e:
+            logger.error(f"Error getting model response to prompt: {str(e)}")
+            raise
+
     def extract_function_calls(self, response) -> list[dict[str, Any]]:
         """
         Extract function calls from Model response
@@ -49,26 +80,14 @@ class OpenAIModelHandler(ModelHandler):
                 return function_calls
             return []
         except Exception as e:
-            logger.error(f"Error extracting function calls from response: {e}")
-            raise ResponseExtractionError(
-                "Failed to extract function calls from response."
-            )
+            logger.error(f"Error extracting function calls from response: {str(e)}")
+            raise
 
-    def extract_text(self, response) -> str:
+    async def process_function_calls(
+        self, function_calls: list[dict[str, Any]]
+    ) -> list[Any]:
         """
-        Extract text from Model response
-        """
-        try:
-            if response.choices[0].message.content is not None:
-                return response.choices[0].message.content.strip()
-            return ""
-        except Exception as e:
-            logger.error(f"Error extracting text from response: {e}")
-            raise ResponseExtractionError("Failed to extract text from response.")
-
-    async def process_function_calls(self, function_calls: list[dict[str, Any]]):
-        """
-        Make api calls for the function calls and prepare the api response for the model
+        Make api calls for the function calls
         Api responses are appended to agent.messages. api_responses is not used.
         """
         api_responses: list[Any] = []
@@ -85,27 +104,32 @@ class OpenAIModelHandler(ModelHandler):
                     }
                 )
             except Exception as e:
-                logger.error(f"Error processing function calls: {e}")
-                raise ProcessingFuncationCallsError("Failed to process function calls.")
+                logger.error(f"Error processing function calls: {str(e)}")
+                raise
 
         return api_responses
 
-    async def get_response(self, chat=None, api_responses=None):
+    async def get_response_to_api_responses(self, api_responses):
         """
-        Model response
+        Model response to api responses
         """
         try:
-            response = self.agent.get_client().chat.completions.create(  # type: ignore
-                model=self.agent.model.split("/")[1],  # type: ignore
-                messages=self.agent.messages,  # type: ignore
-                tools=[function_to_openai_schema(func) for func in self.agent.functions],  # type: ignore
-                temperature=0,
-                tool_choice="auto",
-            )
-            return response
+            return await self._get_model_response()
         except Exception as e:
-            logger.error(f"Error getting model response: {e}")
-            raise ModelResponseError("Failed to get model response")
+            logger.error(f"Error getting model response to api responses: {e}")
+            raise
 
-    def get_role(self):
+    def extract_text(self, response) -> str:
+        """
+        Extract text from Model response
+        """
+        try:
+            if response.choices[0].message.content is not None:
+                return response.choices[0].message.content.strip()
+            return ""
+        except Exception as e:
+            logger.error(f"Error extracting text from response: {e}")
+            raise
+
+    def get_role(self) -> str:
         return "assistant"

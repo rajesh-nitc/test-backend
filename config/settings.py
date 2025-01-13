@@ -11,12 +11,12 @@ class Settings(BaseSettings):
         "genai-function-calling-api", description="Name of the application."
     )
     AZURE_OPENAI_API_KEY: str = Field(
-        ...,
+        ...,  # Required field (this means it must be provided through env)
         json_schema_extra={"env": "AZURE_OPENAI_API_KEY"},
         description="Azure OpenAI API key.",
     )
     AZURE_OPENAI_ENDPOINT: str = Field(
-        "https://oai-function-calling-03.openai.azure.com/",
+        "https://oai-function-calling-05.openai.azure.com/",
         description="Azure OpenAI endpoint.",
     )
     EMB_BLOB: str = Field(

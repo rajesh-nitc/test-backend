@@ -2,9 +2,10 @@ from collections.abc import Callable
 from typing import Any
 
 import vertexai
-from openai import AzureOpenAI
+from openai import AsyncAzureOpenAI
 from pydantic import BaseModel
 from vertexai.generative_models import (
+    ChatSession,
     FunctionDeclaration,
     GenerationConfig,
     GenerativeModel,
@@ -22,6 +23,10 @@ class Agent(BaseModel):
     system_instruction: str
     messages: list = []
     functions: list[Callable[..., Any]]
+    chat: ChatSession | None = None
+
+    class Config:
+        arbitrary_types_allowed = True
 
     def get_client(self):
         """
@@ -60,7 +65,7 @@ class Agent(BaseModel):
             )
         elif self.model.startswith("openai"):
 
-            return AzureOpenAI(
+            return AsyncAzureOpenAI(
                 azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
                 api_key=settings.AZURE_OPENAI_API_KEY,
                 api_version="2024-02-01",

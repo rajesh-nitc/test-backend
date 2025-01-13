@@ -9,11 +9,11 @@ class ModelHandler(ABC):
         self.agent = agent
 
     @abstractmethod
-    def extract_function_calls(self, response) -> list[dict[str, Any]]:
+    async def get_response_to_prompt(self, prompt: str, history: list):
         pass
 
     @abstractmethod
-    def extract_text(self, response) -> str:
+    def extract_function_calls(self, response) -> list[dict[str, Any]]:
         pass
 
     @abstractmethod
@@ -21,11 +21,13 @@ class ModelHandler(ABC):
         pass
 
     @abstractmethod
-    async def get_response(
-        self, chat: Any | None = None, api_responses: list | None = None
-    ):
+    async def get_response_to_api_responses(self, api_responses):
         pass
 
     @abstractmethod
-    def get_role(self):
+    def extract_text(self, response) -> str:
+        pass
+
+    @abstractmethod
+    def get_role(self) -> str:
         pass

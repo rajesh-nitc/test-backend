@@ -13,31 +13,22 @@ async def generate_model_response(agent: Agent, prompt: str, user_id: str) -> st
     """
     Generate final Model response.
     """
-    logger.info(f"Received prompt from user {user_id}: {prompt}")
-    prompt = dedent_and_strip(prompt)
+    # Get Model handler
     handler = get_model_handler(agent)
 
-    # Retrieve user's chat history for the same day
+    # Log received prompt
+    prompt = dedent_and_strip(prompt)
+    logger.info(f"Received prompt from user {user_id}: {prompt}")
+
+    # Get user's chat history
     history = get_chat_messages(agent, user_id)
 
-    if agent.model.startswith("google"):
-        chat = agent.get_client().start_chat(history=history, response_validation=False)  # type: ignore
-        response = await chat.send_message_async(prompt)
-    elif agent.model.startswith("openai"):
-        chat = None
-        agent.messages.clear()
-        for message in history:
-            agent.messages.append(
-                ChatMessage(role=message["role"], content=message["content"])
-            )
-        agent.messages.append(
-            ChatMessage(role="system", content=agent.system_instruction)
-        )
-        agent.messages.append(ChatMessage(role="user", content=prompt))
-        response = await handler.get_response()
-
-    # Log Model response to prompt
-    logger.info(f"Model response to prompt: {response}")
+    # Model response to prompt
+    try:
+        response = await handler.get_response_to_prompt(prompt, history)
+        logger.info(f"Model response to prompt: {response}")
+    except Exception as e:
+        return str(e)
 
     # Final Model response
     final_response = ""
@@ -53,14 +44,14 @@ async def generate_model_response(agent: Agent, prompt: str, user_id: str) -> st
         if function_calls and not text_content:
             logger.info("Case 1: Only function calls in Model response.")
             api_responses = await handler.process_function_calls(function_calls)
-            response = await handler.get_response(chat, api_responses)
+            response = await handler.get_response_to_api_responses(api_responses)
             logger.info(f"Case 1: Model response to api responses: {response}")
 
         # Case 2: Function Calls and Text
         elif function_calls and text_content:
             logger.info("Case 2: Function calls and text in Model response.")
             api_responses = await handler.process_function_calls(function_calls)
-            response = await handler.get_response(chat, api_responses)
+            response = await handler.get_response_to_api_responses(api_responses)
             logger.info(f"Case 2: Model response to api responses: {response}")
             final_response += text_content
 
@@ -70,9 +61,13 @@ async def generate_model_response(agent: Agent, prompt: str, user_id: str) -> st
             function_calling_in_process = False
             final_response += handler.extract_text(response)
 
-    append_chat_message_to_gcs(user_id, ChatMessage(role="user", content=prompt))
-    append_chat_message_to_gcs(
-        user_id, ChatMessage(role=handler.get_role(), content=final_response)  # type: ignore
-    )
+    # Add chat to gcs
+    try:
+        append_chat_message_to_gcs(user_id, ChatMessage(role="user", content=prompt))
+        append_chat_message_to_gcs(
+            user_id, ChatMessage(role=handler.get_role(), content=final_response)  # type: ignore
+        )
+    except Exception as e:
+        return str(e)
 
     return final_response
