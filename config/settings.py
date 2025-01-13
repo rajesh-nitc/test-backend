@@ -26,13 +26,12 @@ class Settings(BaseSettings):
     EMB_DEPLOYED_INDEX_ID: str = Field(
         "index_01_deploy_1734488317622", description="Vector search index ID."
     )
-    EMB_DIMENSIONALITY: int = Field(768, ge=1, description="Embeddings dimensionality.")
     EMB_INDEX_ENDPOINT: str = Field(
         "projects/770674777462/locations/us-central1/indexEndpoints/5963364040964046848",
         description="Vector search index endpoint.",
     )
     EMB_MODEL: Literal["text-embedding-004", "text-embedding-005"] = Field(
-        "text-embedding-005", description="The embedding Model to use."
+        "text-embedding-005", description="The text embedding Model to use."
     )
     EMB_TOP_K: int = Field(
         3,

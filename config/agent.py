@@ -34,7 +34,6 @@ class Agent(BaseModel):
     temperature: float = 0
     n: int = 1
     max_tokens: int = 125
-    stream: bool = False
     top_p: float = 1.0
     seed: int = 25
     tool_choice: str = "auto"

@@ -23,7 +23,6 @@ class OpenAIModelHandler(ModelHandler):
                 temperature=self.agent.temperature,
                 n=self.agent.n,
                 tool_choice=self.agent.tool_choice,  # type: ignore
-                stream=self.agent.stream,
                 top_p=self.agent.top_p,
                 seed=self.agent.seed,
             )

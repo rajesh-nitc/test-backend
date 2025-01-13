@@ -62,7 +62,6 @@ docker: ## Build and run the application in Docker
 		-e AZURE_OPENAI_ENDPOINT="https://oai-function-calling-api.openai.azure.com/" \
         -e EMB_BUCKET="bkt-bu1-d-function-calling-api-embedding" \
         -e EMB_DEPLOYED_INDEX_ID="index_01_deploy_1734488317622" \
-        -e EMB_DIMENSIONALITY=768 \
         -e EMB_INDEX_ENDPOINT="projects/770674777462/locations/us-central1/indexEndpoints/5963364040964046848" \
         -e EMB_MODEL="text-embedding-005" \
         -e EMB_TOP_K=3 \

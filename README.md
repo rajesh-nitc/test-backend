@@ -13,8 +13,8 @@ This API supports function calling with Azure OpenAI models and Gemini models on
 
 ## Features
 
-1. **Generation with APIs** _(get_location_coordinates_func, get_weather_by_coordinates_func)_
-2. **Generation with Vector Search** _(search_toys_func)_
+1. **Generation with APIs** (e.g., `get_location_coordinates_func`, `get_weather_by_coordinates_func`)
+2. **Generation with Vector Search** (e.g., `search_toys_func`)
 
 ## Agent
 
@@ -36,10 +36,10 @@ def get_agent() -> Agent:
 
 ### Prerequisites
 
-1. **Azure OpenAI**: Azure OpenAI service on Azure and model deployment on Azure AI Foundry.
-2. **GCP Project**: Vertex AI API is enabled.
-3. **GCS Buckets**: Buckets for storing chat and embeddings.
-4. **IAM roles**: Appropriate IAM roles on Azure and GCP.
+1. **Azure OpenAI**: An Azure OpenAI service with the model deployed on Azure AI Foundry.
+2. **GCP Project**: A Google Cloud project with Vertex AI API enabled.
+3. **IAM Roles**: Appropriate IAM roles configured for Azure and GCP.
+4. **GCS Buckets**: Buckets set up for storing chat history and embeddings.
 5. **Virtual Environment**:
 
 ```
@@ -50,21 +50,21 @@ pip install -r requirements-test.txt
 pre-commit install
 ```
 
-6. **Embeddings** _(optional, required only if feature #2 is used)_:
+6. **Text Embeddings** (optional, required only if Feature #2 is used):
 
 ```
 make gcp_embeddings
 ```
 
-7. **Vertex AI Vector Search** _(optional, required only if feature #2 is used)_: Vector search index is deployed via the console, using the embeddings JSON generated in previous step.
-8. **Configuration**: Configured variables in `config/settings.py` and `Makefile`.
+7. **Vector Search** (optional, required only if Feature #2 is used): A Vector Search index deployed via the console using the embeddings JSON generated in the previous step.
+8. **Configuration**: Variables are set in `config/settings.py` and `Makefile`.
 9. **GCP Authentication**:
 
 ```
    make gcp_auth
 ```
 
-10. **Model Switch**: Clear chat history before switching from Azure OpenAI model to Gemini model or the vice versa:
+10. **Model Switch**: The chat history is cleared before switching between Azure OpenAI and Gemini models:
 
 ```
 make gcp_clear_history

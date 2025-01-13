@@ -11,7 +11,7 @@ from config.settings import settings
 EMB_MODEL = settings.EMB_MODEL
 EMB_INDEX_ENDPOINT = settings.EMB_INDEX_ENDPOINT
 EMB_DEPLOYED_INDEX_ID = settings.EMB_DEPLOYED_INDEX_ID
-EMB_DIMENSIONALITY = settings.EMB_DIMENSIONALITY
+EMB_DIMENSIONALITY = 768
 
 logger = logging.getLogger(__name__)
 
