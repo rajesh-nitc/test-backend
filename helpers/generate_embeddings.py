@@ -11,8 +11,8 @@ GOOGLE_CLOUD_PROJECT = settings.GOOGLE_CLOUD_PROJECT
 EMB_MODEL = settings.EMB_MODEL
 EMB_BUCKET = settings.EMB_BUCKET
 EMB_DIMENSIONALITY = settings.EMB_DIMENSIONALITY
-EMB_BLOB = settings.EMB_BLOB
-EMB_DF_HEAD = settings.EMB_DF_HEAD
+EMB_DF_HEAD = 250
+EMB_BLOB = "embeddings.json"
 file_path = "data/retail_toy_dataset.csv"
 
 

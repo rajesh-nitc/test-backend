@@ -19,20 +19,12 @@ class Settings(BaseSettings):
         "https://oai-function-calling-05.openai.azure.com/",
         description="Azure OpenAI endpoint.",
     )
-    EMB_BLOB: str = Field(
-        "product_embeddings.json", description="Embeddings JSON file."
-    )
     EMB_BUCKET: str = Field(
         "bkt-bu1-d-function-calling-api-embedding",
         description="Bucket for storing embeddings JSON file.",
     )
     EMB_DEPLOYED_INDEX_ID: str = Field(
         "index_01_deploy_1734488317622", description="Vector search index ID."
-    )
-    EMB_DF_HEAD: int = Field(
-        250,
-        ge=1,
-        description="Take first 250 records only.",
     )
     EMB_DIMENSIONALITY: int = Field(768, ge=1, description="Embeddings dimensionality.")
     EMB_INDEX_ENDPOINT: str = Field(
