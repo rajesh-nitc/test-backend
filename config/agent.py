@@ -15,6 +15,13 @@ from vertexai.generative_models import (
 )
 
 from config.settings import settings
+from functions.api.weather import (
+    get_location_coordinates_func,
+    get_weather_by_coordinates_func,
+)
+from functions.search.toys import search_toys_func
+from services.api.weather import get_location_coordinates, get_weather_by_coordinates
+from services.search.toys import search_toys
 
 
 class Agent(BaseModel):
@@ -24,6 +31,14 @@ class Agent(BaseModel):
     messages: list = []
     functions: list[Callable[..., Any]]
     chat: ChatSession | None = None
+    temperature: float = 0
+    n: int = 1
+    max_tokens: int = 125
+    stream: bool = False
+    top_p: float = 1.0
+    seed: int = 25
+    tool_choice: str = "auto"
+    api_version: str = "2024-02-01"
 
     class Config:
         arbitrary_types_allowed = True
@@ -48,9 +63,11 @@ class Agent(BaseModel):
             return GenerativeModel(
                 self.model.split("/")[1],
                 generation_config=GenerationConfig(
-                    temperature=0,
-                    candidate_count=1,
-                    max_output_tokens=settings.LLM_MAX_OUTPUT_TOKENS,
+                    temperature=self.temperature,
+                    candidate_count=self.n,
+                    max_output_tokens=self.max_tokens,
+                    top_p=self.top_p,
+                    seed=self.seed,
                 ),
                 tools=[
                     Tool(
@@ -68,8 +85,29 @@ class Agent(BaseModel):
             return AsyncAzureOpenAI(
                 azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
                 api_key=settings.AZURE_OPENAI_API_KEY,
-                api_version="2024-02-01",
+                api_version=self.api_version,
             )
 
         else:
             raise ValueError(f"Unsupported model type: {self.model}")
+
+
+# A registry of available functions and their handlers
+FUNCTION_REGISTRY = {
+    "get_location_coordinates_func": get_location_coordinates,
+    "get_weather_by_coordinates_func": get_weather_by_coordinates,
+    "search_toys_func": search_toys,
+}
+
+
+def get_agent() -> Agent:
+    return Agent(
+        name=f"{settings.APP_NAME}-agent",
+        model=settings.LLM_MODEL,
+        system_instruction=settings.LLM_SYSTEM_INSTRUCTION,
+        functions=[
+            get_location_coordinates_func,
+            get_weather_by_coordinates_func,
+            search_toys_func,
+        ],
+    )

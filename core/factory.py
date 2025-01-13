@@ -1,7 +1,7 @@
+from config.agent import Agent
 from core.gemini import GeminiModelHandler
 from core.interface import ModelHandler
 from core.openai import OpenAIModelHandler
-from functions.agent import Agent
 
 
 def get_model_handler(agent: Agent) -> ModelHandler:

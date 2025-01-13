@@ -16,7 +16,7 @@ class Settings(BaseSettings):
         description="Azure OpenAI API key.",
     )
     AZURE_OPENAI_ENDPOINT: str = Field(
-        "https://oai-function-calling-05.openai.azure.com/",
+        "https://oai-function-calling-api-02.openai.azure.com/",
         description="Azure OpenAI endpoint.",
     )
     EMB_BUCKET: str = Field(
@@ -51,9 +51,6 @@ class Settings(BaseSettings):
     LLM_CHAT_BUCKET: str = Field(
         "bkt-bu1-d-function-calling-api-chat",
         description="Bucket for storing chat history.",
-    )
-    LLM_MAX_OUTPUT_TOKENS: int = Field(
-        100, le=100, description="Maximum output tokens."
     )
     LLM_MODEL: Literal[
         "openai/gpt-4",

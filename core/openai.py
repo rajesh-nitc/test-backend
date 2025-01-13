@@ -2,8 +2,8 @@ import json
 import logging
 from typing import Any
 
+from config.agent import FUNCTION_REGISTRY
 from core.interface import ModelHandler
-from functions.agent import FUNCTION_REGISTRY
 from models.common.chat import ChatMessage
 from utils.schema import function_to_openai_schema
 
@@ -20,8 +20,12 @@ class OpenAIModelHandler(ModelHandler):
                 model=self.agent.model.split("/")[1],  # type: ignore
                 messages=self.agent.messages,  # type: ignore
                 tools=[function_to_openai_schema(func) for func in self.agent.functions],  # type: ignore
-                temperature=0,
-                tool_choice="auto",
+                temperature=self.agent.temperature,
+                n=self.agent.n,
+                tool_choice=self.agent.tool_choice,  # type: ignore
+                stream=self.agent.stream,
+                top_p=self.agent.top_p,
+                seed=self.agent.seed,
             )
             return response
         except Exception:

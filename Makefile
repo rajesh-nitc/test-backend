@@ -70,7 +70,6 @@ docker: ## Build and run the application in Docker
         -e GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT) \
 		-e HTTP_CLIENT_BASE_URL="https://api.openweathermap.org" \
         -e LLM_CHAT_BUCKET="bkt-bu1-d-function-calling-api-chat" \
-		-e LLM_MAX_OUTPUT_TOKENS=100 \
         -e LLM_MODEL="google/gemini-2.0-flash-exp" \
         -e LLM_SYSTEM_INSTRUCTION="Ask clarifying questions if not enough information is available. Don't explain what you are doing, just provide the result" \
         -e LOG_LEVEL="INFO" \
