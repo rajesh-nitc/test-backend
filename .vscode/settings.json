@@ -6,6 +6,8 @@
 	],
 	"python.analysis.typeCheckingMode": "basic",
 	"editor.formatOnSave": true,
+	"terminal.integrated.copyOnSelection": true,
+	"terminal.integrated.rightClickBehavior": "paste",
 	"editor.codeActionsOnSave": {
 		"source.organizeImports": "always"
 	},
@@ -17,13 +19,16 @@
 	],
 	"python.testing.autoTestDiscoverOnSaveEnabled": true,
 	"terminal.integrated.env.linux": {
-        "PYTHONPATH": "${workspaceFolder}"
-    },
-	"search.exclude": {
-		"**/.venv": true,
+		"PYTHONPATH": "${workspaceFolder}"
+	},
+	"files.exclude": {
+		".venv": true,
 		"**/__pycache__": true,
-		"**/.git": true,
-		"**/.vscode": true,
+		".mypy_cache": true,
+		".pytest_cache": true
+	},
+	"search.exclude": {
+		"**/__pycache__": true,
 		"**/.mypy_cache": true,
 		"**/.pytest_cache": true
 	}

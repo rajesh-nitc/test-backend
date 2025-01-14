@@ -5,8 +5,8 @@ LLM_CHAT_BUCKET=bkt-bu1-d-function-calling-api-chat
 
 # Adding so that make does not conflict with files or directory with the same names as target
 # For e.g. "make tests" won't work unless we add tests as a phony target
-.PHONY: help gcp_auth gcp_clear_history gcp_credentials_base64 gcp_embeddings run prompt \
-tests notebook precommit docker docker_clean
+.PHONY: help gcp_app_auth gcp_gcloud_auth gcp_clear_history gcp_credentials_base64 gcp_embeddings \
+run prompt tests notebook precommit docker docker_clean
 
 help: ## Self-documenting help command
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
@@ -17,10 +17,13 @@ check_venv:
 		exit 1; \
 	fi
 
-gcp_auth: ## Authenticate with Google Cloud
+gcp_app_auth: ## App Auth with Google Cloud
 	gcloud auth application-default login
 	gcloud auth application-default set-quota-project $(GOOGLE_CLOUD_PROJECT)
 	gcloud config set project $(GOOGLE_CLOUD_PROJECT)
+
+gcp_gcloud_auth: ## gcloud Auth (Required for gsutil command in gcp_clear_history)
+	gcloud auth login
 
 gcp_clear_history: ## Clear gcs bucket contents (To clear the history)
 	gsutil -m rm -r gs://$(LLM_CHAT_BUCKET)/**

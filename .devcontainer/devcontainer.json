@@ -1,0 +1,51 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/python-3
+{
+    "name": "Python 3",
+    "dockerFile": "./Dockerfile",
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [
+        8000
+    ],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // Fix for https://www.kenmuse.com/blog/avoiding-dubious-ownership-in-dev-containers/
+    "postCreateCommand": "bash /workspaces/genai-function-calling-api/.devcontainer/post_create.sh",
+    // Use 'postStartCommand' to run commands after the container is started (more frequently than create).
+    "postStartCommand": "bash /workspaces/genai-function-calling-api/.devcontainer/post_start.sh",
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                // AI & Code Assistance
+                "GitHub.copilot", // GitHub Copilot
+                // "google.geminicodeassist", // Gemini Code Assist
+                "VisualStudioExptTeam.vscodeintellicode", // IntelliCode AI
+                // Programming Language Support
+                "ms-python.python", // Python support
+                // "hashicorp.terraform", // Terraform support
+                "redhat.vscode-yaml", // YAML support
+                "ms-toolsai.jupyter", // Jupyter notebook
+                "ms-toolsai.datawrangler", // Data Wrangler
+                // Code Quality & Formatting
+                "dbaeumer.vscode-eslint", // ESLint support
+                "esbenp.prettier-vscode", // Prettier - Code formatter
+                "editorconfig.editorconfig", // EditorConfig support
+                // Version Control & Git
+                "eamodio.gitlens", // GitLens - Git supercharged
+                "mhutchie.git-graph" // Git Graph
+                // Cloud & Container Support
+                // "ms-azuretools.vscode-docker", // Docker support
+                // "googlecloudtools.cloudcode", // Google Cloud support
+                // Markdown Support
+                // "bierner.markdown-preview-github-styles" // Markdown preview
+            ]
+        }
+    }
+}

@@ -36,35 +36,39 @@ def get_agent() -> Agent:
 
 ### Prerequisites
 
-1. **Azure OpenAI**: An Azure OpenAI service with the model deployed on Azure AI Foundry.
-2. **GCP Project**: A Google Cloud project with Vertex AI API enabled.
-3. **IAM Roles**: Appropriate IAM roles configured for Azure and GCP.
-4. **GCS Buckets**: Buckets set up for storing chat history and embeddings.
-5. **Virtual Environment**:
+1. **Azure Authentication**:
 
 ```
-
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-test.txt
-pre-commit install
+echo 'export AZURE_OPENAI_API_KEY=YOUR_API_KEY_HERE' >> ~/.zshrc
 ```
 
-6. **Text Embeddings** (optional, required only if Feature #2 is used):
+2. **GCP Authentication**:
+
+```
+make gcp_app_auth
+make gcp_gcloud_auth
+```
+
+3. **OpenWeather Authentication**:
+
+```
+echo 'export OPENWEATHER_API_KEY=YOUR_API_KEY_HERE' >> ~/.zshrc
+```
+
+4. **Settings**: Update variables in `config/settings.py` and `Makefile`
+
+5. **Text Embeddings** (required only if using **Generation with Vector Search**):
 
 ```
 make gcp_embeddings
 ```
 
-7. **Vector Search** (optional, required only if Feature #2 is used): A Vector Search index deployed via the console using the embeddings JSON generated in the previous step.
-8. **Configuration**: Variables are set in `config/settings.py` and `Makefile`.
-9. **GCP Authentication**:
+6. **Vector Search**: Deploy a Vector Search index via the GCP console using the embeddings JSON generated in the previous step.
 
-```
-   make gcp_auth
-```
+7. **Note**:
 
-10. **Model Switch**: The chat history is cleared before switching between Azure OpenAI and Gemini models:
+- After updating environment variables in steps 1 and 3, open a new terminal to ensure the changes take effect.
+- Clear the chat history before switching between Azure OpenAI and Gemini models to avoid conflicts:
 
 ```
 make gcp_clear_history
@@ -76,7 +80,7 @@ make gcp_clear_history
 # Run Locally (Without Docker)
 make run
 
-# Run Locally (With Docker)
+# Run Locally (With Docker) - Update AZURE_OPENAI_API_KEY and OPENWEATHER_API_KEY in Makefile
 make docker
 
 ```

@@ -1,4 +1,6 @@
+.devcontainer/
 .git/
+.github/
 .gitattributes
 .gitignore
 .mypy_cache/
@@ -12,5 +14,5 @@ helpers/
 Makefile
 pytest.ini
 README.md
-requirements-test.txt
+requirements-dev.txt
 tests/

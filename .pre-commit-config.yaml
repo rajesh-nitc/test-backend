@@ -7,7 +7,6 @@ repos:
       - id: check-ast
       - id: check-builtin-literals
       - id: check-docstring-first
-      - id: check-json
       - id: check-merge-conflict
       - id: check-shebang-scripts-are-executable
       - id: check-yaml
@@ -16,7 +15,7 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: file-contents-sorter
-        files: ^(requirements\.txt|requirements-test\.txt|\.gitignore)$
+        files: ^(requirements\.txt|requirements-dev\.txt|\.gitignore)$
       - id: trailing-whitespace
       - id: name-tests-test
         args: ["--pytest-test-first"]
