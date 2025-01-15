@@ -55,18 +55,17 @@ make gcp_gcloud_auth
 echo 'export OPENWEATHER_API_KEY=YOUR_API_KEY_HERE' >> ~/.zshrc
 ```
 
-4. **Settings**: Update variables in `config/settings.py` and `Makefile`
+4. **Application Settings**: Update variables in `config/settings.py` and `Makefile`
 
-5. **Text Embeddings** (required only if using **Generation with Vector Search**):
+5. **Text Embeddings** (required only if using **Generation with Vector Search**): Generate embeddings JSON and deploy a Vector Search index via the GCP console.
 
 ```
 make gcp_embeddings
 ```
 
-6. **Vector Search**: Deploy a Vector Search index via the GCP console using the embeddings JSON generated in the previous step.
+6. **Additional Notes**:
 
-7. **Note**:
-
+- Dev Container: Requires Linux or WSL on Windows, with both VSCode and Docker Desktop installed.
 - After updating environment variables in steps 1 and 3, open a new terminal to ensure the changes take effect.
 - Clear the chat history before switching between Azure OpenAI and Gemini models to avoid conflicts:
 
