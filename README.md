@@ -65,7 +65,7 @@ make gcp_embeddings
 
 6. **Additional Notes**:
 
-- Dev Container: Requires Linux or WSL on Windows, with both VSCode and Docker Desktop installed.
+- Dev Containers require Linux or WSL on Windows, along with VS Code (with the Dev Containers extension) and Docker or Docker Desktop to build, run, and manage containers.
 - After updating environment variables in steps 1 and 3, open a new terminal to ensure the changes take effect.
 - Clear the chat history before switching between Azure OpenAI and Gemini models to avoid conflicts:
 
