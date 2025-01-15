@@ -17,45 +17,44 @@ check_venv:
 		exit 1; \
 	fi
 
-gcp_app_auth: ## App Auth with Google Cloud
+gcp_app_auth: ## App Auth with gcp
 	gcloud auth application-default login
 	gcloud auth application-default set-quota-project $(GOOGLE_CLOUD_PROJECT)
 	gcloud config set project $(GOOGLE_CLOUD_PROJECT)
 
-gcp_gcloud_auth: ## gcloud Auth (Required for gsutil command in gcp_clear_history)
+gcp_gcloud_auth: ## gcloud sdk Auth (Required for gsutil command in gcp_clear_history)
 	gcloud auth login
 
 gcp_clear_history: ## Clear gcs bucket contents (To clear the history)
 	gsutil -m rm -r gs://$(LLM_CHAT_BUCKET)/**
 
-gcp_credentials_base64: ## Base64 encode GCP creds JSON (Use this for Github Actions Repository secret)
+gcp_credentials_base64: ## Base64 encode JSON creds (Use this for Github Actions Repository secret)
 	base64 ~/.config/gcloud/application_default_credentials.json > credentials.json.base64
 	cat credentials.json.base64
 	rm credentials.json.base64
 
-gcp_embeddings: check_venv ## Generate embeddings using the helper module
+gcp_embeddings: check_venv ## Generate embeddings using the helper module and data in data folder
 	PYTHONPATH=. python3 helpers/generate_embeddings.py
 
-run: check_venv ## Run the application locally after authentication
+run: check_venv ## Run the application locally
 	bash ./start.sh
 
-prompt: ## Send a prompt request using cURL (requires PROMPT)
+prompt: ## Send an api request (e.g., make prompt PROMPT='what is 1+1')
 	curl -X 'POST' 'http://localhost:8000/api/prompt' \
   	-H 'Content-Type: application/json' \
   	-d '{ "prompt": "$(PROMPT)", "user_id": "rajesh-nitc" }'
 
 # Run test cases with --test-cases="weather,toys"
-tests: check_venv ## Run test use cases
+tests: check_venv ## Run integration tests
 	pytest -m integration --test-cases="weather,toys"
 
-notebook: check_venv ## Create jupyter notebook from python module
+notebook: check_venv ## Create jupyter notebook from helper module
 	jupytext --to notebook helpers/generate_embeddings.py
 
 precommit: check_venv ## Run pre-commit checks
 	pre-commit run --all-files
 
-# Add AZURE_OPENAI_API_KEY and OpenWeather API key
-docker: ## Build and run the application in Docker
+docker: ## Run in docker (Add Openai API key, OpenWeather API key and update other variables)
 	sudo docker build -t $(APP_NAME) .
 	sudo docker run -d -p 8000:8000 \
         -v ~/.config/gcloud/application_default_credentials.json:/tmp/keys/credentials.json \
