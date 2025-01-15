@@ -72,7 +72,9 @@ make gcp_embeddings
 ```
 make gcp_clear_history
 ```
+
 - Makefile help:
+
 ```
 make help
 ```
