@@ -1,27 +1,14 @@
 {
     "recommendations": [
-        "ms-vscode-remote.remote-containers", // Dev Containers
-        // AI & Code Assistance
-        "GitHub.copilot", // GitHub Copilot
-        // "google.geminicodeassist", // Gemini Code Assist
-        "VisualStudioExptTeam.vscodeintellicode", // IntelliCode AI
-        // Programming Language Support
-        "ms-python.python", // Python support
-        // "hashicorp.terraform", // Terraform support
-        "redhat.vscode-yaml", // YAML support
-        "ms-toolsai.jupyter", // Jupyter notebook
-        "ms-toolsai.datawrangler", // Data Wrangler
-        // Code Quality & Formatting
-        "dbaeumer.vscode-eslint", // ESLint support
-        "esbenp.prettier-vscode", // Prettier - Code formatter
-        "editorconfig.editorconfig", // EditorConfig support
-        // Version Control & Git
-        "eamodio.gitlens", // GitLens - Git supercharged
-        "mhutchie.git-graph" // Git Graph
-        // Cloud & Container Support
-        // "ms-azuretools.vscode-docker", // Docker support
-        // "googlecloudtools.cloudcode", // Google Cloud support
-        // Markdown Support
-        // "bierner.markdown-preview-github-styles" // Markdown preview
+        "ms-vscode-remote.remote-containers", // Development in isolated Docker-based environments
+        "GitHub.copilot", // AI-powered code suggestions for enhanced productivity
+        "VisualStudioExptTeam.vscodeintellicode", // AI-assisted code completions and suggestions
+        "ms-python.python", // Essential extension for Python development
+        "hashicorp.terraform", // Terraform support for infrastructure as code
+        "redhat.vscode-yaml", // YAML support with validation and schema handling
+        "ms-toolsai.jupyter", // Jupyter Notebook support for data science and analysis
+        "ms-toolsai.datawrangler", // Data cleaning and visualization tools (useful for data analysis)
+        "dbaeumer.vscode-eslint", // Linting and formatting for JavaScript and TypeScript
+        "esbenp.prettier-vscode", // Code formatter for JavaScript, TypeScript, JSON, YAML, and Markdown
     ]
 }
