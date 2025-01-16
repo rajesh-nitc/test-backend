@@ -9,6 +9,10 @@ class ModelHandler(ABC):
         self.agent = agent
 
     @abstractmethod
+    async def _get_client(self):
+        pass
+
+    @abstractmethod
     async def get_response_to_prompt(self, prompt: str, history: list):
         pass
 

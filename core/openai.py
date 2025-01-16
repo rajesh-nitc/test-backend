@@ -2,7 +2,10 @@ import json
 import logging
 from typing import Any
 
+from openai import AsyncAzureOpenAI
+
 from config.agent import FUNCTION_REGISTRY
+from config.settings import settings
 from core.interface import ModelHandler
 from models.common.chat import ChatMessage
 from utils.schema import function_to_openai_schema
@@ -11,14 +14,24 @@ logger = logging.getLogger(__name__)
 
 
 class OpenAIModelHandler(ModelHandler):
+    def _get_client(self):
+        """
+        Get client
+        """
+        return AsyncAzureOpenAI(
+            azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
+            api_key=settings.AZURE_OPENAI_API_KEY,
+            api_version=self.agent.api_version,
+        )
+
     async def _get_model_response(self) -> Any:
         """
         Model response
         """
         try:
-            response = await self.agent.get_client().chat.completions.create(  # type: ignore
-                model=self.agent.model.split("/")[1],  # type: ignore
-                messages=self.agent.messages,  # type: ignore
+            response = await self._get_client().chat.completions.create(
+                model=self.agent.model.split("/")[1],
+                messages=self.agent.messages,
                 tools=[function_to_openai_schema(func) for func in self.agent.functions],  # type: ignore
                 temperature=self.agent.temperature,
                 n=self.agent.n,
@@ -65,7 +78,7 @@ class OpenAIModelHandler(ModelHandler):
                     function_args = json.loads(function_call.function.arguments)
                     function_calls.append({function_name: function_args})
 
-                    self.agent.messages.append(  # type: ignore
+                    self.agent.messages.append(
                         {
                             "role": response.choices[0].message.role,
                             "function_call": {

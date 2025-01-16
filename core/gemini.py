@@ -1,22 +1,69 @@
 import logging
 from typing import Any
 
-from vertexai.generative_models import GenerationResponse, Part
+import vertexai
+from vertexai.generative_models import (
+    FunctionDeclaration,
+    GenerationConfig,
+    GenerationResponse,
+    GenerativeModel,
+    HarmBlockThreshold,
+    HarmCategory,
+    Part,
+    Tool,
+)
 
 from config.agent import FUNCTION_REGISTRY
+from config.settings import settings
 from core.interface import ModelHandler
 
 logger = logging.getLogger(__name__)
 
 
 class GeminiModelHandler(ModelHandler):
+    def _get_client(self):
+        """
+        Get client
+        """
+        vertexai.init(project=settings.GOOGLE_CLOUD_PROJECT, location=settings.REGION)
+
+        safety_settings = {
+            HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+            HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+            HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+            HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+        }
+
+        return GenerativeModel(
+            self.agent.model.split("/")[1],
+            generation_config=GenerationConfig(
+                temperature=self.agent.temperature,
+                candidate_count=self.agent.n,
+                max_output_tokens=self.agent.max_tokens,
+                top_p=self.agent.top_p,
+                seed=self.agent.seed,
+            ),
+            tools=[
+                Tool(
+                    function_declarations=[
+                        FunctionDeclaration.from_func(func)
+                        for func in self.agent.functions
+                    ]
+                )
+            ],
+            safety_settings=safety_settings,
+            system_instruction=self.agent.system_instruction,
+        )
+
     async def get_response_to_prompt(self, prompt, history) -> GenerationResponse:
         """
         Model response to prompt
         """
         try:
-            self.agent.chat = self.agent.get_client().start_chat(history=history, response_validation=False)  # type: ignore
-            return await self.agent.chat.send_message_async(prompt)  # type: ignore
+            self.agent.chat = self._get_client().start_chat(
+                history=history, response_validation=False
+            )
+            return await self.agent.chat.send_message_async(prompt)
         except Exception as e:
             logger.error(f"Error getting model response to prompt: {e}")
             raise
