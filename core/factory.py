@@ -1,4 +1,4 @@
-from config.agent import Agent
+from core.agent import Agent
 from core.gemini import GeminiModelHandler
 from core.interface import ModelHandler
 from core.openai import OpenAIModelHandler

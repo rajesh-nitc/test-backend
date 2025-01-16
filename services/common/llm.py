@@ -1,6 +1,6 @@
 import logging
 
-from config.agent import Agent
+from core.agent import Agent
 from core.factory import get_model_handler
 from models.common.chat import ChatMessage
 from utils.gcs import append_chat_message_to_gcs, get_chat_messages

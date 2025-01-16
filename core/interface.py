@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-from config.agent import Agent
+from core.agent import Agent
 
 
 class ModelHandler(ABC):
