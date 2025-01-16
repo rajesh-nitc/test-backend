@@ -68,7 +68,9 @@ class GeminiModelHandler(ModelHandler):
             logger.error(f"Error getting model response to prompt: {e}")
             raise
 
-    def extract_function_calls(self, response) -> list[dict[str, Any]]:
+    def extract_function_calls(
+        self, response: GenerationResponse
+    ) -> list[dict[str, Any]]:
         """
         Extract function calls from Model response
         """
@@ -110,7 +112,9 @@ class GeminiModelHandler(ModelHandler):
 
         return api_responses
 
-    async def get_response_to_api_responses(self, api_responses) -> GenerationResponse:
+    async def get_response_to_api_responses(
+        self, api_responses: list[Part]
+    ) -> GenerationResponse:
         """
         Model response to api responses
         """
@@ -121,7 +125,7 @@ class GeminiModelHandler(ModelHandler):
             logger.error(f"Error getting model response: {e}")
             raise
 
-    def extract_text(self, response) -> str:
+    def extract_text(self, response: GenerationResponse) -> str:
         """
         Extract text from Model response
         """
@@ -141,4 +145,7 @@ class GeminiModelHandler(ModelHandler):
             raise
 
     def get_role(self) -> str:
+        """
+        Returns assistant role
+        """
         return "model"

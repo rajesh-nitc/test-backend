@@ -31,7 +31,7 @@ class OpenAIModelHandler(ModelHandler):
         try:
             response = await self._get_client().chat.completions.create(
                 model=self.agent.model.split("/")[1],
-                messages=self.agent.messages,
+                messages=self.agent.messages,  # type: ignore
                 tools=[function_to_openai_schema(func) for func in self.agent.functions],  # type: ignore
                 temperature=self.agent.temperature,
                 n=self.agent.n,
@@ -48,7 +48,7 @@ class OpenAIModelHandler(ModelHandler):
         Model response to prompt
         """
         try:
-            self.agent.messages.clear()
+            self.agent.messages = []
             for message in history:
                 self.agent.messages.append(
                     ChatMessage(role=message["role"], content=message["content"])
@@ -78,7 +78,7 @@ class OpenAIModelHandler(ModelHandler):
                     function_args = json.loads(function_call.function.arguments)
                     function_calls.append({function_name: function_args})
 
-                    self.agent.messages.append(
+                    self.agent.messages.append(  # type: ignore
                         {
                             "role": response.choices[0].message.role,
                             "function_call": {
@@ -148,4 +148,7 @@ class OpenAIModelHandler(ModelHandler):
             raise
 
     def get_role(self) -> str:
+        """
+        Returns assistant role
+        """
         return "assistant"
