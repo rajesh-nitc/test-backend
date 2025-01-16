@@ -57,7 +57,7 @@ echo 'export OPENWEATHER_API_KEY=YOUR_API_KEY_HERE' >> ~/.zshrc
 
 4. **Application Settings**: Update variables in `config/settings.py` and `Makefile`.
 
-5. **Text Embeddings** (required only if using **Generation with Vector Search**): Generate embeddings JSON and deploy a Vector Search index via the GCP console.
+5. **Text Embeddings** (required only if using Feature #2): Generate embeddings JSON and deploy a Vector Search index via the GCP console.
 
 ```
 make gcp_embeddings
