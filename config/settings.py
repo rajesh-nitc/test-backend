@@ -16,7 +16,7 @@ class Settings(BaseSettings):
         description="Azure OpenAI API key.",
     )
     AZURE_OPENAI_ENDPOINT: str = Field(
-        "https://oai-function-calling-api-03.openai.azure.com/",
+        "https://oai-function-calling-api-04.openai.azure.com/",
         description="Azure OpenAI endpoint.",
     )
     EMB_BUCKET: str = Field(
@@ -58,7 +58,7 @@ class Settings(BaseSettings):
         "google/gemini-1.5-pro",
         "google/gemini-1.5-flash",
         "google/gemini-2.0-flash-exp",
-    ] = Field("google/gemini-2.0-flash-exp", description="The foundation model to use.")
+    ] = Field("openai/gpt-4o-mini", description="The foundation model to use.")
     LLM_SYSTEM_INSTRUCTION: str = Field(
         dedent_and_strip(
             """

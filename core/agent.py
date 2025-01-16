@@ -9,9 +9,8 @@ class Agent(BaseModel):
     name: str
     model: str
     system_instruction: str
-    messages: list = []
+    messages: list | ChatSession = []
     functions: list[Callable[..., Any]]
-    chat: ChatSession | None = None
     temperature: float = 0
     n: int = 1
     max_tokens: int = 125

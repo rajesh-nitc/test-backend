@@ -60,10 +60,10 @@ class GeminiModelHandler(ModelHandler):
         Model response to prompt
         """
         try:
-            self.agent.chat = self._get_client().start_chat(
+            self.agent.messages = self._get_client().start_chat(
                 history=history, response_validation=False
             )
-            return await self.agent.chat.send_message_async(prompt)
+            return await self.agent.messages.send_message_async(prompt)
         except Exception as e:
             logger.error(f"Error getting model response to prompt: {e}")
             raise
@@ -115,7 +115,7 @@ class GeminiModelHandler(ModelHandler):
         Model response to api responses
         """
         try:
-            response = await self.agent.chat.send_message_async(api_responses)  # type: ignore
+            response = await self.agent.messages.send_message_async(api_responses)  # type: ignore
             return response
         except Exception as e:
             logger.error(f"Error getting model response: {e}")
