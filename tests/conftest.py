@@ -12,16 +12,24 @@ def pytest_addoption(parser):
 
 @pytest.fixture
 def test_use_cases(request):
+    def check_all_keywords(response, keywords):
+        return all(keyword.lower() in response.lower() for keyword in keywords)
+
+    def check_any_keyword(response, keywords):
+        return any(keyword.lower() in response.lower() for keyword in keywords)
+
     all_cases = {
         "weather": {
             "prompt": "what is 1+1 and how is the weather in bengaluru and mumbai?",
             "user_id": "test_user_1",
             "expected_keywords": ["2", "bengaluru", "mumbai"],
+            "check_function": check_all_keywords,
         },
         "toys": {
             "prompt": "suggest toys like Uno under $25?",
             "user_id": "test_user_2",
             "expected_keywords": ["toy", "toys"],
+            "check_function": check_any_keyword,
         },
     }
     selected_tests = request.config.getoption("--test-cases").split(",")

@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from vertexai.generative_models import ChatSession
 
 
@@ -19,5 +19,4 @@ class Agent(BaseModel):
     tool_choice: str = "auto"
     api_version: str = "2024-02-01"
 
-    class Config:
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
