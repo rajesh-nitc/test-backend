@@ -58,7 +58,7 @@ class Settings(BaseSettings):
         "google/gemini-1.5-pro",
         "google/gemini-1.5-flash",
         "google/gemini-2.0-flash-exp",
-    ] = Field("openai/gpt-4o-mini", description="The foundation model to use.")
+    ] = Field("google/gemini-1.5-flash", description="The foundation model to use.")
     LLM_SYSTEM_INSTRUCTION: str = Field(
         dedent_and_strip(
             """
