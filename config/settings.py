@@ -8,7 +8,7 @@ from utils.text import dedent_and_strip
 
 class Settings(BaseSettings):
     APP_NAME: str = Field(
-        "genai-function-calling-api", description="Name of the application."
+        "genai-function-calling-api-v1", description="Name of the application."
     )
     AZURE_OPENAI_API_KEY: str = Field(
         ...,  # Required field (this means it must be provided through env)

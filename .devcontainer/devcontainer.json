@@ -1,11 +1,11 @@
 {
-    "name": "Python 3",
+    "name": "genai-function-calling-api-v1",
     "dockerFile": "./Dockerfile",
     "forwardPorts": [
         8000
     ],
-    "postCreateCommand": "bash /workspaces/genai-function-calling-api/.devcontainer/post_create.sh",
-    "postStartCommand": "bash /workspaces/genai-function-calling-api/.devcontainer/post_start.sh",
+    "postCreateCommand": "bash /workspaces/genai-function-calling-api-v1/.devcontainer/post_create.sh",
+    "postStartCommand": "bash /workspaces/genai-function-calling-api-v1/.devcontainer/post_start.sh",
     "remoteUser": "vscode",
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}

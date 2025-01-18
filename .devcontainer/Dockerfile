@@ -1,4 +1,5 @@
-# Start with the base Python image
+# Beyond Python and git, this image includes a number of Python tools, zsh, Oh My Zsh!, a non-root vscode user with sudo access, and a set of common dependencies for development
+# https://github.com/devcontainers/images/tree/main/src/python#using-this-image
 FROM mcr.microsoft.com/devcontainers/python:3.12-bullseye
 
 # Install dependencies
