@@ -16,7 +16,7 @@ class Settings(BaseSettings):
         description="Azure OpenAI API key.",
     )
     AZURE_OPENAI_ENDPOINT: str = Field(
-        "https://oai-function-calling-api-05.openai.azure.com/",
+        "https://oai-function-calling-api-06.openai.azure.com/",
         description="Azure OpenAI endpoint.",
     )
     EMB_BUCKET: str = Field(
