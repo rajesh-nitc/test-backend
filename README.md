@@ -97,6 +97,6 @@ make docker
 make prompt PROMPT='what is 1+1 and how is the weather in bengaluru and mumbai?'
 
 # Generation with Vector Search
-make prompt PROMPT='suggest toys like Uno under $$25?'
+make prompt PROMPT='suggest indoor toys like Uno under $$25?'
 
 ```
