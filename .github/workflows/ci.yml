@@ -42,9 +42,9 @@ jobs:
           pre-commit run --all-files
 
       - name: Set up GCP auth
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS_BASE64 }}
+        run: |
+          echo "${{ secrets.GCP_CREDENTIALS_BASE64 }}" | base64 --decode > $HOME/credentials.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/credentials.json" >> $GITHUB_ENV
 
       # Run test cases with --test-cases="weather,toys"
       - name: Run tests with pytest
