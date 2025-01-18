@@ -10,6 +10,10 @@
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
+    "mounts": [
+        "source=/home/rajesh/.config/gcloud,target=/home/vscode/.config/gcloud,type=bind",
+        "source=/home/rajesh/.ssh,target=/home/vscode/.ssh,type=bind"
+    ],
     "customizations": {
         "vscode": {
             "extensions": [
