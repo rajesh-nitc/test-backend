@@ -32,7 +32,7 @@ def get_agent() -> Agent:
     )
 ```
 
-## 🚀 Getting Started
+## Getting Started 🚀
 
 ### Prerequisites
 
