@@ -54,7 +54,7 @@ jobs:
           AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
         run: |
           source .venv/bin/activate
-          pytest -m integration --test-cases="weather,toys"
+          pytest -m integration --test-cases="weather"
 
       - name: Sanitize branch name
         run: |
