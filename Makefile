@@ -52,6 +52,7 @@ notebook: check_venv ## Create jupyter notebook from helper module
 	jupytext --to notebook helpers/generate_embeddings.py
 
 precommit: check_venv ## Run pre-commit checks
+	pre-commit install
 	pre-commit run --all-files
 
 docker: ## Run in docker (Add Openai API key, OpenWeather API key and update other variables)
