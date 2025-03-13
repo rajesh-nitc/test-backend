@@ -1,5 +1,5 @@
 # Variables
-APP_NAME=genai-fc-api
+APP_NAME=test-backend
 GOOGLE_CLOUD_PROJECT=prj-bu1-d-sample-base-9208
 LLM_CHAT_BUCKET=bkt-bu1-d-function-calling-api-chat
 

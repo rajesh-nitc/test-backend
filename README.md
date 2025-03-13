@@ -1,4 +1,4 @@
-# genai-fc-api
+# test-backend
 
 This API supports function calling with both Azure OpenAI models and Gemini models on Vertex AI. The model is provided with the day's chat history to maintain multi-turn context.
 
@@ -55,7 +55,7 @@ make gcp_gcloud_auth
 echo 'export OPENWEATHER_API_KEY=YOUR_API_KEY_HERE' >> ~/.zshrc
 ```
 
-4. **Application Settings**: Update variables in `config/settings.py` and `Makefile`.
+4. **Application Settings**: Update `config/settings.py`
 
 5. **Text Embeddings** (required only if using Feature #2): Generate embeddings JSON and deploy a Vector Search index via the GCP console.
 
@@ -82,10 +82,10 @@ make help
 ### Run
 
 ```
-# Run Locally (Without Docker)
+# Run Locally
 make run
 
-# Run Locally (With Docker)
+# Run Locally (With Docker) - update variables in Makefile
 make docker
 
 ```
